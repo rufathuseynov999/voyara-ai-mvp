@@ -1,0 +1,63 @@
+name: Verify VOYARA MVP
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  application:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      NEXT_PUBLIC_APP_URL: https://example.invalid
+      NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_01234567890123456789
+      SUPABASE_SECRET_KEY: sb_secret_012345678901234567890123
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+      VOYARA_DEMO_MODE: "false"
+      VOYARA_DEMO_ROLE: founder
+      VOYARA_LOG_LEVEL: info
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run env:check
+      - run: npm run security:scan
+      - run: npm run db:migrations:verify
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm audit --audit-level=low
+      - run: npm run build
+      - run: npm run test:runtime
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:browser
+
+  supabase:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 2.109.1
+      - run: supabase start
+      - run: supabase db reset --local --no-seed
+      - run: supabase db lint --level error
+      - run: supabase test db
+      - if: always()
+        run: supabase stop --no-backup

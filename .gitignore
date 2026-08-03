@@ -1,0 +1,15 @@
+node_modules/
+.next/
+test-results/
+artifacts/
+.supabase/
+supabase/.temp/
+.env
+.env.*
+!.env.example
+!.env.local.example
+!.env.preview.example
+!.env.production.example
+*.tsbuildinfo
+*.log
+.DS_Store
