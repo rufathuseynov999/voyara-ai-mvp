@@ -30,7 +30,7 @@
 | Unified conversation/message data model | ✅ | Phase 4A; extended Phase 4B with brand/external-id/handover/delivery-status fields |
 | Channel-adapter interface (provider-neutral) | ✅ | Phase 4A; **no live channel connected** |
 | Dual Instagram accounts (R-Travel + VOYARA) — data model | ✅ | Phase 4B — `customer_facing_brand`, `INSTAGRAM_RTRAVEL`/`INSTAGRAM_VOYARA` identity kinds, campaign attribution, external conversation/message ids |
-| Dual Instagram accounts — real channel adapter | ❌ | 🔑 Meta Business verification + App Review + two connected Pages/IG accounts — see the Phase 4B activation runbook §1 |
+| Dual Instagram accounts — real channel adapter | ✅ (SANDBOX, fixture-certified) | Phase 4H — signature/challenge verification, brand-scoped webhook route, HUMAN_CONFIRMED-only identity linking, append-only inbound audit trail. 🔑 Meta Business verification + App Review + two connected Pages/IG accounts + real credentials + `VOYARA_INSTAGRAM_ACTIVATION_ENABLED=true` still required before LIVE — see the Phase 4H activation runbook |
 | Multilingual AI voice receptionist | ❌ | No telephony, no STT/TTS, no voice-agent logic |
 | Website AI chat widget | ❌ | No widget UI, no LLM-driven chat logic |
 | WhatsApp Business agent — architecture, adapter, webhook endpoint | ✅ | Phase 4C — fixture-certified (7/7); **NOT_CONFIGURED, no real WhatsApp number connected** |
@@ -121,7 +121,7 @@ Not built this phase: any real Instagram or payment-provider connection (both re
 
 Delivered: a **WhatsApp Cloud API adapter** (real webhook challenge + signature verification, inbound normalization, service-window/template awareness, multi-account-ready) plus its real webhook endpoint — fixture-certified 7/7, honestly NOT_CONFIGURED (no real WhatsApp number connected); a **real trilingual website AI chat** with cryptographically opaque, strictly isolated anonymous sessions and rate limiting; **message risk classification** with a founder-approved, versioned, hash-verified policy gating the only path that can auto-send without per-message human approval; **provider-neutral LLM routing** (simulation-only, fail-closed SANDBOX/LIVE, spending ceilings, a closed tool-permission set structurally incapable of an authoritative action); and **unified-inbox extensions** (unread/SLA indicators, take-over/return-to-AI) covering all four channels. A pre-release migration-history correction (Migration 19) was also completed and rigorously re-verified: 91 tables, 308 CHECK constraints, 222 indexes, 206 RLS policies, and 8 functions all byte-for-byte identical between a genuinely fresh migrations-1–19 database and the development sandbox.
 
-Not built this phase: any real WhatsApp number, any real LLM call, spending-ceiling persistence/summing, template-message content management, or Instagram's real adapter (still Phase 4B's gap, unchanged).
+Not built this phase: any real WhatsApp number, any real LLM call, spending-ceiling persistence/summing, template-message content management. (Instagram's real adapter — SANDBOX-mode, fixture-certified — was built in Phase 4H; see above.)
 
 # Phase 4D — what was actually built this session
 

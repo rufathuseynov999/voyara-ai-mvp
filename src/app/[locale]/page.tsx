@@ -48,6 +48,14 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
                 {dictionary.landing.secondaryAction}
               </Link>
             </div>
+            <ol className="cta-clarity" aria-label={dictionary.landing.ctaStepsTitle}>
+              {dictionary.landing.ctaSteps.map((step, index) => (
+                <li key={step}>
+                  <span className="cc-i" aria-hidden="true">{index + 1}</span>
+                  {step}
+                </li>
+              ))}
+            </ol>
             <div className="statline">
               {plansFromMinor !== null && (
                 <span className="statline-chip">
@@ -70,6 +78,19 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
         </div>
       </section>
 
+      <section className="sect scope-section" id="scope" aria-labelledby="scope-title">
+        <div className="section-heading">
+          <span className="eyebrow">VOYARA</span>
+          <h2 id="scope-title">{dictionary.landing.scopeTitle}</h2>
+          <p>{dictionary.landing.scopeLead}</p>
+        </div>
+        <ul className="scope-grid">
+          {dictionary.landing.scopeItems.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </section>
+
       <section className="story-band sect" id="how" aria-label={dictionary.landing.journeyTitle}>
         <div className="story-cap">
           <span className="eyebrow">{dictionary.landing.journeyEyebrow}</span>
@@ -80,7 +101,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
             const tone = index === 4 || index === 7 || index === 8 ? 'gold' : index === 3 ? 'em' : '';
             return (
               <span className="storyrail-item" key={node}>
-                <span className={`snode${tone ? ` ${tone}` : ''}`} style={{ '--i': index } as React.CSSProperties}>{node}</span>
+                <span className={`snode${tone ? ` ${tone}` : ''}`}>{node}</span>
                 {index < journey.length - 1 && <span className="sarr" aria-hidden="true">→</span>}
               </span>
             );
@@ -95,7 +116,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
         </div>
         <div className="why-grid">
           {dictionary.landing.why.map(([title, body], index) => (
-            <article className="why-card" key={title} style={{ '--i': index } as React.CSSProperties}>
+            <article className="why-card" key={title}>
               <span className="why-card-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
               <h3>{title}</h3>
               <p>{body}</p>
@@ -131,6 +152,10 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
             );
           })}
         </div>
+        <p className="receipt-example">
+          <span className="re-badge">{dictionary.landing.receiptExampleLabel}</span>
+          {dictionary.landing.receiptExampleLine}
+        </p>
       </section>
 
       <section className="membership-section sect" id="memberships" aria-labelledby="personal-memberships">

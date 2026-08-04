@@ -24,10 +24,10 @@ export default async function FounderPage({ params }: { params: Promise<{ locale
   return (
     <>
       <FounderCommandCenter dictionary={dictionary} locale={locale} snapshot={snapshot} />
-      <VoiceMetricsPanel metrics={voiceMetrics} />
-      <SupplierOpsPanel snapshot={supplierOpsSnapshot} />
-      <SubscriptionOpsPanel snapshot={subscriptionOpsSnapshot} />
-      <AutomationOpsPanel snapshot={automationOpsSnapshot} />
+      <VoiceMetricsPanel metrics={voiceMetrics} dictionary={dictionary} />
+      <SupplierOpsPanel snapshot={supplierOpsSnapshot} dictionary={dictionary} />
+      <SubscriptionOpsPanel snapshot={subscriptionOpsSnapshot} dictionary={dictionary} />
+      <AutomationOpsPanel snapshot={automationOpsSnapshot} dictionary={dictionary} />
     </>
   );
 }

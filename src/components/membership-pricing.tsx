@@ -63,6 +63,7 @@ export function MembershipPricing({
               <span className="plan-pr">
                 {price ?? '—'} ₼<span>/{unit}</span>
               </span>
+              <span className="plan-note">{dictionary.landing.planNotes[plan.planCode as keyof typeof dictionary.landing.planNotes]}</span>
               <span className="plan-ann">
                 {plan.monthly ?? '—'} ₼/{dictionary.landing.monthly} · {plan.annual ?? '—'} ₼/{dictionary.landing.annually}
               </span>
@@ -80,7 +81,13 @@ export function MembershipPricing({
       <div className="corpwrap">
         <div className="section-heading corporate-heading">
           <span className="eyebrow">{dictionary.landing.corporateTitle}</span>
+          <p>{dictionary.landing.corporateBody}</p>
         </div>
+        <ul className="corp-bullets">
+          {dictionary.landing.corporateBullets.map((bullet) => (
+            <li key={bullet}>{bullet}</li>
+          ))}
+        </ul>
         <div className="corpgrid">
           {corporate.map((plan) => (
             <article className="plan-v2 corp2" key={plan.planCode}>
@@ -89,6 +96,7 @@ export function MembershipPricing({
                 {plan.monthly === null ? dictionary.landing.custom : `${plan.monthly} ₼`}
                 {plan.monthly !== null && <span>/{dictionary.landing.monthly}</span>}
               </span>
+              <span className="plan-note">{dictionary.landing.planNotes[plan.planCode as keyof typeof dictionary.landing.planNotes]}</span>
               <Link className="btn btn-em btn-sm" href={`/${locale}/trip-wizard`}>
                 {dictionary.landing.requestDemo}
               </Link>

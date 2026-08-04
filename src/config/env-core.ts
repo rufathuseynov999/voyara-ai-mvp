@@ -461,3 +461,205 @@ export function readVoiceCredentials(
   }
   return parsed;
 }
+
+/**
+ * Phase 4H — Instagram Messaging credentials, dual-brand (R-Travel +
+ * VOYARA). No live Meta credentials exist anywhere in this project —
+ * absence is expected, not an error; the channel registry fails closed for
+ * this exact reason, identical to WhatsApp and Voice above.
+ *
+ * Shape mirrors the fact that one Meta App can own two Pages/IG accounts:
+ * `appId`/`appSecret`/`webhookVerifyToken` are shared (one Meta App, one
+ * webhook subscription for both brands); `instagramAccountId`/`pageId`/
+ * `accessToken` are per-brand. A caller can never override which brand a
+ * set of stored account config belongs to — `readInstagramCredentials`
+ * takes the brand as its OWN parameter and looks up ONLY that brand's env
+ * vars; there is no code path where a caller-supplied brand string
+ * substitutes for, or is written into, the stored account identity itself.
+ */
+const instagramAppCredentialsSchema = z.object({
+  appId: z.string().trim().min(4).max(64),
+  appSecret: z.string().trim().min(16).max(256),
+  webhookVerifyToken: z.string().trim().min(16).max(256),
+  graphApiVersion: z.string().trim().regex(/^v\d+\.\d+$/, 'Graph API version must look like v21.0'),
+  callbackUrl: z.string().url().refine((value) => new URL(value).protocol === 'https:', {
+    message: 'Instagram callback URL must be HTTPS'
+  })
+});
+export type InstagramAppCredentials = z.infer<typeof instagramAppCredentialsSchema>;
+
+const INSTAGRAM_DEFAULT_GRAPH_API_VERSION = 'v21.0';
+
+const instagramBrandCredentialsSchema = z.object({
+  instagramAccountId: z.string().trim().min(4).max(64),
+  pageId: z.string().trim().min(4).max(64),
+  accessToken: z.string().trim().min(16).max(2048)
+});
+export type InstagramBrandCredentials = z.infer<typeof instagramBrandCredentialsSchema>;
+
+export type InstagramCredentials = InstagramAppCredentials & InstagramBrandCredentials & {
+  brand: 'RTRAVEL' | 'VOYARA';
+};
+
+/** Reads the shared Meta App-level credentials only (no brand). Returns
+ *  null if none of the four required env vars are set at all; throws if
+ *  SOME but not all are set (a genuinely malformed/partial configuration —
+ *  never silently treated as "not configured"), and throws if any value
+ *  contains placeholder text. */
+export function readInstagramAppCredentials(
+  environment: NodeJS.ProcessEnv = process.env
+): InstagramAppCredentials | null {
+  const appId = environment.VOYARA_META_APP_ID;
+  const appSecret = environment.VOYARA_META_APP_SECRET;
+  const webhookVerifyToken = environment.VOYARA_INSTAGRAM_WEBHOOK_VERIFY_TOKEN;
+  const callbackUrl = environment.VOYARA_INSTAGRAM_CALLBACK_URL;
+  if (!appId && !appSecret && !webhookVerifyToken && !callbackUrl) return null;
+
+  const graphApiVersion = environment.VOYARA_INSTAGRAM_GRAPH_API_VERSION ?? INSTAGRAM_DEFAULT_GRAPH_API_VERSION;
+  const parsed = instagramAppCredentialsSchema.parse({ appId, appSecret, webhookVerifyToken, graphApiVersion, callbackUrl });
+  if (
+    containsPlaceholder(parsed.appId) || containsPlaceholder(parsed.appSecret)
+    || containsPlaceholder(parsed.webhookVerifyToken) || containsPlaceholder(parsed.callbackUrl)
+  ) {
+    throw new Error('Instagram Meta App credentials cannot contain placeholder text.');
+  }
+  return parsed;
+}
+
+/** Reads ONE brand's Instagram account credentials. `brand` is the
+ *  caller's own selection of WHICH brand's env vars to read — it is never
+ *  written back into, or trusted as an override of, any stored
+ *  configuration; the returned `brand` field simply echoes which set of
+ *  variables was actually read. Returns null if none of that brand's three
+ *  env vars are set; throws on partial or placeholder values. */
+export function readInstagramBrandCredentials(
+  brand: 'RTRAVEL' | 'VOYARA',
+  environment: NodeJS.ProcessEnv = process.env
+): (InstagramBrandCredentials & { brand: 'RTRAVEL' | 'VOYARA' }) | null {
+  const prefix = brand === 'RTRAVEL' ? 'VOYARA_INSTAGRAM_RTRAVEL' : 'VOYARA_INSTAGRAM_VOYARA';
+  const instagramAccountId = environment[`${prefix}_ACCOUNT_ID`];
+  const pageId = environment[`${prefix}_PAGE_ID`];
+  const accessToken = environment[`${prefix}_ACCESS_TOKEN`];
+  if (!instagramAccountId && !pageId && !accessToken) return null;
+
+  const parsed = instagramBrandCredentialsSchema.parse({ instagramAccountId, pageId, accessToken });
+  if (containsPlaceholder(parsed.instagramAccountId) || containsPlaceholder(parsed.pageId) || containsPlaceholder(parsed.accessToken)) {
+    throw new Error(`Instagram ${brand} credentials cannot contain placeholder text.`);
+  }
+  return { ...parsed, brand };
+}
+
+/** Combines the shared app credentials with ONE brand's account
+ *  credentials into what the adapter actually needs. Returns null unless
+ *  BOTH the app-level credentials and the requested brand's credentials
+ *  are present — a brand can never be considered "configured" on its own
+ *  without the shared app secret/webhook token also being present, since
+ *  neither signature verification nor the webhook challenge would be
+ *  possible without them. */
+export function readInstagramCredentials(
+  brand: 'RTRAVEL' | 'VOYARA',
+  environment: NodeJS.ProcessEnv = process.env
+): InstagramCredentials | null {
+  const app = readInstagramAppCredentials(environment);
+  const brandCredentials = readInstagramBrandCredentials(brand, environment);
+  if (!app || !brandCredentials) return null;
+  return { ...app, ...brandCredentials };
+}
+
+/**
+ * Diagnostic status for the Instagram deployment validator
+ * (scripts/check-instagram.ts). Distinguishes every case the Phase 4H
+ * production validator requirement lists, WITHOUT throwing for the
+ * legitimate "not configured" states — only genuinely malformed, partial,
+ * duplicate, or mismatched configuration throws.
+ */
+export type InstagramConfigurationStatus =
+  | { status: 'BOTH_NOT_CONFIGURED' }
+  | { status: 'ONLY_RTRAVEL_CONFIGURED' }
+  | { status: 'ONLY_VOYARA_CONFIGURED' }
+  | { status: 'BOTH_CONFIGURED' };
+
+export class InstagramConfigurationError extends Error {
+  readonly code:
+    | 'MALFORMED_OR_PLACEHOLDER'
+    | 'PARTIAL_CONFIGURATION'
+    | 'DUPLICATE_ACCOUNT_ID'
+    | 'DUPLICATE_PAGE_ID'
+    | 'DUPLICATE_ACCESS_TOKEN'
+    | 'BRAND_MISMATCH'
+    | 'MISSING_WEBHOOK_TOKEN'
+    | 'MISSING_APP_SECRET';
+
+  constructor(message: string, code: InstagramConfigurationError['code']) {
+    super(message);
+    this.name = 'InstagramConfigurationError';
+    this.code = code;
+  }
+}
+
+/** Validates the FULL Instagram configuration (app + both brands) and
+ *  returns a structured status. Throws InstagramConfigurationError — never
+ *  returns a "degraded but ok" status — for any of: malformed/placeholder
+ *  values (surfaced by the two readers above), a brand configured with
+ *  only some of its three variables set, the app configured without a
+ *  webhook token or app secret, or either brand claiming the SAME
+ *  Instagram account id / Page id / access token as the other brand. The
+ *  caller (scripts/check-instagram.ts) exits non-zero on any thrown error,
+ *  satisfying "malformed or partial configuration must exit non-zero."
+ */
+export function validateInstagramConfiguration(
+  environment: NodeJS.ProcessEnv = process.env
+): InstagramConfigurationStatus {
+  const app = readInstagramAppCredentials(environment);
+
+  let rtravel: (InstagramBrandCredentials & { brand: 'RTRAVEL' }) | null = null;
+  let voyara: (InstagramBrandCredentials & { brand: 'VOYARA' }) | null = null;
+  try {
+    rtravel = readInstagramBrandCredentials('RTRAVEL', environment) as (InstagramBrandCredentials & { brand: 'RTRAVEL' }) | null;
+    voyara = readInstagramBrandCredentials('VOYARA', environment) as (InstagramBrandCredentials & { brand: 'VOYARA' }) | null;
+  } catch (error) {
+    throw new InstagramConfigurationError(
+      error instanceof Error ? error.message : 'Invalid Instagram brand credentials.',
+      'MALFORMED_OR_PLACEHOLDER'
+    );
+  }
+
+  if (!app && !rtravel && !voyara) return { status: 'BOTH_NOT_CONFIGURED' };
+
+  if ((rtravel || voyara) && !app) {
+    throw new InstagramConfigurationError(
+      'At least one brand has Instagram account variables set, but the shared Meta App credentials ' +
+      '(VOYARA_META_APP_ID / VOYARA_META_APP_SECRET / VOYARA_INSTAGRAM_WEBHOOK_VERIFY_TOKEN / VOYARA_INSTAGRAM_CALLBACK_URL) are not fully set.',
+      'PARTIAL_CONFIGURATION'
+    );
+  }
+  if (app && !app.webhookVerifyToken) {
+    throw new InstagramConfigurationError('Instagram webhook verification token is missing.', 'MISSING_WEBHOOK_TOKEN');
+  }
+  if (app && !app.appSecret) {
+    throw new InstagramConfigurationError('Instagram Meta App secret is missing.', 'MISSING_APP_SECRET');
+  }
+
+  if (rtravel && voyara) {
+    if (rtravel.instagramAccountId === voyara.instagramAccountId) {
+      throw new InstagramConfigurationError('R-Travel and VOYARA cannot share the same Instagram account id.', 'DUPLICATE_ACCOUNT_ID');
+    }
+    if (rtravel.pageId === voyara.pageId) {
+      throw new InstagramConfigurationError('R-Travel and VOYARA cannot share the same Facebook Page id.', 'DUPLICATE_PAGE_ID');
+    }
+    if (rtravel.accessToken === voyara.accessToken) {
+      throw new InstagramConfigurationError('R-Travel and VOYARA cannot share the same access token.', 'DUPLICATE_ACCESS_TOKEN');
+    }
+    if (rtravel.brand !== 'RTRAVEL' || voyara.brand !== 'VOYARA') {
+      // Structurally unreachable (each reader hard-codes its own brand),
+      // kept as an explicit assertion so a future refactor cannot silently
+      // reintroduce a brand-swap bug.
+      throw new InstagramConfigurationError('Brand identity mismatch while reading Instagram configuration.', 'BRAND_MISMATCH');
+    }
+    return { status: 'BOTH_CONFIGURED' };
+  }
+
+  if (rtravel) return { status: 'ONLY_RTRAVEL_CONFIGURED' };
+  if (voyara) return { status: 'ONLY_VOYARA_CONFIGURED' };
+  return { status: 'BOTH_NOT_CONFIGURED' };
+}

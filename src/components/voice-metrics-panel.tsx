@@ -1,4 +1,5 @@
 import type { VoiceOperationsMetrics } from '@/server/agents/voice/voice-metrics-queries';
+import type { Dictionary } from '@/i18n/dictionaries';
 
 /**
  * Phase 4D — read-only voice metrics panel. Purely a display of numbers
@@ -6,33 +7,38 @@ import type { VoiceOperationsMetrics } from '@/server/agents/voice/voice-metrics
  * interactive control, button, or form anywhere in this component — it
  * cannot execute anything, matching the founder's explicit instruction that
  * this stays advisory-only.
+ *
+ * Localized: every displayed label/status is sourced from
+ * dictionary.opsPanels.voice — internal metric keys (totalCalls, answered,
+ * etc.) are untouched.
  */
-export function VoiceMetricsPanel({ metrics }: { metrics: VoiceOperationsMetrics }) {
+export function VoiceMetricsPanel({ metrics, dictionary }: { metrics: VoiceOperationsMetrics; dictionary: Dictionary }) {
+  const d = dictionary.opsPanels.voice;
   return (
     <section className="voice-metrics-panel state-card">
-      <h2>Voice operations (read-only)</h2>
-      <p className="orch-note">Simulation-only — no live telephony provider is connected. See the Phase 4D activation runbook.</p>
+      <h2>{d.title}</h2>
+      <p className="orch-note">{d.note}</p>
       <div className="voice-metrics-grid">
-        <div><strong>{metrics.totalCalls}</strong><span>Calls received</span></div>
-        <div><strong>{metrics.answered}</strong><span>Answered</span></div>
-        <div><strong>{metrics.missed}</strong><span>Missed</span></div>
-        <div><strong>{metrics.completed}</strong><span>Completed</span></div>
-        <div><strong>{metrics.aiResolved}</strong><span>AI-resolved</span></div>
-        <div><strong>{metrics.transferred}</strong><span>Transferred to staff</span></div>
-        <div><strong>{metrics.callbacksRequired}</strong><span>Callbacks required</span></div>
-        <div><strong>{metrics.qualifiedLeads}</strong><span>Qualified leads</span></div>
-        <div><strong>{metrics.averageDurationSeconds ?? '—'}</strong><span>Avg. duration (s)</span></div>
-        <div><strong>{metrics.unresolvedOrHighRiskCalls}</strong><span>Unresolved / high-risk</span></div>
+        <div><strong>{metrics.totalCalls}</strong><span>{d.calls}</span></div>
+        <div><strong>{metrics.answered}</strong><span>{d.answered}</span></div>
+        <div><strong>{metrics.missed}</strong><span>{d.missed}</span></div>
+        <div><strong>{metrics.completed}</strong><span>{d.completed}</span></div>
+        <div><strong>{metrics.aiResolved}</strong><span>{d.aiResolved}</span></div>
+        <div><strong>{metrics.transferred}</strong><span>{d.transferred}</span></div>
+        <div><strong>{metrics.callbacksRequired}</strong><span>{d.callbacks}</span></div>
+        <div><strong>{metrics.qualifiedLeads}</strong><span>{d.leads}</span></div>
+        <div><strong>{metrics.averageDurationSeconds ?? '—'}</strong><span>{d.avgDuration}</span></div>
+        <div><strong>{metrics.unresolvedOrHighRiskCalls}</strong><span>{d.unresolved}</span></div>
       </div>
-      <h3>Language distribution</h3>
+      <h3>{d.langDist}</h3>
       <ul className="voice-language-distribution">
-        {Object.entries(metrics.languageDistribution).length === 0 ? <li>No calls yet.</li> : null}
+        {Object.entries(metrics.languageDistribution).length === 0 ? <li>{d.noCalls}</li> : null}
         {Object.entries(metrics.languageDistribution).map(([lang, count]) => (
           <li key={lang}>{lang.toUpperCase()}: {count}</li>
         ))}
       </ul>
       <p className="orch-note">
-        Estimated LLM cost: {(metrics.estimatedLlmCostMinorUnits / 100).toFixed(2)} — Estimated voice-provider cost: not available (no provider connected).
+        {d.estCost}: {(metrics.estimatedLlmCostMinorUnits / 100).toFixed(2)}
       </p>
     </section>
   );

@@ -39,6 +39,11 @@ export type InboxLabels = {
   allBrands: string; allChannels: string; allLanguages: string; allStatuses: string; noConversations: string; selectConversation: string;
   linkedIdentities: string; timeline: string; paymentLinks: string; assign: string; handoverToHuman: string; handoverToAi: string; escalate: string;
   assigned: string; unassigned: string; handoverAi: string; handoverHuman: string; verified: string; unverified: string;
+  filterCallStatus: string; filterUrgency: string; filterCallback: string; allCallStatuses: string; anyUrgency: string; anyCallback: string;
+  callbackRequiredOpt: string; callbackCompletedOpt: string; voiceCallTitle: string; aiSummaryTitle: string; transcriptTitle: string;
+  callbackTasksTitle: string; callAuditTitle: string; calledLabel: string; callerLabel: string; statusLabel: string; durationLabel: string;
+  languageLabel: string; urgencyLabel: string; transferLabel: string; recordingLabel: string; enabledWord: string; disabledWord: string;
+  consentLabel: string; dueLabel: string; unreadAria: string; slaOverdueTitle: string;
 };
 
 export function CrmInbox({ labels }: { labels: InboxLabels }) {
@@ -114,8 +119,8 @@ export function CrmInbox({ labels }: { labels: InboxLabels }) {
           <option value="ESCALATED">ESCALATED</option>
           <option value="RESOLVED">RESOLVED</option>
         </select>
-        <select aria-label="Call status" onChange={(e) => setFilters((f) => ({ ...f, callStatus: e.target.value }))} value={filters.callStatus}>
-          <option value="">All call statuses</option>
+        <select aria-label={labels.filterCallStatus} onChange={(e) => setFilters((f) => ({ ...f, callStatus: e.target.value }))} value={filters.callStatus}>
+          <option value="">{labels.allCallStatuses}</option>
           <option value="STARTED">STARTED</option>
           <option value="RINGING">RINGING</option>
           <option value="ANSWERED">ANSWERED</option>
@@ -123,16 +128,16 @@ export function CrmInbox({ labels }: { labels: InboxLabels }) {
           <option value="COMPLETED">COMPLETED</option>
           <option value="FAILED">FAILED</option>
         </select>
-        <select aria-label="Urgency" onChange={(e) => setFilters((f) => ({ ...f, urgency: e.target.value }))} value={filters.urgency}>
-          <option value="">All urgency</option>
+        <select aria-label={labels.filterUrgency} onChange={(e) => setFilters((f) => ({ ...f, urgency: e.target.value }))} value={filters.urgency}>
+          <option value="">{labels.anyUrgency}</option>
           <option value="LOW">LOW</option>
           <option value="MEDIUM">MEDIUM</option>
           <option value="HIGH">HIGH</option>
         </select>
-        <select aria-label="Callback required" onChange={(e) => setFilters((f) => ({ ...f, callbackRequired: e.target.value }))} value={filters.callbackRequired}>
-          <option value="">Callback: any</option>
-          <option value="true">Callback required</option>
-          <option value="false">Callback completed</option>
+        <select aria-label={labels.filterCallback} onChange={(e) => setFilters((f) => ({ ...f, callbackRequired: e.target.value }))} value={filters.callbackRequired}>
+          <option value="">{labels.anyCallback}</option>
+          <option value="true">{labels.callbackRequiredOpt}</option>
+          <option value="false">{labels.callbackCompletedOpt}</option>
         </select>
       </div>
 
@@ -142,12 +147,12 @@ export function CrmInbox({ labels }: { labels: InboxLabels }) {
           {conversations.map((c) => (
             <li key={c.conversationId}>
               <button className={`inbox-row${selected?.conversationId === c.conversationId ? ' is-active' : ''}${c.unread ? ' is-unread' : ''}`} onClick={() => openConversation(c.conversationId)}>
-                {c.unread && <span className="inbox-unread-dot" aria-label="unread" />}
+                {c.unread && <span className="inbox-unread-dot" aria-label={labels.unreadAria} />}
                 <span className={`inbox-brand-badge inbox-brand-${(c.customerFacingBrand ?? 'unknown').toLowerCase()}`}>{c.customerFacingBrand ?? '—'}</span>
                 <span className="inbox-contact">{c.contactName ?? c.contactId.slice(0, 8)}</span>
                 <span className="inbox-channel">{c.channel}</span>
                 <span className="inbox-status">{c.status}</span>
-                {c.slaOverdue && <span className="inbox-sla-badge" title="SLA overdue">SLA</span>}
+                {c.slaOverdue && <span className="inbox-sla-badge" title={labels.slaOverdueTitle}>SLA</span>}
               </button>
             </li>
           ))}
@@ -189,37 +194,37 @@ export function CrmInbox({ labels }: { labels: InboxLabels }) {
 
               {selected.voiceCall && (
                 <>
-                  <h3>Voice call</h3>
+                  <h3>{labels.voiceCallTitle}</h3>
                   <ul className="inbox-voice-detail">
-                    <li>Called: {selected.voiceCall.calledNumber} ({selected.voiceCall.brand}) — Caller: {selected.voiceCall.callerNumber}</li>
-                    <li>Status: {selected.voiceCall.status} — Duration: {selected.voiceCall.durationSeconds ?? '—'}s — Language: {selected.voiceCall.detectedLanguage ?? '—'}</li>
-                    {selected.voiceCall.urgency && <li className={`inbox-urgency inbox-urgency-${selected.voiceCall.urgency.toLowerCase()}`}>Urgency: {selected.voiceCall.urgency}</li>}
-                    {selected.voiceCall.transferStatus && <li>Transfer: {selected.voiceCall.transferStatus}</li>}
-                    <li>Recording: {selected.voiceCall.recordingEnabled ? 'enabled' : 'disabled'} (consent: {selected.voiceCall.consent.recording})</li>
+                    <li>{labels.calledLabel}: {selected.voiceCall.calledNumber} ({selected.voiceCall.brand}) — {labels.callerLabel}: {selected.voiceCall.callerNumber}</li>
+                    <li>{labels.statusLabel}: {selected.voiceCall.status} — {labels.durationLabel}: {selected.voiceCall.durationSeconds ?? '—'}s — {labels.languageLabel}: {selected.voiceCall.detectedLanguage ?? '—'}</li>
+                    {selected.voiceCall.urgency && <li className={`inbox-urgency inbox-urgency-${selected.voiceCall.urgency.toLowerCase()}`}>{labels.urgencyLabel}: {selected.voiceCall.urgency}</li>}
+                    {selected.voiceCall.transferStatus && <li>{labels.transferLabel}: {selected.voiceCall.transferStatus}</li>}
+                    <li>{labels.recordingLabel}: {selected.voiceCall.recordingEnabled ? labels.enabledWord : labels.disabledWord} ({labels.consentLabel}: {selected.voiceCall.consent.recording})</li>
                   </ul>
                   {selected.voiceCall.aiSummary && (
                     <>
-                      <h4>AI summary</h4>
+                      <h4>{labels.aiSummaryTitle}</h4>
                       <p className="inbox-voice-summary">{selected.voiceCall.aiSummary}</p>
                     </>
                   )}
                   {selected.voiceCall.transcript && (
                     <>
-                      <h4>Transcript</h4>
+                      <h4>{labels.transcriptTitle}</h4>
                       <p className="inbox-voice-transcript">{selected.voiceCall.transcript}</p>
                     </>
                   )}
                   {selected.voiceCall.callbackTasks.length > 0 && (
                     <>
-                      <h4>Callback tasks</h4>
+                      <h4>{labels.callbackTasksTitle}</h4>
                       <ul className="inbox-callback-tasks">
                         {selected.voiceCall.callbackTasks.map((t) => (
-                          <li key={t.taskId}>{t.status} — due {new Date(t.dueAt).toLocaleString()} {t.notes ? `— ${t.notes}` : ''}</li>
+                          <li key={t.taskId}>{t.status} — {labels.dueLabel} {new Date(t.dueAt).toLocaleString()} {t.notes ? `— ${t.notes}` : ''}</li>
                         ))}
                       </ul>
                     </>
                   )}
-                  <h4>Call audit timeline</h4>
+                  <h4>{labels.callAuditTitle}</h4>
                   <ul className="inbox-call-events">
                     {selected.voiceCall.callEvents.map((e, i) => (
                       <li key={i}>{e.kind} ({e.actorKind}){e.reasonCode ? ` — ${e.reasonCode}` : ''} — {new Date(e.occurredAt).toLocaleString()}</li>

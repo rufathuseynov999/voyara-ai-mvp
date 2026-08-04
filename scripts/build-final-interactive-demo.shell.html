@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>VOYARA AI — Founder Preview</title>
+<style>__CSS__</style>
+</head>
+<body>
+
+<div id="demo-banner">
+  <b id="demo-badge"></b>
+  <span id="demo-text"></span>
+</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">
+      <img class="brand-logo" src="__LOGO_DATAURI__" alt="VOYARA AI" width="44" height="44">
+      <span>VOYARA</span>
+    </div>
+    <nav class="primary-nav">
+      <button onclick="goScreen('landing')" id="nav-home"></button>
+      <button onclick="goScreen('wizard')" id="nav-wizard-lbl"></button>
+      <button onclick="document.getElementById('showcase-title').scrollIntoView({behavior:'smooth'})" id="nav-screens-lbl"></button>
+    </nav>
+    <div class="header-actions">
+      <div class="langsw">
+        <button data-l="az" onclick="setLocale('az')" class="on">AZ</button>
+        <button data-l="ru" onclick="setLocale('ru')">RU</button>
+        <button data-l="en" onclick="setLocale('en')">EN</button>
+      </div>
+      <button class="header-login" id="nav-login" onclick="showSigninToast()"></button>
+      <button class="menu-toggle" id="menu-toggle">\u2630</button>
+    </div>
+  </div>
+</header>
+<div id="mobile-nav">
+  <button id="mnav-home" onclick="goScreen('landing')"></button>
+  <button id="mnav-wizard" onclick="goScreen('wizard')"></button>
+  <button id="mnav-screens" onclick="document.getElementById('showcase-title').scrollIntoView({behavior:'smooth'});document.getElementById('mobile-nav').classList.remove('open')"></button>
+  <button id="mnav-login" onclick="showSigninToast();document.getElementById('mobile-nav').classList.remove('open')"></button>
+</div>
+
+<nav class="screen-tabs" id="screen-tabs-nav">
+  <div class="screen-tabs-inner" id="screen-tabs-inner">
+    <button class="screen-tab on" data-k="landing" id="tab-landing" onclick="goScreen('landing')"></button>
+    <button class="screen-tab" data-k="wizard" id="tab-wizard" onclick="goScreen('wizard')"></button>
+    <button class="screen-tab" data-k="proposal" id="tab-proposal" onclick="goScreen('proposal')"></button>
+    <button class="screen-tab" data-k="approvals" id="tab-approvals" onclick="goScreen('approvals')"></button>
+    <button class="screen-tab" data-k="founder" id="tab-founder" onclick="goScreen('founder')"></button>
+    <button class="screen-tab" data-k="tripRoom" id="tab-tripRoom" onclick="goScreen('tripRoom')"></button>
+    <button class="screen-tab" data-k="payment" id="tab-payment" onclick="goScreen('payment')"></button>
+    <button class="screen-tab" data-k="crm" id="tab-crm" onclick="goScreen('crm')"></button>
+  </div>
+</nav>
+
+<!-- ============ SCREEN 1: LANDING ============ -->
+<section class="screen on" id="screen-landing">
+  <section class="hero-v2">
+    <div class="hero-veil"></div>
+    <div class="hero-grid">
+      <div class="hero-in">
+        <span class="eyebrow-inverse" id="hero-eyebrow"></span>
+        <h1 id="hero-title"></h1>
+        <p id="hero-lead"></p>
+        <div class="hero-actions">
+          <button class="btn btn-gold" id="hero-primary" onclick="goScreen('wizard')"></button>
+          <button class="btn btn-ghost-inverse" id="hero-secondary" onclick="document.getElementById('showcase-title').scrollIntoView({behavior:'smooth'})"></button>
+        </div>
+        <ol class="cta-clarity" id="cta-clarity"></ol>
+        <div class="statline" id="statline"></div>
+      </div>
+      <div class="hero-preview" aria-hidden="true">
+        <div class="hp-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="hp-top-label" id="hp-toplabel"></span></div>
+        <div class="hp-row"><span id="hp-row1-l"></span><span class="tag ai" id="hp-row1-r"></span></div>
+        <div class="hp-row"><span id="hp-row2-l"></span><span class="tag human" id="hp-row2-r"></span></div>
+        <div class="hp-row"><span id="hp-row3-l"></span><span class="tag ok">✓</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="sect" id="scope">
+      <div class="section-heading">
+        <span class="eyebrow">VOYARA</span>
+        <h2 id="scope-title"></h2>
+        <p id="scope-lead"></p>
+      </div>
+      <ul class="scope-grid" id="scope-grid"></ul>
+    </section>
+
+    <section class="sect" style="padding-top:0">
+      <div class="section-heading">
+        <span class="eyebrow" id="journey-eyebrow"></span>
+        <h2 id="journey-title"></h2>
+      </div>
+      <div class="storyrail" id="storyrail"></div>
+    </section>
+
+    <section class="sect why-section">
+      <div class="section-heading" style="padding:0 20px">
+        <span class="eyebrow">VOYARA</span>
+        <h2 id="why-title"></h2>
+      </div>
+      <div class="why-grid" id="why-grid" style="padding:0 20px 20px"></div>
+    </section>
+
+    <section class="sect" id="showcase">
+      <div class="section-heading">
+        <span class="eyebrow">VOYARA</span>
+        <h2 id="showcase-title"></h2>
+        <p id="showcase-lead"></p>
+      </div>
+      <div class="showcase-grid" id="showcase-grid"></div>
+    </section>
+
+    <section class="sect authority-flow-section">
+      <div class="wrap">
+        <div class="section-heading">
+          <span class="eyebrow">VOYARA</span>
+          <h2 id="authority-title"></h2>
+          <p id="authority-body"></p>
+        </div>
+        <div class="authflow" id="authflow"></div>
+        <p class="receipt-example"><span class="re-badge" id="receipt-badge"></span><span id="receipt-line"></span></p>
+      </div>
+    </section>
+
+    <section class="sect" id="memberships">
+      <div class="section-heading" style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:12px">
+        <span class="eyebrow" id="personal-title"></span>
+        <div class="perctl">
+          <button id="perctl-m" class="on" onclick="setPeriod('monthly')"></button>
+          <button id="perctl-a" onclick="setPeriod('annually')"></button>
+        </div>
+      </div>
+      <div class="plans-v2" id="plans-v2"></div>
+      <p class="price-note" id="price-note"></p>
+
+      <div class="corpwrap">
+        <div class="section-heading corporate-heading">
+          <span class="eyebrow" id="corporate-title"></span>
+          <p id="corporate-body"></p>
+        </div>
+        <ul class="corp-bullets" id="corp-bullets"></ul>
+        <div class="corpgrid" id="corpgrid"></div>
+      </div>
+    </section>
+
+    <section class="sect" id="founder">
+      <div class="founder-band">
+        <div class="founder-figure">
+          <img src="__LOGO_DATAURI__" alt="Rufat Huseynov" width="110" height="110" style="border-radius:14px">
+          <span class="founder-kicker" id="founder-kicker"></span>
+        </div>
+        <div>
+          <h2 id="founder-name"></h2>
+          <p style="color:var(--gold);font-size:12.5px;font-weight:650;margin-bottom:10px" id="founder-role"></p>
+          <p id="founder-bio"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <span class="eyebrow eyebrow-inverse">VOYARA</span>
+      <h2 id="final-title"></h2>
+      <div class="final-actions">
+        <button class="btn btn-gold" id="final-start" onclick="goScreen('wizard')"></button>
+        <button class="btn btn-ghost-inverse" id="final-explore" onclick="document.getElementById('showcase-title').scrollIntoView({behavior:'smooth'})"></button>
+      </div>
+      <p class="final-trust" id="final-trust"></p>
+    </section>
+
+    <footer class="site-footer">
+      <span id="footer-tagline"></span>
+      <nav class="footer-links">
+        <a href="#" onclick="return false" id="footer-privacy"></a>
+        <a href="#" onclick="return false" id="footer-terms"></a>
+        <a href="#" onclick="return false" id="footer-contact"></a>
+        <a href="#" onclick="return false" id="footer-support"></a>
+      </nav>
+    </footer>
+  </div>
+</section>
+
+<!-- ============ SCREEN 2: WIZARD ============ -->
+<section class="screen" id="screen-wizard">
+  <div class="mock-shell">
+    <div class="mock-head"><span class="n" id="wiz-n"></span><div><h2 id="wiz-title"></h2><p id="wiz-desc"></p></div></div>
+    <div class="state-pills" id="wiz-pills"></div>
+    <div class="wiz-dots"><span class="on"></span><span></span><span></span></div>
+
+    <div class="wiz-step on" id="wiz-step-1">
+      <div id="wiz-step1-html"></div>
+    </div>
+    <div class="wiz-step" id="wiz-step-2">
+      <div id="wiz-step2-html"></div>
+    </div>
+    <div class="wiz-step" id="wiz-step-3">
+      <div id="wiz-step3-html"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCREEN 3: PROPOSAL ============ -->
+<section class="screen" id="screen-proposal">
+  <div class="mock-shell">
+    <div class="mock-head"><span class="n" id="prop-n"></span><div><h2 id="prop-title"></h2><p id="prop-desc"></p></div></div>
+    <div class="state-pills" id="prop-pills"></div>
+    <div id="prop-card"></div>
+  </div>
+</section>
+
+<!-- ============ SCREEN 4: APPROVALS ============ -->
+<section class="screen" id="screen-approvals">
+  <div class="mock-shell">
+    <div class="mock-head"><span class="n" id="appr-n"></span><div><h2 id="appr-title"></h2><p id="appr-desc"></p></div></div>
+    <div class="state-pills" id="appr-pills"></div>
+    <div id="appr-list"></div>
+  </div>
+</section>
+
+<!-- ============ SCREEN 5: FOUNDER COMMAND CENTER ============ -->
+<section class="screen" id="screen-founder">
+  <div class="mock-shell">
+    <div class="mock-head"><span class="n" id="fdr-n"></span><div><h2 id="fdr-title"></h2><p id="fdr-desc"></p></div></div>
+    <div class="state-pills" id="fdr-pills"></div>
+    <div class="mock-card">
+      <div class="mock-grid-3" id="fdr-kpis"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCREEN 6: TRIP ROOM ============ -->
+<section class="screen" id="screen-tripRoom">
+  <div class="mock-shell">
+    <div class="mock-head"><span class="n" id="trip-n"></span><div><h2 id="trip-title"></h2><p id="trip-desc"></p></div></div>
+    <div class="state-pills" id="trip-pills"></div>
+    <div id="trip-card"></div>
+  </div>
+</section>
+
+<!-- ============ SCREEN 7: PAYMENT ============ -->
+<section class="screen" id="screen-payment">
+  <div class="mock-shell">
+    <div class="mock-head"><span class="n" id="pay-n"></span><div><h2 id="pay-title"></h2><p id="pay-desc"></p></div></div>
+    <div class="state-pills" id="pay-pills"></div>
+    <div id="pay-card"></div>
+  </div>
+</section>
+
+<!-- ============ SCREEN 8: CRM ============ -->
+<section class="screen" id="screen-crm">
+  <div class="mock-shell">
+    <div class="mock-head"><span class="n" id="crm-n"></span><div><h2 id="crm-title"></h2><p id="crm-desc"></p></div></div>
+    <div class="state-pills" id="crm-pills"></div>
+    <div class="mock-card" id="crm-list"></div>
+  </div>
+</section>
+
+<div class="toast" id="toast"></div>
+
+<script>__JS__</script>
+</body>
+</html>

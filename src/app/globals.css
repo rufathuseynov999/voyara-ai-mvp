@@ -5462,3 +5462,148 @@ p {
   .authority-flow-section.sect { padding: 36px 22px; }
   .membership-section.sect { padding: 44px 0; }
 }
+
+/* ============================================================
+   LANDING — CONVERSION COMPLETENESS PASS
+   Scope: /az, /ru, /en only. New landing content blocks added in
+   page.tsx and membership-pricing.tsx. Same design tokens as the
+   approved productization + refinement passes above — no new
+   colors, fonts, or dependencies.
+   ============================================================ */
+
+/* --- CTA clarity: compact 4-step strip under hero actions --- */
+.cta-clarity {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cta-clarity li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.cta-clarity .cc-i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(228, 210, 172, 0.4);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+
+/* --- Scope section: "What VOYARA handles" --- */
+.scope-section .section-heading p {
+  color: var(--ink-muted);
+  font-size: 14px;
+  max-width: 56ch;
+}
+
+.scope-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 24px 0 0;
+}
+
+.scope-grid li {
+  padding: 12px 16px;
+  border-radius: 999px;
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  font-size: 13.5px;
+  font-weight: 550;
+  text-align: center;
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+
+.scope-grid li:hover {
+  border-color: var(--gold-light);
+  transform: translateY(-2px);
+}
+
+/* --- Work Receipt illustrative example --- */
+.receipt-example {
+  margin-top: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--hairline);
+  font-size: 13.5px;
+  font-weight: 550;
+  color: var(--ink);
+}
+
+.re-badge {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--champagne-soft);
+  color: var(--champagne-deep);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* --- Plan differentiator microcopy --- */
+.plan-note {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--mist);
+  line-height: 1.4;
+}
+
+.plan-v2.black .plan-note {
+  color: rgba(237, 233, 221, 0.7);
+}
+
+/* --- Corporate section: body + bullets --- */
+.corporate-heading p {
+  margin-top: 8px;
+  max-width: 62ch;
+  font-size: 14px;
+  color: var(--ink-muted);
+  line-height: 1.6;
+}
+
+.corp-bullets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 26px;
+}
+
+.corp-bullets li {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid #CFE0D8;
+  font-size: 12px;
+  font-weight: 550;
+  color: var(--emerald);
+}
+
+@media (max-width: 640px) {
+  .scope-grid { grid-template-columns: repeat(2, 1fr); }
+  .cta-clarity { gap: 6px 14px; }
+  .receipt-example { font-size: 12.5px; padding: 9px 14px; }
+}

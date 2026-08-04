@@ -211,18 +211,29 @@ test('requesting a non-simulation channel in SIMULATION mode fails closed', () =
   );
 });
 
-test('SANDBOX mode fails closed for every channel without credentials — WhatsApp reports CREDENTIALS_MISSING (Phase 4C), every other channel remains genuinely unsupported', () => {
+test('SANDBOX mode fails closed for every channel without credentials — WhatsApp and Instagram report CREDENTIALS_MISSING (Phase 4C / Phase 4H), voice/web-chat/email remain genuinely unsupported', () => {
   delete process.env.VOYARA_WHATSAPP_PHONE_NUMBER_ID;
   delete process.env.VOYARA_WHATSAPP_WABA_ID;
   delete process.env.VOYARA_WHATSAPP_ACCESS_TOKEN;
   delete process.env.VOYARA_WHATSAPP_APP_SECRET;
   delete process.env.VOYARA_WHATSAPP_WEBHOOK_VERIFY_TOKEN;
+  delete process.env.VOYARA_META_APP_ID;
+  delete process.env.VOYARA_META_APP_SECRET;
+  delete process.env.VOYARA_INSTAGRAM_WEBHOOK_VERIFY_TOKEN;
+  delete process.env.VOYARA_INSTAGRAM_CALLBACK_URL;
 
   assert.throws(
     () => createChannelAdapter('WHATSAPP', 'SANDBOX'),
     (e: unknown) => e instanceof ChannelAdapterError && e.code === 'CREDENTIALS_MISSING'
   );
-  for (const channel of ['INSTAGRAM_DM', 'VOICE', 'WEB_CHAT', 'EMAIL'] as const) {
+  // Phase 4H: Instagram is now a genuinely supported SANDBOX channel, but
+  // still fails closed exactly like WhatsApp when no credentials (and no
+  // brand) are provided — it is not in the "unsupported" list below.
+  assert.throws(
+    () => createChannelAdapter('INSTAGRAM_DM', 'SANDBOX'),
+    (e: unknown) => e instanceof ChannelAdapterError && e.code === 'CREDENTIALS_MISSING'
+  );
+  for (const channel of ['VOICE', 'WEB_CHAT', 'EMAIL'] as const) {
     assert.throws(
       () => createChannelAdapter(channel, 'SANDBOX'),
       (e: unknown) => e instanceof ChannelAdapterError && e.code === 'UNSUPPORTED_CHANNEL'

@@ -1,0 +1,260 @@
+{
+  "az": {
+    "demoBadge": "DEMO",
+    "demoText": "Standalone təsisçi rəyi · yalnız simulyasiya edilmiş məlumat · canlı təminatçı, ödəniş və mesaj yoxdur",
+    "signinToast": "Demo rəyində giriş simulyasiya olunur",
+    "screensAria": "Demo ekranları",
+    "menuAria": "Menü",
+    "tabs": {
+      "landing": "01 Ana səhifə",
+      "wizard": "02 Planlayıcı",
+      "proposal": "03 Təklif",
+      "approvals": "04 Təsdiqlər",
+      "founder": "05 Təsisçi",
+      "tripRoom": "06 Səyahət Otağı",
+      "payment": "07 Ödəniş",
+      "crm": "08 CRM"
+    },
+    "geo": {
+      "maldives": "Maldiv adaları",
+      "baku": "Bakı",
+      "male": "Male"
+    },
+    "unitNight": "gecə",
+    "unitAdult": "böyük",
+    "wiz": {
+      "startDate": "Başlanma tarixi",
+      "nights": "Gecə sayı",
+      "continue": "Davam et",
+      "step2Title": "Səyahətçi və planlama",
+      "travellers": "Səyahətçi sayı",
+      "chip1": "2 böyük",
+      "chip2": "2 böyük + uşaq",
+      "chip3": "Solo",
+      "planLabel": "Plan",
+      "step3Title": "Yoxla və göndər",
+      "submitToast": "Sorğu göndərildi — Süni intellekt seçimləri hazırlayır"
+    },
+    "prop": {
+      "dest": "İstiqamət",
+      "nights": "Gecə",
+      "price": "Qiymət",
+      "approve": "Mütəxəssis təsdiqi gözlənilir",
+      "accept": "Təklifi qəbul et",
+      "acceptToast": "Qəbul edildi — Səyahət Otağına keçid"
+    },
+    "appr": {
+      "risk1": "Aşağı risk",
+      "risk2": "Standart",
+      "approve": "Təsdiqlə",
+      "reject": "Rədd et",
+      "approved": "Təsdiqləndi",
+      "rejected": "Rədd edildi",
+      "decisionToast": "Qərar qeyd edildi — dəyişməz audit yazısı"
+    },
+    "fdr": {
+      "mrr": "MRR",
+      "subscribers": "Ödənişli abunəçi",
+      "approvalsWaiting": "Gözləyən təsdiq"
+    },
+    "trip": {
+      "itinerary": "Marşrut",
+      "confirmed": "Təsdiqləndi",
+      "documents": "Sənədlər",
+      "uploaded": "Yükləndi",
+      "visa": "Viza",
+      "inReview": "Baxılır"
+    },
+    "pay": {
+      "request": "Ödəniş sorğusu",
+      "financeReview": "İnsan maliyyə yoxlaması",
+      "pending": "Gözlənilir",
+      "readiness": "Bron hazırlığı",
+      "notReady": "Hazır deyil",
+      "approveBtn": "Maliyyəni təsdiqlə",
+      "confirmed": "Təsdiqləndi",
+      "toast": "İnsan maliyyə yoxlaması tamamlandı"
+    },
+    "crm": {
+      "lead1": "Nigar M.",
+      "lead2": "Kamran T.",
+      "lead3": "Ayan R.",
+      "website": "Vebsayt",
+      "new": "Yeni",
+      "humanReview": "İnsan baxışı",
+      "opTask": "Əməliyyat tapşırığı"
+    }
+  },
+  "ru": {
+    "demoBadge": "DEMO",
+    "demoText": "Автономный превью для основателя · только симулированные данные · без живых провайдеров, платежей или сообщений",
+    "signinToast": "Вход симулируется в демо-режиме",
+    "screensAria": "Экраны демо",
+    "menuAria": "Меню",
+    "tabs": {
+      "landing": "01 Главная",
+      "wizard": "02 Мастер",
+      "proposal": "03 Предложение",
+      "approvals": "04 Одобрения",
+      "founder": "05 Основатель",
+      "tripRoom": "06 Комната поездки",
+      "payment": "07 Оплата",
+      "crm": "08 CRM"
+    },
+    "geo": {
+      "maldives": "Мальдивы",
+      "baku": "Баку",
+      "male": "Мале"
+    },
+    "unitNight": "ночь",
+    "unitAdult": "взрослый",
+    "wiz": {
+      "startDate": "Дата начала",
+      "nights": "Количество ночей",
+      "continue": "Продолжить",
+      "step2Title": "Путешественники и план",
+      "travellers": "Количество путешественников",
+      "chip1": "2 взрослых",
+      "chip2": "2 взрослых + ребёнок",
+      "chip3": "Соло",
+      "planLabel": "Тариф",
+      "step3Title": "Проверить и отправить",
+      "submitToast": "Запрос отправлен — ИИ готовит варианты"
+    },
+    "prop": {
+      "dest": "Направление",
+      "nights": "Ночей",
+      "price": "Цена",
+      "approve": "Ожидает подтверждения эксперта",
+      "accept": "Принять предложение",
+      "acceptToast": "Принято — переход в Комнату поездки"
+    },
+    "appr": {
+      "risk1": "Низкий риск",
+      "risk2": "Стандарт",
+      "approve": "Одобрить",
+      "reject": "Отклонить",
+      "approved": "Одобрено",
+      "rejected": "Отклонено",
+      "decisionToast": "Решение зафиксировано — неизменяемая запись аудита"
+    },
+    "fdr": {
+      "mrr": "MRR",
+      "subscribers": "Платных подписчиков",
+      "approvalsWaiting": "Ожидают одобрения"
+    },
+    "trip": {
+      "itinerary": "Маршрут",
+      "confirmed": "Подтвержден",
+      "documents": "Документы",
+      "uploaded": "Загружены",
+      "visa": "Виза",
+      "inReview": "На рассмотрении"
+    },
+    "pay": {
+      "request": "Запрос на оплату",
+      "financeReview": "Финансовая проверка человеком",
+      "pending": "Ожидается",
+      "readiness": "Готовность к бронированию",
+      "notReady": "Не готово",
+      "approveBtn": "Подтвердить оплату",
+      "confirmed": "Подтверждено",
+      "toast": "Финансовая проверка завершена"
+    },
+    "crm": {
+      "lead1": "Нигяр М.",
+      "lead2": "Камран Т.",
+      "lead3": "Аян Р.",
+      "website": "Сайт",
+      "new": "Новый",
+      "humanReview": "Проверка человеком",
+      "opTask": "Операционная задача"
+    }
+  },
+  "en": {
+    "demoBadge": "DEMO",
+    "demoText": "Standalone founder preview · simulated data only · no live providers, payments or messages",
+    "signinToast": "Sign-in is simulated in this demo",
+    "screensAria": "Demo screens",
+    "menuAria": "Menu",
+    "tabs": {
+      "landing": "01 Landing",
+      "wizard": "02 Wizard",
+      "proposal": "03 Proposal",
+      "approvals": "04 Approvals",
+      "founder": "05 Founder",
+      "tripRoom": "06 Trip Room",
+      "payment": "07 Payment",
+      "crm": "08 CRM"
+    },
+    "geo": {
+      "maldives": "Maldives",
+      "baku": "Baku",
+      "male": "Malé"
+    },
+    "unitNight": "night",
+    "unitAdult": "adult",
+    "wiz": {
+      "startDate": "Start date",
+      "nights": "Number of nights",
+      "continue": "Continue",
+      "step2Title": "Travellers and plan",
+      "travellers": "Number of travellers",
+      "chip1": "2 adults",
+      "chip2": "2 adults + child",
+      "chip3": "Solo",
+      "planLabel": "Plan",
+      "step3Title": "Review and submit",
+      "submitToast": "Request submitted — AI is preparing options"
+    },
+    "prop": {
+      "dest": "Destination",
+      "nights": "Nights",
+      "price": "Price",
+      "approve": "Awaiting expert approval",
+      "accept": "Accept proposal",
+      "acceptToast": "Accepted — opening Trip Room"
+    },
+    "appr": {
+      "risk1": "Low risk",
+      "risk2": "Standard",
+      "approve": "Approve",
+      "reject": "Reject",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "decisionToast": "Decision recorded — immutable audit entry"
+    },
+    "fdr": {
+      "mrr": "MRR",
+      "subscribers": "Paid subscribers",
+      "approvalsWaiting": "Approvals waiting"
+    },
+    "trip": {
+      "itinerary": "Itinerary",
+      "confirmed": "Confirmed",
+      "documents": "Documents",
+      "uploaded": "Uploaded",
+      "visa": "Visa",
+      "inReview": "In review"
+    },
+    "pay": {
+      "request": "Payment request",
+      "financeReview": "Human finance review",
+      "pending": "Pending",
+      "readiness": "Booking readiness",
+      "notReady": "Not ready",
+      "approveBtn": "Approve payment",
+      "confirmed": "Confirmed",
+      "toast": "Human finance review completed"
+    },
+    "crm": {
+      "lead1": "Nigar M.",
+      "lead2": "Kamran T.",
+      "lead3": "Ayan R.",
+      "website": "Website",
+      "new": "New",
+      "humanReview": "Human review",
+      "opTask": "Operational task"
+    }
+  }
+}
