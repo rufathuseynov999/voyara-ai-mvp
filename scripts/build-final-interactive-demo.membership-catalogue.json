@@ -1,0 +1,2638 @@
+{
+  "generatedFrom": "src/lib/membership-catalogue.ts",
+  "generatorScript": "scripts/export-membership-catalogue.ts",
+  "locales": [
+    "az",
+    "ru",
+    "en"
+  ],
+  "annualValueFraming": {
+    "az": "12 ay üçün 10 ayın qiyməti",
+    "ru": "12 месяцев по цене 10",
+    "en": "12 months for the price of 10"
+  },
+  "plans": {
+    "az": [
+      {
+        "planCode": "PERSONAL_SMART",
+        "slug": "smart",
+        "category": "PERSONAL",
+        "displayOrder": 1,
+        "name": "Smart",
+        "positioning": "Daha yaxşı planlaşdırma, üzv təklifləri və mütəxəssis yoxlaması istəyən səyahətçilər üçün ağıllı başlanğıc.",
+        "bestFor": "İlk dəfə üzv olan, ara-sıra səyahət edən müştərilər üçün",
+        "inheritanceLabel": null,
+        "benefits": [
+          "Mövcud VOYARA üzv otel tariflərinə və səyahət təkliflərinə çıxış",
+          "AI dəstəkli təyinat, otel və uçuş araşdırması",
+          "Mövcud otel, uçuş və transfer variantlarının müqayisəsi",
+          "Öhdəlik götürməzdən əvvəl insan tərəfindən yoxlanılmış səyahət təklifi",
+          "Otel rezervasiyası və aviabilet əlaqələndirilməsi",
+          "Şəxsi Trip Room",
+          "Səyahət sənədləri və yola çıxış üçün yoxlama siyahısı",
+          "Standart dəstək",
+          "Ödəniş və ya riskli rezervasiya əməliyyatlarından əvvəl insan təsdiqi"
+        ],
+        "memberRateAccess": "Üzvlərə açıq VOYARA tarifləri və mövcud olduqda üstünlük verilən təkliflərə çıxış.",
+        "searchDepth": "Əsas otel, uçuş və transfer variantlarının müqayisəsi",
+        "servicePriority": "STANDARD",
+        "humanReviewLevel": "STANDARD_REVIEW",
+        "conciergeLevel": "NONE",
+        "humanApprovalBoundary": "Bütün ödənişlər, rezervasiyalar və riskli dəyişikliklər insan tərəfindən təsdiqlənənə qədər icra olunmur — AI hazırlayır, insan təsdiqləyir, Voyara icra edir.",
+        "fairUseDisclosure": "Standart dəstək ədalətli istifadə prinsipinə əsaslanır; tezlik hədləri founder tərəfindən konfiqurasiya olunur.",
+        "availabilityDisclosure": "Yekun qiymət və şərtlər təsdiqdən əvvəl göstərilir. Təklif, marşrut və qiymət təchizatçıdan, təyinat məntəqəsindən və mövcud inventardan asılıdır.",
+        "ctaLabel": "Smart-a qoşul",
+        "upgradeTrigger": "Ailə və ya çoxməqsədli səyahət planlaşdırırsınızsa, daha geniş axtarış üçün Plus-a keçin.",
+        "pricing": {
+          "monthly": 19,
+          "annual": 190,
+          "annualSaving": 38,
+          "isCustomPriced": false
+        }
+      },
+      {
+        "planCode": "PERSONAL_PLUS",
+        "slug": "plus",
+        "category": "PERSONAL",
+        "displayOrder": 2,
+        "name": "Plus",
+        "positioning": "Daha güclü mənbə tapma və daha sürətli dəstək istəyən tez-tez səyahət edən, ailə və çox təyinatlı müştərilər üçün.",
+        "bestFor": "Tez-tez səyahət edən ailələr və çoxməqsədli marşrut planlaşdıranlar üçün",
+        "inheritanceLabel": "Smart-da olan hər şey",
+        "benefits": [
+          "Mövcud VOYARA üzv otel tariflərinə və səyahət təkliflərinə çıxış",
+          "AI dəstəkli təyinat, otel və uçuş araşdırması",
+          "Mövcud otel, uçuş və transfer variantlarının müqayisəsi",
+          "Öhdəlik götürməzdən əvvəl insan tərəfindən yoxlanılmış səyahət təklifi",
+          "Otel rezervasiyası və aviabilet əlaqələndirilməsi",
+          "Şəxsi Trip Room",
+          "Səyahət sənədləri və yola çıxış üçün yoxlama siyahısı",
+          "Standart dəstək",
+          "Ödəniş və ya riskli rezervasiya əməliyyatlarından əvvəl insan təsdiqi",
+          "Mövcud tariflər və təklif kombinasiyaları üzrə genişləndirilmiş axtarış",
+          "Otel otağı və tarif seçimlərinin daha dərin müqayisəsi",
+          "Ailə və çoxməqsədli marşrut planlaşdırılması",
+          "Yadda saxlanılan səyahətçi seçimləri",
+          "Prioritetli insan yoxlaması",
+          "Marşrut dəyişikliyi və yenidən planlaşdırma dəstəyi",
+          "Viza, sığorta, transfer, eSIM və fəaliyyət əlaqələndirilməsi",
+          "Ayrı səyahətlər arasında daha yaxşı davamlılıq",
+          "Təklif və ya son tarix diqqət tələb etdikdə daha erkən eskalasiya"
+        ],
+        "memberRateAccess": "Üzvlərə açıq VOYARA tarifləri və mövcud olduqda üstünlük verilən təkliflərə çıxış.",
+        "searchDepth": "Genişləndirilmiş axtarış və daha dərin tarif müqayisəsi",
+        "servicePriority": "PRIORITY",
+        "humanReviewLevel": "PRIORITY_REVIEW",
+        "conciergeLevel": "STANDARD",
+        "humanApprovalBoundary": "Bütün ödənişlər, rezervasiyalar və riskli dəyişikliklər insan tərəfindən təsdiqlənənə qədər icra olunmur — AI hazırlayır, insan təsdiqləyir, Voyara icra edir.",
+        "fairUseDisclosure": "Prioritetli yoxlama və genişləndirilmiş əlaqələndirmə ədalətli istifadə prinsipinə əsaslanır.",
+        "availabilityDisclosure": "Yekun qiymət və şərtlər təsdiqdən əvvəl göstərilir. Təklif, marşrut və qiymət təchizatçıdan, təyinat məntəqəsindən və mövcud inventardan asılıdır.",
+        "ctaLabel": "Plus seç",
+        "upgradeTrigger": "Mürəkkəb marşrutlar və xüsusi tələblər üçün Premium-a keçin.",
+        "pricing": {
+          "monthly": 39,
+          "annual": 390,
+          "annualSaving": 78,
+          "isCustomPriced": false
+        }
+      },
+      {
+        "planCode": "PERSONAL_PREMIUM",
+        "slug": "premium",
+        "category": "PERSONAL",
+        "displayOrder": 3,
+        "name": "Premium",
+        "positioning": "Mürəkkəb və yüksək dəyərli səyahətlər üçün premium səyahət idarəetməsi və konsyerj üzvlüyü.",
+        "bestFor": "Mürəkkəb marşrutlar və yüksək gözləntili xidmət istəyən müştərilər üçün",
+        "inheritanceLabel": "Plus-da olan hər şey",
+        "benefits": [
+          "Mövcud VOYARA üzv otel tariflərinə və səyahət təkliflərinə çıxış",
+          "AI dəstəkli təyinat, otel və uçuş araşdırması",
+          "Mövcud otel, uçuş və transfer variantlarının müqayisəsi",
+          "Öhdəlik götürməzdən əvvəl insan tərəfindən yoxlanılmış səyahət təklifi",
+          "Otel rezervasiyası və aviabilet əlaqələndirilməsi",
+          "Şəxsi Trip Room",
+          "Səyahət sənədləri və yola çıxış üçün yoxlama siyahısı",
+          "Standart dəstək",
+          "Ödəniş və ya riskli rezervasiya əməliyyatlarından əvvəl insan təsdiqi",
+          "Mövcud tariflər və təklif kombinasiyaları üzrə genişləndirilmiş axtarış",
+          "Otel otağı və tarif seçimlərinin daha dərin müqayisəsi",
+          "Ailə və çoxməqsədli marşrut planlaşdırılması",
+          "Yadda saxlanılan səyahətçi seçimləri",
+          "Prioritetli insan yoxlaması",
+          "Marşrut dəyişikliyi və yenidən planlaşdırma dəstəyi",
+          "Viza, sığorta, transfer, eSIM və fəaliyyət əlaqələndirilməsi",
+          "Ayrı səyahətlər arasında daha yaxşı davamlılıq",
+          "Təklif və ya son tarix diqqət tələb etdikdə daha erkən eskalasiya",
+          "Premium otel və daha yüksək kateqoriyalı otaq mənbə tapılması",
+          "Mövcud olduqda əlavə dəyərli otel üstünlükləri və üstün təkliflər",
+          "Mürəkkəb marşrut və xüsusi tələb idarəolunması",
+          "Prioritetli səyahət dəstəyi",
+          "Restoran, fəaliyyət və transfer əlaqələndirilməsi",
+          "Proaktiv səyahətqabağı hazırlıq",
+          "Səyahət monitorinqi və insan eskalasiyası",
+          "Pozuntu və yenidən rezervasiya əlaqələndirilməsi",
+          "Daha yüksək prioritetli təklif hazırlanması",
+          "Konsyerj səviyyəli səyahət idarəetməsi"
+        ],
+        "memberRateAccess": "Premium otel kateqoriyalarına və mövcud olduqda əlavə dəyərli üstünlüklərə çıxış.",
+        "searchDepth": "Premium kateqoriyalar üzrə dərin axtarış və mürəkkəb marşrut idarəolunması",
+        "servicePriority": "PRIORITY",
+        "humanReviewLevel": "PRIORITY_REVIEW",
+        "conciergeLevel": "MANAGED_CONCIERGE",
+        "humanApprovalBoundary": "Bütün ödənişlər, rezervasiyalar və riskli dəyişikliklər insan tərəfindən təsdiqlənənə qədər icra olunmur — AI hazırlayır, insan təsdiqləyir, Voyara icra edir.",
+        "fairUseDisclosure": "Konsyerj səviyyəli koordinasiya ədalətli istifadə prinsipinə əsaslanır; həcm founder tərəfindən konfiqurasiya olunur.",
+        "availabilityDisclosure": "Yekun qiymət və şərtlər təsdiqdən əvvəl göstərilir. Təklif, marşrut və qiymət təchizatçıdan, təyinat məntəqəsindən və mövcud inventardan asılıdır.",
+        "ctaLabel": "Premium seç",
+        "upgradeTrigger": "VIP, təcili və ya adlı səyahət meneceri tələb edən səyahətlər üçün Black-ə müraciət edin.",
+        "pricing": {
+          "monthly": 69,
+          "annual": 690,
+          "annualSaving": 138,
+          "isCustomPriced": false
+        }
+      },
+      {
+        "planCode": "PERSONAL_BLACK",
+        "slug": "black",
+        "category": "PERSONAL",
+        "displayOrder": 4,
+        "name": "Black",
+        "positioning": "VIP, icraçı, ailə və son dəqiqə səyahətləri üçün VOYARA-nın ən yüksək şəxsi üzvlüyü.",
+        "bestFor": "VIP, icraçı və son dəqiqə səyahət tələb edənlər üçün — müraciət əsaslı",
+        "inheritanceLabel": "Premium-da olan hər şey",
+        "benefits": [
+          "Mövcud VOYARA üzv otel tariflərinə və səyahət təkliflərinə çıxış",
+          "AI dəstəkli təyinat, otel və uçuş araşdırması",
+          "Mövcud otel, uçuş və transfer variantlarının müqayisəsi",
+          "Öhdəlik götürməzdən əvvəl insan tərəfindən yoxlanılmış səyahət təklifi",
+          "Otel rezervasiyası və aviabilet əlaqələndirilməsi",
+          "Şəxsi Trip Room",
+          "Səyahət sənədləri və yola çıxış üçün yoxlama siyahısı",
+          "Standart dəstək",
+          "Ödəniş və ya riskli rezervasiya əməliyyatlarından əvvəl insan təsdiqi",
+          "Mövcud tariflər və təklif kombinasiyaları üzrə genişləndirilmiş axtarış",
+          "Otel otağı və tarif seçimlərinin daha dərin müqayisəsi",
+          "Ailə və çoxməqsədli marşrut planlaşdırılması",
+          "Yadda saxlanılan səyahətçi seçimləri",
+          "Prioritetli insan yoxlaması",
+          "Marşrut dəyişikliyi və yenidən planlaşdırma dəstəyi",
+          "Viza, sığorta, transfer, eSIM və fəaliyyət əlaqələndirilməsi",
+          "Ayrı səyahətlər arasında daha yaxşı davamlılıq",
+          "Təklif və ya son tarix diqqət tələb etdikdə daha erkən eskalasiya",
+          "Premium otel və daha yüksək kateqoriyalı otaq mənbə tapılması",
+          "Mövcud olduqda əlavə dəyərli otel üstünlükləri və üstün təkliflər",
+          "Mürəkkəb marşrut və xüsusi tələb idarəolunması",
+          "Prioritetli səyahət dəstəyi",
+          "Restoran, fəaliyyət və transfer əlaqələndirilməsi",
+          "Proaktiv səyahətqabağı hazırlıq",
+          "Səyahət monitorinqi və insan eskalasiyası",
+          "Pozuntu və yenidən rezervasiya əlaqələndirilməsi",
+          "Daha yüksək prioritetli təklif hazırlanması",
+          "Konsyerj səviyyəli səyahət idarəetməsi",
+          "Ən yüksək müraciət prioriteti",
+          "Adlı səyahət meneceri",
+          "Fərdi (bespoke) səyahət mənbə tapılması",
+          "VIP, icraçı, ailə və təcili səyahət idarəolunması",
+          "Ailə və çoxsəyahətçi profil əlaqələndirilməsi",
+          "Premium və tapılması çətin olan inventar araşdırılması",
+          "Təcili insan eskalasiyası ilə 24/7 AI qəbulu",
+          "Aeroport, transfer, yemək və təcrübə əlaqələndirilməsi",
+          "Xüsusi hadisə və mürəkkəb tələb idarəolunması",
+          "Bütün aktiv səyahətlər arasında davamlılıq"
+        ],
+        "memberRateAccess": "Bespoke mənbə tapılması vasitəsilə ən geniş mümkün inventar araşdırılması; qarantiyalı deyil, lakin prioritetli araşdırılır.",
+        "searchDepth": "Bespoke, tapılması çətin olan inventar üzrə tam araşdırma",
+        "servicePriority": "HIGHEST",
+        "humanReviewLevel": "NAMED_MANAGER_REVIEW",
+        "conciergeLevel": "NAMED_TRAVEL_MANAGER",
+        "humanApprovalBoundary": "Bütün ödənişlər, rezervasiyalar və riskli dəyişikliklər insan tərəfindən təsdiqlənənə qədər icra olunmur — AI hazırlayır, insan təsdiqləyir, Voyara icra edir.",
+        "fairUseDisclosure": "Black üzvlüyü qeyri-məhdud xidmət deyil — tutum idarə olunur və müraciət əsasında qəbul edilə bilər.",
+        "availabilityDisclosure": "Yekun qiymət və şərtlər təsdiqdən əvvəl göstərilir. Təklif, marşrut və qiymət təchizatçıdan, təyinat məntəqəsindən və mövcud inventardan asılıdır.",
+        "ctaLabel": "Black üzvlüyünə müraciət et",
+        "upgradeTrigger": "Şirkət səyahəti idarəetməsi üçün Korporativ üzvlüklərə baxın.",
+        "pricing": {
+          "monthly": 299,
+          "annual": 2990,
+          "annualSaving": 598,
+          "isCustomPriced": false
+        }
+      },
+      {
+        "planCode": "CORPORATE_STARTER",
+        "slug": "starter",
+        "category": "CORPORATE",
+        "displayOrder": 5,
+        "name": "Starter",
+        "positioning": "Komandaların işgüzar səyahət ehtiyaclarını təşkil etməyə başlamaq üçün",
+        "bestFor": "Kiçik komandalar və mərkəzləşdirilmiş qeydlərə ehtiyacı olan startaplar üçün",
+        "inheritanceLabel": null,
+        "benefits": [
+          "İşçi səyahət tələbi qəbulu",
+          "Mövcud biznes otel və tarif mənbə tapılması",
+          "Əsas menecer təsdiq iş axını",
+          "Mərkəzi səyahət qeydləri",
+          "Standart əməliyyat əlaqələndirilməsi",
+          "Əsas hesabatlıq"
+        ],
+        "memberRateAccess": "Mövcud olduqda korporativ tariflərə çıxış; şirkət razılaşmaları konfiqurasiya edildikdə tətbiq olunur.",
+        "searchDepth": "Əsas korporativ tarif müqayisəsi",
+        "servicePriority": "STANDARD",
+        "humanReviewLevel": "STANDARD_REVIEW",
+        "conciergeLevel": "NONE",
+        "humanApprovalBoundary": "Bütün ödənişlər, rezervasiyalar və riskli dəyişikliklər insan tərəfindən təsdiqlənənə qədər icra olunmur — AI hazırlayır, insan təsdiqləyir, Voyara icra edir.",
+        "fairUseDisclosure": "Standart əməliyyat əlaqələndirilməsi ədalətli istifadə prinsipinə əsaslanır.",
+        "availabilityDisclosure": "Yekun qiymət və şərtlər təsdiqdən əvvəl göstərilir. Təklif, marşrut və qiymət təchizatçıdan, təyinat məntəqəsindən və mövcud inventardan asılıdır.",
+        "ctaLabel": "Korporativ üzvlüyə başla",
+        "upgradeTrigger": "Çoxsəviyyəli təsdiq və siyasət idarəolunması lazımdırsa, Standard-a keçin.",
+        "pricing": {
+          "monthly": 149,
+          "annual": null,
+          "annualSaving": null,
+          "isCustomPriced": false
+        }
+      },
+      {
+        "planCode": "CORPORATE_STANDARD",
+        "slug": "standard",
+        "category": "CORPORATE",
+        "displayOrder": 6,
+        "name": "Standard",
+        "positioning": "Böyüyən komandalar üçün siyasətə uyğun səyahət idarəolunması",
+        "bestFor": "Çoxsəviyyəli təsdiqə ehtiyacı olan orta ölçülü komandalar üçün",
+        "inheritanceLabel": "Starter-da olan hər şey",
+        "benefits": [
+          "İşçi səyahət tələbi qəbulu",
+          "Mövcud biznes otel və tarif mənbə tapılması",
+          "Əsas menecer təsdiq iş axını",
+          "Mərkəzi səyahət qeydləri",
+          "Standart əməliyyat əlaqələndirilməsi",
+          "Əsas hesabatlıq",
+          "Daha geniş tarif və marşrut müqayisəsi",
+          "Çoxsəviyyəli təsdiqlər",
+          "Siyasətə uyğun səyahət idarəolunması",
+          "Səyahətçi profilləri",
+          "Şirkət səyahət paneli",
+          "Konsolidasiya olunmuş qeydlər",
+          "Dəyişiklik və istisna əlaqələndirilməsi"
+        ],
+        "memberRateAccess": "Mövcud olduqda genişləndirilmiş korporativ tariflər və üstün tariflər.",
+        "searchDepth": "Genişləndirilmiş tarif və marşrut müqayisəsi",
+        "servicePriority": "PRIORITY",
+        "humanReviewLevel": "PRIORITY_REVIEW",
+        "conciergeLevel": "STANDARD",
+        "humanApprovalBoundary": "Bütün ödənişlər, rezervasiyalar və riskli dəyişikliklər insan tərəfindən təsdiqlənənə qədər icra olunmur — AI hazırlayır, insan təsdiqləyir, Voyara icra edir.",
+        "fairUseDisclosure": "Çoxsəviyyəli təsdiq həcmi ədalətli istifadə prinsipinə əsaslanır.",
+        "availabilityDisclosure": "Yekun qiymət və şərtlər təsdiqdən əvvəl göstərilir. Təklif, marşrut və qiymət təchizatçıdan, təyinat məntəqəsindən və mövcud inventardan asılıdır.",
+        "ctaLabel": "Korporativ üzvlüyə başla",
+        "upgradeTrigger": "İcraçı səyahət və qabaqcıl hesabatlıq lazımdırsa, Professional-a keçin.",
+        "pricing": {
+          "monthly": 299,
+          "annual": null,
+          "annualSaving": null,
+          "isCustomPriced": false
+        }
+      },
+      {
+        "planCode": "CORPORATE_PROFESSIONAL",
+        "slug": "professional",
+        "category": "CORPORATE",
+        "displayOrder": 7,
+        "name": "Professional",
+        "positioning": "İcraçı səyahəti və mürəkkəb korporativ marşrutlar üçün xüsusi əlaqələndirmə",
+        "bestFor": "İcraçı səyahət və mürəkkəb, çoxşəhərli marşrutları olan şirkətlər üçün",
+        "inheritanceLabel": "Standard-da olan hər şey",
+        "benefits": [
+          "İşçi səyahət tələbi qəbulu",
+          "Mövcud biznes otel və tarif mənbə tapılması",
+          "Əsas menecer təsdiq iş axını",
+          "Mərkəzi səyahət qeydləri",
+          "Standart əməliyyat əlaqələndirilməsi",
+          "Əsas hesabatlıq",
+          "Daha geniş tarif və marşrut müqayisəsi",
+          "Çoxsəviyyəli təsdiqlər",
+          "Siyasətə uyğun səyahət idarəolunması",
+          "Səyahətçi profilləri",
+          "Şirkət səyahət paneli",
+          "Konsolidasiya olunmuş qeydlər",
+          "Dəyişiklik və istisna əlaqələndirilməsi",
+          "İcraçı səyahət idarəolunması",
+          "Prioritetli korporativ dəstək",
+          "Qabaqcıl hesabatlıq",
+          "Siyasət istisnası eskalasiyası",
+          "Mürəkkəb və çoxşəhərli marşrut əlaqələndirilməsi",
+          "Xüsusi korporativ səyahət əlaqələndirilməsi",
+          "Konfiqurasiya edildikdə üstün təchizatçı və şirkət tarifi idarəolunması"
+        ],
+        "memberRateAccess": "Konfiqurasiya edildikdə üstün təchizatçı razılaşmaları və şirkət tarifi idarəolunması.",
+        "searchDepth": "İcraçı və mürəkkəb marşrutlar üzrə dərin axtarış",
+        "servicePriority": "PRIORITY",
+        "humanReviewLevel": "PRIORITY_REVIEW",
+        "conciergeLevel": "ENHANCED",
+        "humanApprovalBoundary": "Bütün ödənişlər, rezervasiyalar və riskli dəyişikliklər insan tərəfindən təsdiqlənənə qədər icra olunmur — AI hazırlayır, insan təsdiqləyir, Voyara icra edir.",
+        "fairUseDisclosure": "Xüsusi korporativ əlaqələndirmə ədalətli istifadə prinsipinə əsaslanır; həcm founder tərəfindən konfiqurasiya olunur.",
+        "availabilityDisclosure": "Yekun qiymət və şərtlər təsdiqdən əvvəl göstərilir. Təklif, marşrut və qiymət təchizatçıdan, təyinat məntəqəsindən və mövcud inventardan asılıdır.",
+        "ctaLabel": "Korporativ üzvlüyə başla",
+        "upgradeTrigger": "Fərdi razılaşmalar və xüsusi iş axınları lazımdırsa, Korporativ Masaya müraciət edin.",
+        "pricing": {
+          "monthly": 599,
+          "annual": null,
+          "annualSaving": null,
+          "isCustomPriced": false
+        }
+      },
+      {
+        "planCode": "CORPORATE_ENTERPRISE",
+        "slug": "enterprise",
+        "category": "CORPORATE",
+        "displayOrder": 8,
+        "name": "Enterprise",
+        "positioning": "Fərdi hazırlanmış iş axınları və danışıqlı xidmət səviyyələri olan böyük təşkilatlar üçün",
+        "bestFor": "Fərdi idarəetmə və inteqrasiyalar tələb edən böyük müəssisələr üçün",
+        "inheritanceLabel": "Professional-da olan hər şey",
+        "benefits": [
+          "İşçi səyahət tələbi qəbulu",
+          "Mövcud biznes otel və tarif mənbə tapılması",
+          "Əsas menecer təsdiq iş axını",
+          "Mərkəzi səyahət qeydləri",
+          "Standart əməliyyat əlaqələndirilməsi",
+          "Əsas hesabatlıq",
+          "Daha geniş tarif və marşrut müqayisəsi",
+          "Çoxsəviyyəli təsdiqlər",
+          "Siyasətə uyğun səyahət idarəolunması",
+          "Səyahətçi profilləri",
+          "Şirkət səyahət paneli",
+          "Konsolidasiya olunmuş qeydlər",
+          "Dəyişiklik və istisna əlaqələndirilməsi",
+          "İcraçı səyahət idarəolunması",
+          "Prioritetli korporativ dəstək",
+          "Qabaqcıl hesabatlıq",
+          "Siyasət istisnası eskalasiyası",
+          "Mürəkkəb və çoxşəhərli marşrut əlaqələndirilməsi",
+          "Xüsusi korporativ səyahət əlaqələndirilməsi",
+          "Konfiqurasiya edildikdə üstün təchizatçı və şirkət tarifi idarəolunması",
+          "Fərdi təsdiq iş axınları",
+          "Fərdi rollar və icazələr",
+          "Danışıqlı xidmət səviyyələri",
+          "Fərdiləşdirilmiş hesabatlıq",
+          "Razılaşdırılmış inteqrasiyalar",
+          "Şirkətə xas səyahət qaydaları",
+          "Xüsusi hesab idarəetməsi",
+          "Fərdi təchizatçı və korporativ tarif konfiqurasiyası"
+        ],
+        "memberRateAccess": "Fərdi danışıqlar əsasında müəyyən edilən korporativ tariflər və inteqrasiyalar.",
+        "searchDepth": "Danışıqlı, şirkətə xas mənbə tapılması",
+        "servicePriority": "HIGHEST",
+        "humanReviewLevel": "NAMED_MANAGER_REVIEW",
+        "conciergeLevel": "NAMED_TRAVEL_MANAGER",
+        "humanApprovalBoundary": "Bütün ödənişlər, rezervasiyalar və riskli dəyişikliklər insan tərəfindən təsdiqlənənə qədər icra olunmur — AI hazırlayır, insan təsdiqləyir, Voyara icra edir.",
+        "fairUseDisclosure": "Xidmət səviyyələri müqavilə əsasında danışıqlıdır; qeyri-məhdud əmək tələb etmir.",
+        "availabilityDisclosure": "Yekun qiymət və şərtlər təsdiqdən əvvəl göstərilir. Təklif, marşrut və qiymət təchizatçıdan, təyinat məntəqəsindən və mövcud inventardan asılıdır.",
+        "ctaLabel": "Korporativ Masa ilə əlaqə saxla",
+        "upgradeTrigger": "Enterprise VOYARA-nın ən yüksək korporativ səviyyəsidir — əlavə səviyyə yoxdur.",
+        "pricing": {
+          "monthly": null,
+          "annual": null,
+          "annualSaving": null,
+          "isCustomPriced": true
+        }
+      }
+    ],
+    "ru": [
+      {
+        "planCode": "PERSONAL_SMART",
+        "slug": "smart",
+        "category": "PERSONAL",
+        "displayOrder": 1,
+        "name": "Smart",
+        "positioning": "Умная отправная точка для путешественников, которые хотят лучшего планирования, предложений для участников и экспертной проверки.",
+        "bestFor": "Для новых участников, которые путешествуют время от времени",
+        "inheritanceLabel": null,
+        "benefits": [
+          "Доступ к доступным тарифам на отели и предложениям для участников VOYARA",
+          "Исследование направлений, отелей и рейсов с помощью ИИ",
+          "Сравнение доступных вариантов отелей, рейсов и трансферов",
+          "Предложение поездки, проверенное человеком, перед подтверждением",
+          "Координация бронирования отеля и авиабилета",
+          "Личный Trip Room",
+          "Чек-лист документов и подготовки к поездке",
+          "Стандартная поддержка",
+          "Подтверждение человеком перед оплатой или рискованным бронированием"
+        ],
+        "memberRateAccess": "Доступ к тарифам VOYARA для участников и к предпочтительным предложениям, где они доступны.",
+        "searchDepth": "Базовое сравнение вариантов отелей, рейсов и трансферов",
+        "servicePriority": "STANDARD",
+        "humanReviewLevel": "STANDARD_REVIEW",
+        "conciergeLevel": "NONE",
+        "humanApprovalBoundary": "Ни один платёж, бронирование или рискованное изменение не выполняется без подтверждения человеком — ИИ готовит, человек подтверждает, Voyara исполняет.",
+        "fairUseDisclosure": "Стандартная поддержка предоставляется на принципах добросовестного использования; лимиты частоты настраиваются учредителем.",
+        "availabilityDisclosure": "Итоговая цена и условия показываются до подтверждения. Предложение, маршрут и цена зависят от поставщика, направления и наличия инвентаря.",
+        "ctaLabel": "Присоединиться к Smart",
+        "upgradeTrigger": "Если вы планируете семейную или многоцелевую поездку, перейдите на Plus для более широкого поиска.",
+        "pricing": {
+          "monthly": 19,
+          "annual": 190,
+          "annualSaving": 38,
+          "isCustomPriced": false
+        }
+      },
+      {
+        "planCode": "PERSONAL_PLUS",
+        "slug": "plus",
+        "category": "PERSONAL",
+        "displayOrder": 2,
+        "name": "Plus",
+        "positioning": "Для частых путешественников, семей и тех, кто планирует поездки с несколькими направлениями и хочет более глубокого поиска и быстрой поддержки.",
+        "bestFor": "Для часто путешествующих семей и тех, кто планирует маршруты с несколькими направлениями",
+        "inheritanceLabel": "Всё, что есть в Smart",
+        "benefits": [
+          "Доступ к доступным тарифам на отели и предложениям для участников VOYARA",
+          "Исследование направлений, отелей и рейсов с помощью ИИ",
+          "Сравнение доступных вариантов отелей, рейсов и трансферов",
+          "Предложение поездки, проверенное человеком, перед подтверждением",
+          "Координация бронирования отеля и авиабилета",
+          "Личный Trip Room",
+          "Чек-лист документов и подготовки к поездке",
+          "Стандартная поддержка",
+          "Подтверждение человеком перед оплатой или рискованным бронированием",
+          "Расширенный поиск по доступным тарифам и комбинациям предложений",
+          "Более глубокое сравнение номеров и тарифов отелей",
+          "Планирование семейных и многонаправленных маршрутов",
+          "Сохранённые предпочтения путешественника",
+          "Приоритетная проверка человеком",
+          "Поддержка при изменении маршрута и перепланировании",
+          "Координация виз, страхования, трансферов, eSIM и активностей",
+          "Лучшая преемственность между отдельными поездками",
+          "Более ранняя эскалация, когда предложение или срок требуют внимания"
+        ],
+        "memberRateAccess": "Доступ к тарифам VOYARA для участников и к предпочтительным предложениям, где они доступны.",
+        "searchDepth": "Расширенный поиск и более глубокое сравнение тарифов",
+        "servicePriority": "PRIORITY",
+        "humanReviewLevel": "PRIORITY_REVIEW",
+        "conciergeLevel": "STANDARD",
+        "humanApprovalBoundary": "Ни один платёж, бронирование или рискованное изменение не выполняется без подтверждения человеком — ИИ готовит, человек подтверждает, Voyara исполняет.",
+        "fairUseDisclosure": "Приоритетная проверка и расширенная координация предоставляются на принципах добросовестного использования.",
+        "availabilityDisclosure": "Итоговая цена и условия показываются до подтверждения. Предложение, маршрут и цена зависят от поставщика, направления и наличия инвентаря.",
+        "ctaLabel": "Выбрать Plus",
+        "upgradeTrigger": "Для сложных маршрутов и особых запросов перейдите на Premium.",
+        "pricing": {
+          "monthly": 39,
+          "annual": 390,
+          "annualSaving": 78,
+          "isCustomPriced": false
+        }
+      },
+      {
+        "planCode": "PERSONAL_PREMIUM",
+        "slug": "premium",
+        "category": "PERSONAL",
+        "displayOrder": 3,
+        "name": "Premium",
+        "positioning": "Премиальное членство по управлению путешествиями и консьерж-сервису для сложных и более дорогих поездок.",
+        "bestFor": "Для тех, кому нужны сложные маршруты и сервис высокого уровня",
+        "inheritanceLabel": "Всё, что есть в Plus",
+        "benefits": [
+          "Доступ к доступным тарифам на отели и предложениям для участников VOYARA",
+          "Исследование направлений, отелей и рейсов с помощью ИИ",
+          "Сравнение доступных вариантов отелей, рейсов и трансферов",
+          "Предложение поездки, проверенное человеком, перед подтверждением",
+          "Координация бронирования отеля и авиабилета",
+          "Личный Trip Room",
+          "Чек-лист документов и подготовки к поездке",
+          "Стандартная поддержка",
+          "Подтверждение человеком перед оплатой или рискованным бронированием",
+          "Расширенный поиск по доступным тарифам и комбинациям предложений",
+          "Более глубокое сравнение номеров и тарифов отелей",
+          "Планирование семейных и многонаправленных маршрутов",
+          "Сохранённые предпочтения путешественника",
+          "Приоритетная проверка человеком",
+          "Поддержка при изменении маршрута и перепланировании",
+          "Координация виз, страхования, трансферов, eSIM и активностей",
+          "Лучшая преемственность между отдельными поездками",
+          "Более ранняя эскалация, когда предложение или срок требуют внимания",
+          "Поиск премиальных отелей и номеров более высокой категории",
+          "Дополнительные ценные преимущества отелей и предпочтительные предложения, где доступны",
+          "Управление сложными маршрутами и особыми запросами",
+          "Приоритетная поддержка в поездке",
+          "Координация ресторанов, активностей и трансферов",
+          "Проактивная подготовка к поездке",
+          "Мониторинг поездки и эскалация человеку",
+          "Координация при сбоях и повторном бронировании",
+          "Подготовка предложений с более высоким приоритетом",
+          "Управление поездкой на уровне консьержа"
+        ],
+        "memberRateAccess": "Доступ к премиальным категориям отелей и дополнительным преимуществам, где они доступны.",
+        "searchDepth": "Глубокий поиск по премиальным категориям и управление сложными маршрутами",
+        "servicePriority": "PRIORITY",
+        "humanReviewLevel": "PRIORITY_REVIEW",
+        "conciergeLevel": "MANAGED_CONCIERGE",
+        "humanApprovalBoundary": "Ни один платёж, бронирование или рискованное изменение не выполняется без подтверждения человеком — ИИ готовит, человек подтверждает, Voyara исполняет.",
+        "fairUseDisclosure": "Координация консьерж-уровня предоставляется на принципах добросовестного использования; объём настраивается учредителем.",
+        "availabilityDisclosure": "Итоговая цена и условия показываются до подтверждения. Предложение, маршрут и цена зависят от поставщика, направления и наличия инвентаря.",
+        "ctaLabel": "Выбрать Premium",
+        "upgradeTrigger": "Для VIP, срочных поездок или персонального менеджера подайте заявку на Black.",
+        "pricing": {
+          "monthly": 69,
+          "annual": 690,
+          "annualSaving": 138,
+          "isCustomPriced": false
+        }
+      },
+      {
+        "planCode": "PERSONAL_BLACK",
+        "slug": "black",
+        "category": "PERSONAL",
+        "displayOrder": 4,
+        "name": "Black",
+        "positioning": "Наивысшее персональное членство VOYARA для VIP, руководителей, семей и поездок в последнюю минуту.",
+        "bestFor": "Для VIP, руководителей и срочных поездок в последнюю минуту — на основе заявки",
+        "inheritanceLabel": "Всё, что есть в Premium",
+        "benefits": [
+          "Доступ к доступным тарифам на отели и предложениям для участников VOYARA",
+          "Исследование направлений, отелей и рейсов с помощью ИИ",
+          "Сравнение доступных вариантов отелей, рейсов и трансферов",
+          "Предложение поездки, проверенное человеком, перед подтверждением",
+          "Координация бронирования отеля и авиабилета",
+          "Личный Trip Room",
+          "Чек-лист документов и подготовки к поездке",
+          "Стандартная поддержка",
+          "Подтверждение человеком перед оплатой или рискованным бронированием",
+          "Расширенный поиск по доступным тарифам и комбинациям предложений",
+          "Более глубокое сравнение номеров и тарифов отелей",
+          "Планирование семейных и многонаправленных маршрутов",
+          "Сохранённые предпочтения путешественника",
+          "Приоритетная проверка человеком",
+          "Поддержка при изменении маршрута и перепланировании",
+          "Координация виз, страхования, трансферов, eSIM и активностей",
+          "Лучшая преемственность между отдельными поездками",
+          "Более ранняя эскалация, когда предложение или срок требуют внимания",
+          "Поиск премиальных отелей и номеров более высокой категории",
+          "Дополнительные ценные преимущества отелей и предпочтительные предложения, где доступны",
+          "Управление сложными маршрутами и особыми запросами",
+          "Приоритетная поддержка в поездке",
+          "Координация ресторанов, активностей и трансферов",
+          "Проактивная подготовка к поездке",
+          "Мониторинг поездки и эскалация человеку",
+          "Координация при сбоях и повторном бронировании",
+          "Подготовка предложений с более высоким приоритетом",
+          "Управление поездкой на уровне консьержа",
+          "Наивысший приоритет запроса",
+          "Персональный тревел-менеджер",
+          "Индивидуальный (bespoke) поиск поездки",
+          "Организация VIP, руководящих, семейных и срочных поездок",
+          "Координация профилей семьи и нескольких путешественников",
+          "Поиск премиального и труднодоступного инвентаря",
+          "Круглосуточный приём ИИ с экстренной эскалацией человеку",
+          "Координация аэропорта, трансфера, питания и впечатлений",
+          "Управление особыми событиями и сложными запросами",
+          "Непрерывность по всем активным поездкам"
+        ],
+        "memberRateAccess": "Максимально широкий поиск инвентаря через индивидуальный подбор; не гарантирован, но исследуется в приоритетном порядке.",
+        "searchDepth": "Полное исследование индивидуального, труднодоступного инвентаря",
+        "servicePriority": "HIGHEST",
+        "humanReviewLevel": "NAMED_MANAGER_REVIEW",
+        "conciergeLevel": "NAMED_TRAVEL_MANAGER",
+        "humanApprovalBoundary": "Ни один платёж, бронирование или рискованное изменение не выполняется без подтверждения человеком — ИИ готовит, человек подтверждает, Voyara исполняет.",
+        "fairUseDisclosure": "Членство Black не является неограниченным сервисом — вместимость контролируется и может основываться на заявке.",
+        "availabilityDisclosure": "Итоговая цена и условия показываются до подтверждения. Предложение, маршрут и цена зависят от поставщика, направления и наличия инвентаря.",
+        "ctaLabel": "Подать заявку на Black",
+        "upgradeTrigger": "Для управления корпоративными поездками ознакомьтесь с корпоративными членствами.",
+        "pricing": {
+          "monthly": 299,
+          "annual": 2990,
+          "annualSaving": 598,
+          "isCustomPriced": false
+        }
+      },
+      {
+        "planCode": "CORPORATE_STARTER",
+        "slug": "starter",
+        "category": "CORPORATE",
+        "displayOrder": 5,
+        "name": "Starter",
+        "positioning": "Для команд, начинающих организовывать потребности в деловых поездках",
+        "bestFor": "Для небольших команд и стартапов, которым нужны централизованные записи",
+        "inheritanceLabel": null,
+        "benefits": [
+          "Приём заявок сотрудников на командировки",
+          "Поиск доступных корпоративных отелей и тарифов",
+          "Базовый рабочий процесс утверждения менеджером",
+          "Центральные записи о поездках",
+          "Стандартная операционная координация",
+          "Базовая отчётность"
+        ],
+        "memberRateAccess": "Доступ к корпоративным тарифам, где они доступны; корпоративные договорённости применяются при настройке.",
+        "searchDepth": "Базовое сравнение корпоративных тарифов",
+        "servicePriority": "STANDARD",
+        "humanReviewLevel": "STANDARD_REVIEW",
+        "conciergeLevel": "NONE",
+        "humanApprovalBoundary": "Ни один платёж, бронирование или рискованное изменение не выполняется без подтверждения человеком — ИИ готовит, человек подтверждает, Voyara исполняет.",
+        "fairUseDisclosure": "Стандартная операционная координация предоставляется на принципах добросовестного использования.",
+        "availabilityDisclosure": "Итоговая цена и условия показываются до подтверждения. Предложение, маршрут и цена зависят от поставщика, направления и наличия инвентаря.",
+        "ctaLabel": "Начать корпоративное членство",
+        "upgradeTrigger": "Если нужны многоуровневое утверждение и управление политикой, перейдите на Standard.",
+        "pricing": {
+          "monthly": 149,
+          "annual": null,
+          "annualSaving": null,
+          "isCustomPriced": false
+        }
+      },
+      {
+        "planCode": "CORPORATE_STANDARD",
+        "slug": "standard",
+        "category": "CORPORATE",
+        "displayOrder": 6,
+        "name": "Standard",
+        "positioning": "Управление поездками с учётом политики для растущих команд",
+        "bestFor": "Для средних команд, которым нужно многоуровневое утверждение",
+        "inheritanceLabel": "Всё, что есть в Starter",
+        "benefits": [
+          "Приём заявок сотрудников на командировки",
+          "Поиск доступных корпоративных отелей и тарифов",
+          "Базовый рабочий процесс утверждения менеджером",
+          "Центральные записи о поездках",
+          "Стандартная операционная координация",
+          "Базовая отчётность",
+          "Более широкое сравнение тарифов и маршрутов",
+          "Многоуровневые утверждения",
+          "Управление поездками с учётом политики",
+          "Профили путешественников",
+          "Корпоративная панель управления поездками",
+          "Консолидированные записи",
+          "Координация изменений и исключений"
+        ],
+        "memberRateAccess": "Расширенные корпоративные тарифы и предпочтительные тарифы, где они доступны.",
+        "searchDepth": "Расширенное сравнение тарифов и маршрутов",
+        "servicePriority": "PRIORITY",
+        "humanReviewLevel": "PRIORITY_REVIEW",
+        "conciergeLevel": "STANDARD",
+        "humanApprovalBoundary": "Ни один платёж, бронирование или рискованное изменение не выполняется без подтверждения человеком — ИИ готовит, человек подтверждает, Voyara исполняет.",
+        "fairUseDisclosure": "Объём многоуровневого утверждения предоставляется на принципах добросовестного использования.",
+        "availabilityDisclosure": "Итоговая цена и условия показываются до подтверждения. Предложение, маршрут и цена зависят от поставщика, направления и наличия инвентаря.",
+        "ctaLabel": "Начать корпоративное членство",
+        "upgradeTrigger": "Если нужны поездки руководителей и расширенная отчётность, перейдите на Professional.",
+        "pricing": {
+          "monthly": 299,
+          "annual": null,
+          "annualSaving": null,
+          "isCustomPriced": false
+        }
+      },
+      {
+        "planCode": "CORPORATE_PROFESSIONAL",
+        "slug": "professional",
+        "category": "CORPORATE",
+        "displayOrder": 7,
+        "name": "Professional",
+        "positioning": "Специализированная координация для поездок руководителей и сложных корпоративных маршрутов",
+        "bestFor": "Для компаний с поездками руководителей и сложными многогородскими маршрутами",
+        "inheritanceLabel": "Всё, что есть в Standard",
+        "benefits": [
+          "Приём заявок сотрудников на командировки",
+          "Поиск доступных корпоративных отелей и тарифов",
+          "Базовый рабочий процесс утверждения менеджером",
+          "Центральные записи о поездках",
+          "Стандартная операционная координация",
+          "Базовая отчётность",
+          "Более широкое сравнение тарифов и маршрутов",
+          "Многоуровневые утверждения",
+          "Управление поездками с учётом политики",
+          "Профили путешественников",
+          "Корпоративная панель управления поездками",
+          "Консолидированные записи",
+          "Координация изменений и исключений",
+          "Управление поездками руководителей",
+          "Приоритетная корпоративная поддержка",
+          "Расширенная отчётность",
+          "Эскалация исключений из политики",
+          "Координация сложных многогородских маршрутов",
+          "Выделенная корпоративная координация поездок",
+          "Управление предпочтительными поставщиками и корпоративными тарифами при настройке"
+        ],
+        "memberRateAccess": "Соглашения с предпочтительными поставщиками и корпоративные тарифы при настройке.",
+        "searchDepth": "Глубокий поиск для руководителей и сложных маршрутов",
+        "servicePriority": "PRIORITY",
+        "humanReviewLevel": "PRIORITY_REVIEW",
+        "conciergeLevel": "ENHANCED",
+        "humanApprovalBoundary": "Ни один платёж, бронирование или рискованное изменение не выполняется без подтверждения человеком — ИИ готовит, человек подтверждает, Voyara исполняет.",
+        "fairUseDisclosure": "Выделенная корпоративная координация предоставляется на принципах добросовестного использования; объём настраивается учредителем.",
+        "availabilityDisclosure": "Итоговая цена и условия показываются до подтверждения. Предложение, маршрут и цена зависят от поставщика, направления и наличия инвентаря.",
+        "ctaLabel": "Начать корпоративное членство",
+        "upgradeTrigger": "Если нужны индивидуальные договорённости и особые рабочие процессы, обратитесь в Корпоративный отдел.",
+        "pricing": {
+          "monthly": 599,
+          "annual": null,
+          "annualSaving": null,
+          "isCustomPriced": false
+        }
+      },
+      {
+        "planCode": "CORPORATE_ENTERPRISE",
+        "slug": "enterprise",
+        "category": "CORPORATE",
+        "displayOrder": 8,
+        "name": "Enterprise",
+        "positioning": "Для крупных организаций с индивидуальными рабочими процессами и согласованными уровнями обслуживания",
+        "bestFor": "Для крупных предприятий, которым требуется индивидуальное управление и интеграции",
+        "inheritanceLabel": "Всё, что есть в Professional",
+        "benefits": [
+          "Приём заявок сотрудников на командировки",
+          "Поиск доступных корпоративных отелей и тарифов",
+          "Базовый рабочий процесс утверждения менеджером",
+          "Центральные записи о поездках",
+          "Стандартная операционная координация",
+          "Базовая отчётность",
+          "Более широкое сравнение тарифов и маршрутов",
+          "Многоуровневые утверждения",
+          "Управление поездками с учётом политики",
+          "Профили путешественников",
+          "Корпоративная панель управления поездками",
+          "Консолидированные записи",
+          "Координация изменений и исключений",
+          "Управление поездками руководителей",
+          "Приоритетная корпоративная поддержка",
+          "Расширенная отчётность",
+          "Эскалация исключений из политики",
+          "Координация сложных многогородских маршрутов",
+          "Выделенная корпоративная координация поездок",
+          "Управление предпочтительными поставщиками и корпоративными тарифами при настройке",
+          "Индивидуальные рабочие процессы утверждения",
+          "Индивидуальные роли и права доступа",
+          "Согласованные уровни обслуживания",
+          "Индивидуальная отчётность",
+          "Согласованные интеграции",
+          "Специфичные для компании правила поездок",
+          "Выделенное управление аккаунтом",
+          "Индивидуальная настройка поставщиков и корпоративных тарифов"
+        ],
+        "memberRateAccess": "Корпоративные тарифы и интеграции определяются индивидуальными переговорами.",
+        "searchDepth": "Согласованный, специфичный для компании поиск",
+        "servicePriority": "HIGHEST",
+        "humanReviewLevel": "NAMED_MANAGER_REVIEW",
+        "conciergeLevel": "NAMED_TRAVEL_MANAGER",
+        "humanApprovalBoundary": "Ни один платёж, бронирование или рискованное изменение не выполняется без подтверждения человеком — ИИ готовит, человек подтверждает, Voyara исполняет.",
+        "fairUseDisclosure": "Уровни обслуживания согласовываются по договору; не подразумевают неограниченный труд.",
+        "availabilityDisclosure": "Итоговая цена и условия показываются до подтверждения. Предложение, маршрут и цена зависят от поставщика, направления и наличия инвентаря.",
+        "ctaLabel": "Связаться с Корпоративным отделом",
+        "upgradeTrigger": "Enterprise — высший корпоративный уровень VOYARA, дальнейшего уровня нет.",
+        "pricing": {
+          "monthly": null,
+          "annual": null,
+          "annualSaving": null,
+          "isCustomPriced": true
+        }
+      }
+    ],
+    "en": [
+      {
+        "planCode": "PERSONAL_SMART",
+        "slug": "smart",
+        "category": "PERSONAL",
+        "displayOrder": 1,
+        "name": "Smart",
+        "positioning": "The intelligent starting point for travellers who want better planning, available member offers and expert verification.",
+        "bestFor": "First-time members and occasional travellers",
+        "inheritanceLabel": null,
+        "benefits": [
+          "Access to available VOYARA member hotel rates and travel offers",
+          "AI-assisted destination, hotel and flight research",
+          "Comparison of available hotel, flight and transfer options",
+          "Human-reviewed travel proposal before commitment",
+          "Hotel-booking and flight-ticket coordination",
+          "Personal Trip Room",
+          "Travel-document and pre-departure checklist",
+          "Standard support",
+          "Human approval before payments or risk-sensitive booking actions"
+        ],
+        "memberRateAccess": "Access to VOYARA member-access rates and preferred offers where available.",
+        "searchDepth": "Baseline comparison of hotel, flight and transfer options",
+        "servicePriority": "STANDARD",
+        "humanReviewLevel": "STANDARD_REVIEW",
+        "conciergeLevel": "NONE",
+        "humanApprovalBoundary": "No payment, booking or risk-sensitive change is executed until a human approves it — AI prepares, the human approves, Voyara executes.",
+        "fairUseDisclosure": "Standard support operates on a fair-use basis; frequency limits are founder-configurable.",
+        "availabilityDisclosure": "Final price and conditions are shown before approval. Offers depend on supplier, destination and inventory availability.",
+        "ctaLabel": "Join Smart",
+        "upgradeTrigger": "Planning family or multi-destination travel? Upgrade to Plus for broader sourcing.",
+        "pricing": {
+          "monthly": 19,
+          "annual": 190,
+          "annualSaving": 38,
+          "isCustomPriced": false
+        }
+      },
+      {
+        "planCode": "PERSONAL_PLUS",
+        "slug": "plus",
+        "category": "PERSONAL",
+        "displayOrder": 2,
+        "name": "Plus",
+        "positioning": "For frequent, family and multi-destination travellers who want stronger sourcing and faster support.",
+        "bestFor": "Frequent-travelling families and multi-destination planners",
+        "inheritanceLabel": "Everything in Smart",
+        "benefits": [
+          "Access to available VOYARA member hotel rates and travel offers",
+          "AI-assisted destination, hotel and flight research",
+          "Comparison of available hotel, flight and transfer options",
+          "Human-reviewed travel proposal before commitment",
+          "Hotel-booking and flight-ticket coordination",
+          "Personal Trip Room",
+          "Travel-document and pre-departure checklist",
+          "Standard support",
+          "Human approval before payments or risk-sensitive booking actions",
+          "Expanded search across available rates and offer combinations",
+          "Deeper hotel-room and fare comparison",
+          "Family and multi-destination itinerary planning",
+          "Saved traveller preferences",
+          "Priority human review",
+          "Itinerary-change and replanning support",
+          "Visa, insurance, transfer, eSIM and activity coordination",
+          "Better continuity between separate journeys",
+          "Earlier escalation when an offer or deadline requires attention"
+        ],
+        "memberRateAccess": "Access to VOYARA member-access rates and preferred offers where available.",
+        "searchDepth": "Expanded search and deeper fare comparison",
+        "servicePriority": "PRIORITY",
+        "humanReviewLevel": "PRIORITY_REVIEW",
+        "conciergeLevel": "STANDARD",
+        "humanApprovalBoundary": "No payment, booking or risk-sensitive change is executed until a human approves it — AI prepares, the human approves, Voyara executes.",
+        "fairUseDisclosure": "Priority review and expanded coordination operate on a fair-use basis.",
+        "availabilityDisclosure": "Final price and conditions are shown before approval. Offers depend on supplier, destination and inventory availability.",
+        "ctaLabel": "Choose Plus",
+        "upgradeTrigger": "For complex itineraries and special requests, upgrade to Premium.",
+        "pricing": {
+          "monthly": 39,
+          "annual": 390,
+          "annualSaving": 78,
+          "isCustomPriced": false
+        }
+      },
+      {
+        "planCode": "PERSONAL_PREMIUM",
+        "slug": "premium",
+        "category": "PERSONAL",
+        "displayOrder": 3,
+        "name": "Premium",
+        "positioning": "A premium travel-management and concierge membership for complex and higher-value journeys.",
+        "bestFor": "Complex itineraries and higher service expectations",
+        "inheritanceLabel": "Everything in Plus",
+        "benefits": [
+          "Access to available VOYARA member hotel rates and travel offers",
+          "AI-assisted destination, hotel and flight research",
+          "Comparison of available hotel, flight and transfer options",
+          "Human-reviewed travel proposal before commitment",
+          "Hotel-booking and flight-ticket coordination",
+          "Personal Trip Room",
+          "Travel-document and pre-departure checklist",
+          "Standard support",
+          "Human approval before payments or risk-sensitive booking actions",
+          "Expanded search across available rates and offer combinations",
+          "Deeper hotel-room and fare comparison",
+          "Family and multi-destination itinerary planning",
+          "Saved traveller preferences",
+          "Priority human review",
+          "Itinerary-change and replanning support",
+          "Visa, insurance, transfer, eSIM and activity coordination",
+          "Better continuity between separate journeys",
+          "Earlier escalation when an offer or deadline requires attention",
+          "Premium-hotel and higher-category room sourcing",
+          "Available value-added hotel benefits and preferred offers",
+          "Complex itinerary and special-request handling",
+          "Priority travel support",
+          "Restaurant, activity and transfer coordination",
+          "Proactive pre-trip preparation",
+          "Journey monitoring and human escalation",
+          "Disruption and rebooking coordination",
+          "Higher-priority proposal preparation",
+          "Concierge-level trip management"
+        ],
+        "memberRateAccess": "Access to premium hotel categories and value-added benefits where available.",
+        "searchDepth": "Deep search across premium categories and complex-itinerary handling",
+        "servicePriority": "PRIORITY",
+        "humanReviewLevel": "PRIORITY_REVIEW",
+        "conciergeLevel": "MANAGED_CONCIERGE",
+        "humanApprovalBoundary": "No payment, booking or risk-sensitive change is executed until a human approves it — AI prepares, the human approves, Voyara executes.",
+        "fairUseDisclosure": "Concierge-level coordination operates on a fair-use basis; volume is founder-configurable.",
+        "availabilityDisclosure": "Final price and conditions are shown before approval. Offers depend on supplier, destination and inventory availability.",
+        "ctaLabel": "Choose Premium",
+        "upgradeTrigger": "For VIP, urgent travel or a named travel manager, request Black.",
+        "pricing": {
+          "monthly": 69,
+          "annual": 690,
+          "annualSaving": 138,
+          "isCustomPriced": false
+        }
+      },
+      {
+        "planCode": "PERSONAL_BLACK",
+        "slug": "black",
+        "category": "PERSONAL",
+        "displayOrder": 4,
+        "name": "Black",
+        "positioning": "VOYARA's highest personal membership for VIP, executive, family and last-minute travel.",
+        "bestFor": "VIP, executive and last-minute travel — application-based",
+        "inheritanceLabel": "Everything in Premium",
+        "benefits": [
+          "Access to available VOYARA member hotel rates and travel offers",
+          "AI-assisted destination, hotel and flight research",
+          "Comparison of available hotel, flight and transfer options",
+          "Human-reviewed travel proposal before commitment",
+          "Hotel-booking and flight-ticket coordination",
+          "Personal Trip Room",
+          "Travel-document and pre-departure checklist",
+          "Standard support",
+          "Human approval before payments or risk-sensitive booking actions",
+          "Expanded search across available rates and offer combinations",
+          "Deeper hotel-room and fare comparison",
+          "Family and multi-destination itinerary planning",
+          "Saved traveller preferences",
+          "Priority human review",
+          "Itinerary-change and replanning support",
+          "Visa, insurance, transfer, eSIM and activity coordination",
+          "Better continuity between separate journeys",
+          "Earlier escalation when an offer or deadline requires attention",
+          "Premium-hotel and higher-category room sourcing",
+          "Available value-added hotel benefits and preferred offers",
+          "Complex itinerary and special-request handling",
+          "Priority travel support",
+          "Restaurant, activity and transfer coordination",
+          "Proactive pre-trip preparation",
+          "Journey monitoring and human escalation",
+          "Disruption and rebooking coordination",
+          "Higher-priority proposal preparation",
+          "Concierge-level trip management",
+          "Highest request priority",
+          "Named travel manager",
+          "Bespoke travel sourcing",
+          "VIP, executive and urgent travel handling",
+          "Family and multi-traveller profile coordination",
+          "Premium and difficult-to-source inventory research",
+          "24/7 AI reception with urgent human escalation",
+          "Airport, transfer, dining and experience coordination",
+          "Special-occasion and complex-request management",
+          "Continuity across all active journeys"
+        ],
+        "memberRateAccess": "The widest reasonable inventory search via bespoke sourcing; not guaranteed, but researched with top priority.",
+        "searchDepth": "Full bespoke research across difficult-to-source inventory",
+        "servicePriority": "HIGHEST",
+        "humanReviewLevel": "NAMED_MANAGER_REVIEW",
+        "conciergeLevel": "NAMED_TRAVEL_MANAGER",
+        "humanApprovalBoundary": "No payment, booking or risk-sensitive change is executed until a human approves it — AI prepares, the human approves, Voyara executes.",
+        "fairUseDisclosure": "Black is not an unlimited service — capacity is managed and may be application-based.",
+        "availabilityDisclosure": "Final price and conditions are shown before approval. Offers depend on supplier, destination and inventory availability.",
+        "ctaLabel": "Request Black Membership",
+        "upgradeTrigger": "For company travel governance, see Corporate memberships.",
+        "pricing": {
+          "monthly": 299,
+          "annual": 2990,
+          "annualSaving": 598,
+          "isCustomPriced": false
+        }
+      },
+      {
+        "planCode": "CORPORATE_STARTER",
+        "slug": "starter",
+        "category": "CORPORATE",
+        "displayOrder": 5,
+        "name": "Starter",
+        "positioning": "For teams starting to organize their business travel needs",
+        "bestFor": "Small teams and startups needing centralized records",
+        "inheritanceLabel": null,
+        "benefits": [
+          "Employee travel-request intake",
+          "Available business hotel and fare sourcing",
+          "Basic manager approval workflow",
+          "Central trip records",
+          "Standard operational coordination",
+          "Basic reporting"
+        ],
+        "memberRateAccess": "Access to corporate rates where available; company agreements apply once configured.",
+        "searchDepth": "Basic corporate fare comparison",
+        "servicePriority": "STANDARD",
+        "humanReviewLevel": "STANDARD_REVIEW",
+        "conciergeLevel": "NONE",
+        "humanApprovalBoundary": "No payment, booking or risk-sensitive change is executed until a human approves it — AI prepares, the human approves, Voyara executes.",
+        "fairUseDisclosure": "Standard operational coordination operates on a fair-use basis.",
+        "availabilityDisclosure": "Final price and conditions are shown before approval. Offers depend on supplier, destination and inventory availability.",
+        "ctaLabel": "Start Corporate Membership",
+        "upgradeTrigger": "Need multi-level approvals and policy handling? Upgrade to Standard.",
+        "pricing": {
+          "monthly": 149,
+          "annual": null,
+          "annualSaving": null,
+          "isCustomPriced": false
+        }
+      },
+      {
+        "planCode": "CORPORATE_STANDARD",
+        "slug": "standard",
+        "category": "CORPORATE",
+        "displayOrder": 6,
+        "name": "Standard",
+        "positioning": "Policy-aware travel management for growing teams",
+        "bestFor": "Mid-sized teams needing multi-level approvals",
+        "inheritanceLabel": "Everything in Starter",
+        "benefits": [
+          "Employee travel-request intake",
+          "Available business hotel and fare sourcing",
+          "Basic manager approval workflow",
+          "Central trip records",
+          "Standard operational coordination",
+          "Basic reporting",
+          "Broader rate and itinerary comparison",
+          "Multi-level approvals",
+          "Policy-aware travel handling",
+          "Traveller profiles",
+          "Company travel dashboard",
+          "Consolidated records",
+          "Change and exception coordination"
+        ],
+        "memberRateAccess": "Broader corporate and preferred rates where available.",
+        "searchDepth": "Expanded rate and itinerary comparison",
+        "servicePriority": "PRIORITY",
+        "humanReviewLevel": "PRIORITY_REVIEW",
+        "conciergeLevel": "STANDARD",
+        "humanApprovalBoundary": "No payment, booking or risk-sensitive change is executed until a human approves it — AI prepares, the human approves, Voyara executes.",
+        "fairUseDisclosure": "Multi-level approval volume operates on a fair-use basis.",
+        "availabilityDisclosure": "Final price and conditions are shown before approval. Offers depend on supplier, destination and inventory availability.",
+        "ctaLabel": "Start Corporate Membership",
+        "upgradeTrigger": "Need executive travel and advanced reporting? Upgrade to Professional.",
+        "pricing": {
+          "monthly": 299,
+          "annual": null,
+          "annualSaving": null,
+          "isCustomPriced": false
+        }
+      },
+      {
+        "planCode": "CORPORATE_PROFESSIONAL",
+        "slug": "professional",
+        "category": "CORPORATE",
+        "displayOrder": 7,
+        "name": "Professional",
+        "positioning": "Dedicated coordination for executive travel and complex corporate itineraries",
+        "bestFor": "Companies with executive travel and complex multi-city itineraries",
+        "inheritanceLabel": "Everything in Standard",
+        "benefits": [
+          "Employee travel-request intake",
+          "Available business hotel and fare sourcing",
+          "Basic manager approval workflow",
+          "Central trip records",
+          "Standard operational coordination",
+          "Basic reporting",
+          "Broader rate and itinerary comparison",
+          "Multi-level approvals",
+          "Policy-aware travel handling",
+          "Traveller profiles",
+          "Company travel dashboard",
+          "Consolidated records",
+          "Change and exception coordination",
+          "Executive travel handling",
+          "Priority corporate support",
+          "Advanced reporting",
+          "Policy-exception escalation",
+          "Complex and multi-city journey coordination",
+          "Dedicated corporate travel coordination",
+          "Preferred-supplier and company-rate handling where configured"
+        ],
+        "memberRateAccess": "Preferred-supplier agreements and company-rate handling where configured.",
+        "searchDepth": "Deep search for executive and complex itineraries",
+        "servicePriority": "PRIORITY",
+        "humanReviewLevel": "PRIORITY_REVIEW",
+        "conciergeLevel": "ENHANCED",
+        "humanApprovalBoundary": "No payment, booking or risk-sensitive change is executed until a human approves it — AI prepares, the human approves, Voyara executes.",
+        "fairUseDisclosure": "Dedicated corporate coordination operates on a fair-use basis; volume is founder-configurable.",
+        "availabilityDisclosure": "Final price and conditions are shown before approval. Offers depend on supplier, destination and inventory availability.",
+        "ctaLabel": "Start Corporate Membership",
+        "upgradeTrigger": "Need custom agreements and tailored workflows? Speak with the Corporate Desk.",
+        "pricing": {
+          "monthly": 599,
+          "annual": null,
+          "annualSaving": null,
+          "isCustomPriced": false
+        }
+      },
+      {
+        "planCode": "CORPORATE_ENTERPRISE",
+        "slug": "enterprise",
+        "category": "CORPORATE",
+        "displayOrder": 8,
+        "name": "Enterprise",
+        "positioning": "For large organizations with tailored workflows and negotiated service levels",
+        "bestFor": "Large enterprises requiring custom governance and integrations",
+        "inheritanceLabel": "Everything in Professional",
+        "benefits": [
+          "Employee travel-request intake",
+          "Available business hotel and fare sourcing",
+          "Basic manager approval workflow",
+          "Central trip records",
+          "Standard operational coordination",
+          "Basic reporting",
+          "Broader rate and itinerary comparison",
+          "Multi-level approvals",
+          "Policy-aware travel handling",
+          "Traveller profiles",
+          "Company travel dashboard",
+          "Consolidated records",
+          "Change and exception coordination",
+          "Executive travel handling",
+          "Priority corporate support",
+          "Advanced reporting",
+          "Policy-exception escalation",
+          "Complex and multi-city journey coordination",
+          "Dedicated corporate travel coordination",
+          "Preferred-supplier and company-rate handling where configured",
+          "Custom approval workflows",
+          "Custom roles and permissions",
+          "Negotiated service levels",
+          "Tailored reporting",
+          "Agreed integrations",
+          "Company-specific travel rules",
+          "Dedicated account governance",
+          "Custom supplier and corporate-rate configuration"
+        ],
+        "memberRateAccess": "Corporate rates and integrations are determined through individual negotiation.",
+        "searchDepth": "Negotiated, company-specific sourcing",
+        "servicePriority": "HIGHEST",
+        "humanReviewLevel": "NAMED_MANAGER_REVIEW",
+        "conciergeLevel": "NAMED_TRAVEL_MANAGER",
+        "humanApprovalBoundary": "No payment, booking or risk-sensitive change is executed until a human approves it — AI prepares, the human approves, Voyara executes.",
+        "fairUseDisclosure": "Service levels are contractually negotiated; they do not imply unlimited labour.",
+        "availabilityDisclosure": "Final price and conditions are shown before approval. Offers depend on supplier, destination and inventory availability.",
+        "ctaLabel": "Speak with Corporate Desk",
+        "upgradeTrigger": "Enterprise is VOYARA's top corporate tier — there is no further tier.",
+        "pricing": {
+          "monthly": null,
+          "annual": null,
+          "annualSaving": null,
+          "isCustomPriced": true
+        }
+      }
+    ]
+  },
+  "comparison": {
+    "az": {
+      "personal": {
+        "title": "Şəxsi planların müqayisəsi",
+        "featureLabel": "Xüsusiyyət",
+        "planNames": [
+          "Smart",
+          "Plus",
+          "Premium",
+          "Black"
+        ],
+        "rows": [
+          {
+            "key": "bestFor",
+            "label": "Kimin üçün uyğundur",
+            "cells": [
+              "İlk dəfə üzv olan, ara-sıra səyahət edən müştərilər üçün",
+              "Tez-tez səyahət edən ailələr və çoxməqsədli marşrut planlaşdıranlar üçün",
+              "Mürəkkəb marşrutlar və yüksək gözləntili xidmət istəyən müştərilər üçün",
+              "VIP, icraçı və son dəqiqə səyahət tələb edənlər üçün — müraciət əsaslı"
+            ]
+          },
+          {
+            "key": "memberRateAccess",
+            "label": "Üzv tarifi çıxışı",
+            "cells": [
+              "Üzvlərə açıq VOYARA tarifləri və mövcud olduqda üstünlük verilən təkliflərə çıxış.",
+              "Üzvlərə açıq VOYARA tarifləri və mövcud olduqda üstünlük verilən təkliflərə çıxış.",
+              "Premium otel kateqoriyalarına və mövcud olduqda əlavə dəyərli üstünlüklərə çıxış.",
+              "Bespoke mənbə tapılması vasitəsilə ən geniş mümkün inventar araşdırılması; qarantiyalı deyil, lakin prioritetli araşdırılır."
+            ]
+          },
+          {
+            "key": "hotelFlightSourcing",
+            "label": "Otel və uçuş mənbə tapılması",
+            "cells": [
+              "Otel rezervasiyası əlaqələndirilməsi · Aviabilet axtarışı və əlaqələndirilməsi",
+              "Otel və uçuş əlaqələndirilməsi · Viza, sığorta, transfer, eSIM və fəaliyyət əlaqələndirilməsi",
+              "Premium otel əlaqələndirilməsi · Restoran, fəaliyyət və transfer əlaqələndirilməsi · Pozuntu/yenidən rezervasiya əlaqələndirilməsi",
+              "Fərdi (bespoke) otel və uçuş mənbə tapılması · Aeroport və VIP transfer əlaqələndirilməsi · Yemək və təcrübə əlaqələndirilməsi"
+            ]
+          },
+          {
+            "key": "searchDepth",
+            "label": "Axtarış dərinliyi",
+            "cells": [
+              "Əsas otel, uçuş və transfer variantlarının müqayisəsi",
+              "Genişləndirilmiş axtarış və daha dərin tarif müqayisəsi",
+              "Premium kateqoriyalar üzrə dərin axtarış və mürəkkəb marşrut idarəolunması",
+              "Bespoke, tapılması çətin olan inventar üzrə tam araşdırma"
+            ]
+          },
+          {
+            "key": "humanReview",
+            "label": "İnsan yoxlaması",
+            "cells": [
+              "Standart",
+              "Prioritetli",
+              "Prioritetli",
+              "Adlı menecer"
+            ]
+          },
+          {
+            "key": "multiDestination",
+            "label": "Ailə və çoxməqsədli planlaşdırma",
+            "cells": [
+              "—",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "ancillaryCoordination",
+            "label": "Viza, sığorta, transfer, eSIM, fəaliyyət",
+            "cells": [
+              "—",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "complexItinerary",
+            "label": "Premium və mürəkkəb marşrut idarəolunması",
+            "cells": [
+              "—",
+              "—",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "conciergeLevel",
+            "label": "Konsyerj səviyyəsi",
+            "cells": [
+              "Yoxdur",
+              "Standart",
+              "İdarə olunan",
+              "Adlı meneceri"
+            ]
+          },
+          {
+            "key": "servicePriority",
+            "label": "Xidmət prioriteti",
+            "cells": [
+              "Standart",
+              "Prioritetli",
+              "Prioritetli",
+              "Ən yüksək"
+            ]
+          },
+          {
+            "key": "aiReception",
+            "label": "24/7 AI qəbulu",
+            "cells": [
+              "—",
+              "—",
+              "—",
+              "✓"
+            ]
+          },
+          {
+            "key": "namedManager",
+            "label": "Adlı səyahət meneceri",
+            "cells": [
+              "—",
+              "—",
+              "—",
+              "✓"
+            ]
+          },
+          {
+            "key": "annualSaving",
+            "label": "İllik qənaət",
+            "cells": [
+              "38 ₼",
+              "78 ₼",
+              "138 ₼",
+              "598 ₼"
+            ]
+          },
+          {
+            "key": "humanApproval",
+            "label": "Rezervasiya və ödənişdən əvvəl insan təsdiqi",
+            "cells": [
+              "✓",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          }
+        ]
+      },
+      "corporate": {
+        "title": "Korporativ planların müqayisəsi",
+        "featureLabel": "Xüsusiyyət",
+        "planNames": [
+          "Starter",
+          "Standard",
+          "Professional",
+          "Enterprise"
+        ],
+        "rows": [
+          {
+            "key": "requestIntake",
+            "label": "Səyahət tələbi qəbulu",
+            "cells": [
+              "✓",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "hotelFareSourcing",
+            "label": "Otel və tarif mənbə tapılması",
+            "cells": [
+              "Biznes otel əlaqələndirilməsi · Əsas aviabilet əlaqələndirilməsi",
+              "Genişləndirilmiş otel/uçuş əlaqələndirilməsi · Siyasətə uyğun dəyişiklik idarəolunması",
+              "İcraçı otel/uçuş əlaqələndirilməsi · Çoxşəhərli marşrut əlaqələndirilməsi · Xüsusi korporativ dəstək",
+              "Fərdi hazırlanmış otel/uçuş idarəetməsi · Razılaşdırılmış təchizatçı inteqrasiyaları"
+            ]
+          },
+          {
+            "key": "approvals",
+            "label": "Təsdiq iş axını",
+            "cells": [
+              "✓",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "travellerProfiles",
+            "label": "Səyahətçi profilləri",
+            "cells": [
+              "—",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "policyGovernance",
+            "label": "Siyasət idarəolunması",
+            "cells": [
+              "—",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "reporting",
+            "label": "Hesabatlıq",
+            "cells": [
+              "✓",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "dashboard",
+            "label": "Şirkət paneli",
+            "cells": [
+              "—",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "executiveTravel",
+            "label": "İcraçı səyahət idarəolunması",
+            "cells": [
+              "—",
+              "—",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "complexMultiCity",
+            "label": "Mürəkkəb və çoxşəhərli səyahət",
+            "cells": [
+              "—",
+              "—",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "dedicatedCoordination",
+            "label": "Xüsusi əlaqələndirmə",
+            "cells": [
+              "—",
+              "—",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "supplierRateConfig",
+            "label": "Təchizatçı/şirkət tarifi konfiqurasiyası",
+            "cells": [
+              "—",
+              "—",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "customRoles",
+            "label": "Fərdi rollar",
+            "cells": [
+              "—",
+              "—",
+              "—",
+              "✓"
+            ]
+          },
+          {
+            "key": "integrations",
+            "label": "İnteqrasiyalar",
+            "cells": [
+              "—",
+              "—",
+              "—",
+              "✓"
+            ]
+          },
+          {
+            "key": "serviceGovernance",
+            "label": "Xidmət səviyyəsi idarəetməsi",
+            "cells": [
+              "Ədalətli istifadəyə uyğun olaraq konfiqurasiya olunub",
+              "Ədalətli istifadəyə uyğun olaraq konfiqurasiya olunub",
+              "Ədalətli istifadəyə uyğun olaraq konfiqurasiya olunub",
+              "Enterprise üçün fərdi"
+            ]
+          }
+        ]
+      }
+    },
+    "ru": {
+      "personal": {
+        "title": "Сравнение личных планов",
+        "featureLabel": "Функция",
+        "planNames": [
+          "Smart",
+          "Plus",
+          "Premium",
+          "Black"
+        ],
+        "rows": [
+          {
+            "key": "bestFor",
+            "label": "Кому подходит",
+            "cells": [
+              "Для новых участников, которые путешествуют время от времени",
+              "Для часто путешествующих семей и тех, кто планирует маршруты с несколькими направлениями",
+              "Для тех, кому нужны сложные маршруты и сервис высокого уровня",
+              "Для VIP, руководителей и срочных поездок в последнюю минуту — на основе заявки"
+            ]
+          },
+          {
+            "key": "memberRateAccess",
+            "label": "Доступ к тарифам участника",
+            "cells": [
+              "Доступ к тарифам VOYARA для участников и к предпочтительным предложениям, где они доступны.",
+              "Доступ к тарифам VOYARA для участников и к предпочтительным предложениям, где они доступны.",
+              "Доступ к премиальным категориям отелей и дополнительным преимуществам, где они доступны.",
+              "Максимально широкий поиск инвентаря через индивидуальный подбор; не гарантирован, но исследуется в приоритетном порядке."
+            ]
+          },
+          {
+            "key": "hotelFlightSourcing",
+            "label": "Поиск отелей и рейсов",
+            "cells": [
+              "Координация бронирования отеля · Поиск и координация авиабилетов",
+              "Координация отелей и рейсов · Координация виз, страхования, трансферов, eSIM и активностей",
+              "Координация премиальных отелей · Координация ресторанов, активностей и трансферов · Координация при сбоях/повторном бронировании",
+              "Индивидуальный поиск отелей и рейсов · Координация аэропорта и VIP-трансфера · Координация питания и впечатлений"
+            ]
+          },
+          {
+            "key": "searchDepth",
+            "label": "Глубина поиска",
+            "cells": [
+              "Базовое сравнение вариантов отелей, рейсов и трансферов",
+              "Расширенный поиск и более глубокое сравнение тарифов",
+              "Глубокий поиск по премиальным категориям и управление сложными маршрутами",
+              "Полное исследование индивидуального, труднодоступного инвентаря"
+            ]
+          },
+          {
+            "key": "humanReview",
+            "label": "Проверка человеком",
+            "cells": [
+              "Стандартная",
+              "Приоритетная",
+              "Приоритетная",
+              "Персональный менеджер"
+            ]
+          },
+          {
+            "key": "multiDestination",
+            "label": "Семейное и многонаправленное планирование",
+            "cells": [
+              "—",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "ancillaryCoordination",
+            "label": "Виза, страхование, трансфер, eSIM, активности",
+            "cells": [
+              "—",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "complexItinerary",
+            "label": "Управление премиальными и сложными маршрутами",
+            "cells": [
+              "—",
+              "—",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "conciergeLevel",
+            "label": "Уровень консьержа",
+            "cells": [
+              "Отсутствует",
+              "Стандартный",
+              "Управляемый",
+              "Персональный менеджер"
+            ]
+          },
+          {
+            "key": "servicePriority",
+            "label": "Приоритет обслуживания",
+            "cells": [
+              "Стандартный",
+              "Приоритетный",
+              "Приоритетный",
+              "Наивысший"
+            ]
+          },
+          {
+            "key": "aiReception",
+            "label": "Приём ИИ 24/7",
+            "cells": [
+              "—",
+              "—",
+              "—",
+              "✓"
+            ]
+          },
+          {
+            "key": "namedManager",
+            "label": "Персональный тревел-менеджер",
+            "cells": [
+              "—",
+              "—",
+              "—",
+              "✓"
+            ]
+          },
+          {
+            "key": "annualSaving",
+            "label": "Годовая экономия",
+            "cells": [
+              "38 ₼",
+              "78 ₼",
+              "138 ₼",
+              "598 ₼"
+            ]
+          },
+          {
+            "key": "humanApproval",
+            "label": "Подтверждение человеком перед бронированием и оплатой",
+            "cells": [
+              "✓",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          }
+        ]
+      },
+      "corporate": {
+        "title": "Сравнение корпоративных планов",
+        "featureLabel": "Функция",
+        "planNames": [
+          "Starter",
+          "Standard",
+          "Professional",
+          "Enterprise"
+        ],
+        "rows": [
+          {
+            "key": "requestIntake",
+            "label": "Приём заявок на поездки",
+            "cells": [
+              "✓",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "hotelFareSourcing",
+            "label": "Поиск отелей и тарифов",
+            "cells": [
+              "Координация бизнес-отелей · Базовая координация авиабилетов",
+              "Расширенная координация отелей/рейсов · Управление изменениями с учётом политики",
+              "Координация отелей/рейсов для руководителей · Координация многогородских маршрутов · Выделенная корпоративная поддержка",
+              "Индивидуально настроенное управление отелями/рейсами · Согласованные интеграции поставщиков"
+            ]
+          },
+          {
+            "key": "approvals",
+            "label": "Процесс утверждения",
+            "cells": [
+              "✓",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "travellerProfiles",
+            "label": "Профили путешественников",
+            "cells": [
+              "—",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "policyGovernance",
+            "label": "Управление политикой",
+            "cells": [
+              "—",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "reporting",
+            "label": "Отчётность",
+            "cells": [
+              "✓",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "dashboard",
+            "label": "Корпоративная панель",
+            "cells": [
+              "—",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "executiveTravel",
+            "label": "Организация поездок руководителей",
+            "cells": [
+              "—",
+              "—",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "complexMultiCity",
+            "label": "Сложные и многогородские поездки",
+            "cells": [
+              "—",
+              "—",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "dedicatedCoordination",
+            "label": "Выделенная координация",
+            "cells": [
+              "—",
+              "—",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "supplierRateConfig",
+            "label": "Настройка тарифов поставщика/компании",
+            "cells": [
+              "—",
+              "—",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "customRoles",
+            "label": "Индивидуальные роли",
+            "cells": [
+              "—",
+              "—",
+              "—",
+              "✓"
+            ]
+          },
+          {
+            "key": "integrations",
+            "label": "Интеграции",
+            "cells": [
+              "—",
+              "—",
+              "—",
+              "✓"
+            ]
+          },
+          {
+            "key": "serviceGovernance",
+            "label": "Управление уровнем обслуживания",
+            "cells": [
+              "Настроено согласно принципу добросовестного использования",
+              "Настроено согласно принципу добросовестного использования",
+              "Настроено согласно принципу добросовестного использования",
+              "Индивидуально для Enterprise"
+            ]
+          }
+        ]
+      }
+    },
+    "en": {
+      "personal": {
+        "title": "Personal plan comparison",
+        "featureLabel": "Feature",
+        "planNames": [
+          "Smart",
+          "Plus",
+          "Premium",
+          "Black"
+        ],
+        "rows": [
+          {
+            "key": "bestFor",
+            "label": "Best for",
+            "cells": [
+              "First-time members and occasional travellers",
+              "Frequent-travelling families and multi-destination planners",
+              "Complex itineraries and higher service expectations",
+              "VIP, executive and last-minute travel — application-based"
+            ]
+          },
+          {
+            "key": "memberRateAccess",
+            "label": "Member-rate access",
+            "cells": [
+              "Access to VOYARA member-access rates and preferred offers where available.",
+              "Access to VOYARA member-access rates and preferred offers where available.",
+              "Access to premium hotel categories and value-added benefits where available.",
+              "The widest reasonable inventory search via bespoke sourcing; not guaranteed, but researched with top priority."
+            ]
+          },
+          {
+            "key": "hotelFlightSourcing",
+            "label": "Hotel and flight sourcing",
+            "cells": [
+              "Hotel-booking coordination · Flight-ticket search and coordination",
+              "Hotel and flight coordination · Visa, insurance, transfer, eSIM and activity coordination",
+              "Premium-hotel coordination · Restaurant, activity and transfer coordination · Disruption/rebooking coordination",
+              "Bespoke hotel and flight sourcing · Airport and VIP transfer coordination · Dining and experience coordination"
+            ]
+          },
+          {
+            "key": "searchDepth",
+            "label": "Search depth",
+            "cells": [
+              "Baseline comparison of hotel, flight and transfer options",
+              "Expanded search and deeper fare comparison",
+              "Deep search across premium categories and complex-itinerary handling",
+              "Full bespoke research across difficult-to-source inventory"
+            ]
+          },
+          {
+            "key": "humanReview",
+            "label": "Human review",
+            "cells": [
+              "Standard",
+              "Priority",
+              "Priority",
+              "Named manager"
+            ]
+          },
+          {
+            "key": "multiDestination",
+            "label": "Family and multi-destination planning",
+            "cells": [
+              "—",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "ancillaryCoordination",
+            "label": "Visa, insurance, transfer, eSIM, activities",
+            "cells": [
+              "—",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "complexItinerary",
+            "label": "Premium and complex itinerary handling",
+            "cells": [
+              "—",
+              "—",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "conciergeLevel",
+            "label": "Concierge level",
+            "cells": [
+              "None",
+              "Standard",
+              "Managed",
+              "Named manager"
+            ]
+          },
+          {
+            "key": "servicePriority",
+            "label": "Service priority",
+            "cells": [
+              "Standard",
+              "Priority",
+              "Priority",
+              "Highest"
+            ]
+          },
+          {
+            "key": "aiReception",
+            "label": "24/7 AI reception",
+            "cells": [
+              "—",
+              "—",
+              "—",
+              "✓"
+            ]
+          },
+          {
+            "key": "namedManager",
+            "label": "Named travel manager",
+            "cells": [
+              "—",
+              "—",
+              "—",
+              "✓"
+            ]
+          },
+          {
+            "key": "annualSaving",
+            "label": "Annual saving",
+            "cells": [
+              "38 ₼",
+              "78 ₼",
+              "138 ₼",
+              "598 ₼"
+            ]
+          },
+          {
+            "key": "humanApproval",
+            "label": "Human approval before booking and payment",
+            "cells": [
+              "✓",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          }
+        ]
+      },
+      "corporate": {
+        "title": "Corporate plan comparison",
+        "featureLabel": "Feature",
+        "planNames": [
+          "Starter",
+          "Standard",
+          "Professional",
+          "Enterprise"
+        ],
+        "rows": [
+          {
+            "key": "requestIntake",
+            "label": "Travel-request intake",
+            "cells": [
+              "✓",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "hotelFareSourcing",
+            "label": "Hotel and fare sourcing",
+            "cells": [
+              "Business-hotel coordination · Basic flight coordination",
+              "Expanded hotel/flight coordination · Policy-aware change handling",
+              "Executive hotel/flight coordination · Multi-city itinerary coordination · Dedicated corporate support",
+              "Custom-configured hotel/flight governance · Agreed supplier integrations"
+            ]
+          },
+          {
+            "key": "approvals",
+            "label": "Approval workflow",
+            "cells": [
+              "✓",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "travellerProfiles",
+            "label": "Traveller profiles",
+            "cells": [
+              "—",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "policyGovernance",
+            "label": "Policy governance",
+            "cells": [
+              "—",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "reporting",
+            "label": "Reporting",
+            "cells": [
+              "✓",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "dashboard",
+            "label": "Company dashboard",
+            "cells": [
+              "—",
+              "✓",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "executiveTravel",
+            "label": "Executive travel handling",
+            "cells": [
+              "—",
+              "—",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "complexMultiCity",
+            "label": "Complex and multi-city travel",
+            "cells": [
+              "—",
+              "—",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "dedicatedCoordination",
+            "label": "Dedicated coordination",
+            "cells": [
+              "—",
+              "—",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "supplierRateConfig",
+            "label": "Supplier/company-rate configuration",
+            "cells": [
+              "—",
+              "—",
+              "✓",
+              "✓"
+            ]
+          },
+          {
+            "key": "customRoles",
+            "label": "Custom roles",
+            "cells": [
+              "—",
+              "—",
+              "—",
+              "✓"
+            ]
+          },
+          {
+            "key": "integrations",
+            "label": "Integrations",
+            "cells": [
+              "—",
+              "—",
+              "—",
+              "✓"
+            ]
+          },
+          {
+            "key": "serviceGovernance",
+            "label": "Service-level governance",
+            "cells": [
+              "Configured according to fair use",
+              "Configured according to fair use",
+              "Configured according to fair use",
+              "Custom for Enterprise"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "journey": {
+    "az": {
+      "title": "Üzvlük dəyər səyahəti",
+      "intro": "Üzvlüyünüz VOYARA-ya sizin adınızdan davamlı işləmək icazəsi verir — mövcud tarifləri axtarır, təklifləri müqayisə edir, səyahət variantlarını hazırlayır, marşrutu əlaqələndirir və vacib qərarları insan mütəxəssisinə yönləndirir.",
+      "operatingPrinciple": "Süni intellekt hazırlayır. İnsan təsdiqləyir. VOYARA icra edir.",
+      "fieldLabels": {
+        "provides": "Sizin verdiyiniz",
+        "prepares": "VOYARA hazırlayır",
+        "value": "Kommersiya dəyəri",
+        "approval": "Təsdiq nöqtəsi",
+        "next": "Növbəti addım"
+      },
+      "steps": [
+        {
+          "title": "Tələb",
+          "customerProvides": "Təyinat, tarixlər, səyahətçi sayı və büdcə çərçivəsi kimi əsas səyahət niyyətini bildirirsiniz — WhatsApp, Trip Wizard və ya sifariş masası vasitəsilə.",
+          "voyaraPrepares": "Süni intellekt tələbi qəbul edir, əskik detalları aydınlaşdırır və işi araşdırma üçün hazırlayır.",
+          "commercialValue": "Ayrı-ayrı sayt və agentliklərlə əlaqə saxlamaq əvəzinə, tək müraciətlə bütün prosesi başladırsınız.",
+          "approvalPoint": "Bu mərhələdə insan təsdiqi tələb olunmur — tələbin qəbulu risksizdir.",
+          "nextStep": "Süni intellekt araşdırmaya başlayır."
+        },
+        {
+          "title": "AI araşdırması",
+          "customerProvides": "Əlavə heç nə tələb olunmur; seçimləriniz və əvvəlki tərcihləriniz nəzərə alınır.",
+          "voyaraPrepares": "Süni intellekt təyinat, otel, uçuş və transfer variantlarını araşdırır və üzv üçün mövcud olan tarifləri toplayır.",
+          "commercialValue": "Mövcud VOYARA üzv tariflərinə və mövcud olduqda üstünlük verilən təkliflərə çıxış əldə edirsiniz — bunu tək başına tapmaq vaxt aparardı.",
+          "approvalPoint": "Yenə də insan təsdiqi tələb olunmur — bu, hazırlıq mərhələsidir, öhdəlik deyil.",
+          "nextStep": "Toplanan variantlar müqayisə üçün təqdim olunur."
+        },
+        {
+          "title": "Mövcud tariflərin müqayisəsi",
+          "customerProvides": "Prioritetləriniz haqqında rəy verə bilərsiniz (məsələn, qiymət, məkan, çeviklik).",
+          "voyaraPrepares": "Süni intellekt mövcud ictimai, üzv və mövcud olduqda özəl tarifləri geniş şəkildə müqayisə edir.",
+          "commercialValue": "Hər bir sayta tək-tək baxmaq əvəzinə, geniş təchizatçı müqayisəsindən faydalanırsınız.",
+          "approvalPoint": "Hələ öhdəlik yoxdur — bu, sizə göstərilməzdən əvvəl son yoxlamadır.",
+          "nextStep": "Ən uyğun variantlar insan yoxlamasına göndərilir."
+        },
+        {
+          "title": "İnsan yoxlaması",
+          "customerProvides": "Heç nə — bu addım tamamilə arxa planda baş verir.",
+          "voyaraPrepares": "VOYARA komandasından real insan hazırlanan təklifi yoxlayır, dəqiqliyi təsdiqləyir və lazım olduqda düzəliş edir.",
+          "commercialValue": "Yalnız avtomatlaşdırılmış nəticə deyil, insan tərəfindən yoxlanılmış təklif alırsınız — bu, VOYARA-nın \"AI hazırlayır, insan təsdiqləyir\" prinsipinin əsasıdır.",
+          "approvalPoint": "Bu, birinci insan yoxlama nöqtəsidir — sizə göstərilmədən əvvəl.",
+          "nextStep": "Yoxlanılmış təklif sizə təqdim olunur."
+        },
+        {
+          "title": "Təsdiq",
+          "customerProvides": "Yekun qiymət və şərtləri nəzərdən keçirir və rəsmi qərarınızı verirsiniz.",
+          "voyaraPrepares": "VOYARA yekun qiyməti, şərtləri və mövcudluq qeydlərini aydın şəkildə təqdim edir.",
+          "commercialValue": "Sürprizsiz, tam şəffaf qərar qəbul edirsiniz — yekun qiymət təsdiqdən əvvəl göstərilir.",
+          "approvalPoint": "Bu, sizin öz təsdiqinizdir — ödəniş və ya rezervasiya yalnız sizin razılığınızdan sonra baş verir.",
+          "nextStep": "Rezervasiya əməliyyatları başlayır."
+        },
+        {
+          "title": "Rezervasiya əlaqələndirilməsi",
+          "customerProvides": "Tələb olunan sənədləşdirmə və ya ödəniş məlumatını təqdim edirsiniz.",
+          "voyaraPrepares": "VOYARA otel, uçuş və əlavə xidmətlərin (viza, sığorta, transfer) rezervasiyasını əlaqələndirir və hər addımı sizinlə paylaşır.",
+          "commercialValue": "Ayrı-ayrı təchizatçılarla özünüz danışmaq əvəzinə, tək əlaqə nöqtəsindən tam əlaqələndirmə alırsınız.",
+          "approvalPoint": "Riskli və ya dəyişiklik tələb edən əməliyyatlar yenidən insan təsdiqindən keçir.",
+          "nextStep": "Səyahətiniz Trip Room-da təşkil olunur."
+        },
+        {
+          "title": "Trip Room",
+          "customerProvides": "Heç nə əlavə tələb olunmur — Trip Room avtomatik yaradılır.",
+          "voyaraPrepares": "Bütün sənədlər, marşrut, rezervasiya təsdiqləri və əlaqə nöqtələri bir yerdə toplanır.",
+          "commercialValue": "Səyahətinizin bütün detallarına istənilən vaxt tək yerdən çıxış əldə edirsiniz.",
+          "approvalPoint": "Hər hansı dəyişiklik tələbi yenə insan təsdiqindən keçir.",
+          "nextStep": "Səyahət boyunca davamlı dəstək başlayır."
+        },
+        {
+          "title": "Davamlı dəstək",
+          "customerProvides": "Sual, dəyişiklik tələbi və ya təcili vəziyyət barədə məlumat verirsiniz.",
+          "voyaraPrepares": "Süni intellekt son tarixləri və dəyişiklikləri izləyir; insan komandası pozuntu, təxirə salma və ya təcili halları idarə edir.",
+          "commercialValue": "Səyahət boyu tək başına qalmırsınız — üzvlük səviyyənizə uyğun dəstək davam edir.",
+          "approvalPoint": "Ödəniş tələb edən və ya rezervasiyaya təsir edən hər dəyişiklik insan təsdiqindən keçir.",
+          "nextStep": "Növbəti səyahətiniz üçün seçimləriniz və tarixçəniz saxlanılır."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Путь ценности членства",
+      "intro": "Ваше членство даёт VOYARA право непрерывно работать от вашего имени — искать доступные тарифы, сравнивать предложения, готовить варианты поездки, координировать маршрут и передавать важные решения человеку-эксперту.",
+      "operatingPrinciple": "ИИ готовит. Человек подтверждает. VOYARA исполняет.",
+      "fieldLabels": {
+        "provides": "Вы предоставляете",
+        "prepares": "VOYARA готовит",
+        "value": "Коммерческая ценность",
+        "approval": "Точка подтверждения",
+        "next": "Следующий шаг"
+      },
+      "steps": [
+        {
+          "title": "Запрос",
+          "customerProvides": "Вы сообщаете основное намерение поездки — направление, даты, число путешественников и бюджетные рамки — через WhatsApp, Trip Wizard или стол заказов.",
+          "voyaraPrepares": "ИИ принимает запрос, уточняет недостающие детали и готовит его к исследованию.",
+          "commercialValue": "Вместо обращения на отдельные сайты и в агентства вы запускаете весь процесс одним обращением.",
+          "approvalPoint": "На этом этапе подтверждение человеком не требуется — приём запроса безрисковый.",
+          "nextStep": "ИИ начинает исследование."
+        },
+        {
+          "title": "Исследование ИИ",
+          "customerProvides": "Ничего дополнительного не требуется; учитываются ваши предпочтения и предыдущий выбор.",
+          "voyaraPrepares": "ИИ исследует варианты направления, отеля, рейса и трансфера и собирает доступные для участника тарифы.",
+          "commercialValue": "Вы получаете доступ к доступным тарифам VOYARA для участников и, где возможно, к предпочтительным предложениям — самостоятельный поиск этого занял бы много времени.",
+          "approvalPoint": "Подтверждение человеком по-прежнему не требуется — это этап подготовки, а не обязательство.",
+          "nextStep": "Собранные варианты передаются для сравнения."
+        },
+        {
+          "title": "Сравнение доступных тарифов",
+          "customerProvides": "Вы можете указать приоритеты (например, цена, расположение, гибкость).",
+          "voyaraPrepares": "ИИ широко сравнивает доступные публичные, для участников и, где возможно, частные тарифы.",
+          "commercialValue": "Вместо просмотра каждого сайта по отдельности вы получаете выгоду от широкого сравнения поставщиков.",
+          "approvalPoint": "Обязательств пока нет — это финальная проверка перед показом вам.",
+          "nextStep": "Наиболее подходящие варианты передаются на проверку человеку."
+        },
+        {
+          "title": "Проверка человеком",
+          "customerProvides": "Ничего — этот шаг полностью происходит за кулисами.",
+          "voyaraPrepares": "Реальный человек из команды VOYARA проверяет подготовленное предложение, подтверждает точность и при необходимости вносит правки.",
+          "commercialValue": "Вы получаете предложение, проверенное человеком, а не только автоматизированный результат — это основа принципа VOYARA \"ИИ готовит, человек подтверждает\".",
+          "approvalPoint": "Это первая точка проверки человеком — до того, как предложение будет показано вам.",
+          "nextStep": "Проверенное предложение представляется вам."
+        },
+        {
+          "title": "Подтверждение",
+          "customerProvides": "Вы рассматриваете итоговую цену и условия и принимаете официальное решение.",
+          "voyaraPrepares": "VOYARA чётко представляет итоговую цену, условия и примечания о наличии.",
+          "commercialValue": "Вы принимаете решение без сюрпризов, при полной прозрачности — итоговая цена показывается до подтверждения.",
+          "approvalPoint": "Это ваше собственное подтверждение — оплата или бронирование происходит только после вашего согласия.",
+          "nextStep": "Начинается координация бронирования."
+        },
+        {
+          "title": "Координация бронирования",
+          "customerProvides": "Вы предоставляете необходимые документы или платёжные данные.",
+          "voyaraPrepares": "VOYARA координирует бронирование отеля, рейса и дополнительных услуг (виза, страхование, трансфер) и сообщает вам о каждом шаге.",
+          "commercialValue": "Вместо самостоятельных переговоров с отдельными поставщиками вы получаете полную координацию из одной точки контакта.",
+          "approvalPoint": "Рискованные операции или операции, требующие изменений, снова проходят подтверждение человеком.",
+          "nextStep": "Ваша поездка организуется в Trip Room."
+        },
+        {
+          "title": "Trip Room",
+          "customerProvides": "Дополнительно ничего не требуется — Trip Room создаётся автоматически.",
+          "voyaraPrepares": "Все документы, маршрут, подтверждения бронирования и контактные точки собираются в одном месте.",
+          "commercialValue": "Вы получаете доступ ко всем деталям поездки из одного места в любое время.",
+          "approvalPoint": "Любой запрос на изменение снова проходит подтверждение человеком.",
+          "nextStep": "Начинается непрерывная поддержка на протяжении поездки."
+        },
+        {
+          "title": "Постоянная поддержка",
+          "customerProvides": "Вы сообщаете о вопросах, запросах на изменение или срочных ситуациях.",
+          "voyaraPrepares": "ИИ отслеживает сроки и изменения; команда людей обрабатывает сбои, задержки или экстренные случаи.",
+          "commercialValue": "Вы не остаётесь одни на протяжении поездки — поддержка продолжается в соответствии с уровнем вашего членства.",
+          "approvalPoint": "Любое изменение, требующее оплаты или влияющее на бронирование, проходит подтверждение человеком.",
+          "nextStep": "Ваши предпочтения и история сохраняются для следующей поездки."
+        }
+      ]
+    },
+    "en": {
+      "title": "Member-value journey",
+      "intro": "Your membership gives VOYARA permission to work continuously on your behalf — searching available rates, comparing offers, preparing travel options, coordinating the journey, and escalating important decisions to a human expert.",
+      "operatingPrinciple": "AI prepares. The human approves. VOYARA executes.",
+      "fieldLabels": {
+        "provides": "You provide",
+        "prepares": "VOYARA prepares",
+        "value": "Commercial value",
+        "approval": "Approval point",
+        "next": "Next step"
+      },
+      "steps": [
+        {
+          "title": "Request",
+          "customerProvides": "You share the basic travel intent — destination, dates, traveller count and budget range — via WhatsApp, the Trip Wizard, or the request desk.",
+          "voyaraPrepares": "AI receives the request, clarifies any missing detail, and prepares it for research.",
+          "commercialValue": "Instead of contacting separate sites and agencies, you start the whole process with a single request.",
+          "approvalPoint": "No human approval is required at this stage — intake carries no risk.",
+          "nextStep": "AI begins researching."
+        },
+        {
+          "title": "AI research",
+          "customerProvides": "Nothing further is required; your saved preferences and prior choices are taken into account.",
+          "voyaraPrepares": "AI researches destination, hotel, flight and transfer options and gathers the rates available to members.",
+          "commercialValue": "You gain access to available VOYARA member rates and preferred offers where available — finding these on your own would take considerable time.",
+          "approvalPoint": "Human approval is still not required — this is a preparation stage, not a commitment.",
+          "nextStep": "The gathered options move into comparison."
+        },
+        {
+          "title": "Available-rate comparison",
+          "customerProvides": "You can indicate priorities (for example, price, location, flexibility).",
+          "voyaraPrepares": "AI broadly compares available public, member and, where available, private rates.",
+          "commercialValue": "Instead of checking every site individually, you benefit from broader supplier comparison.",
+          "approvalPoint": "Still no commitment — this is the final check before anything is shown to you.",
+          "nextStep": "The best-fitting options are sent for human review."
+        },
+        {
+          "title": "Human review",
+          "customerProvides": "Nothing — this step happens entirely behind the scenes.",
+          "voyaraPrepares": "A real member of the VOYARA team reviews the prepared proposal, confirms accuracy, and makes corrections where needed.",
+          "commercialValue": "You receive a human-reviewed recommendation, not just an automated result — this is the foundation of VOYARA's \"AI prepares, human approves\" principle.",
+          "approvalPoint": "This is the first human-review checkpoint — before anything reaches you.",
+          "nextStep": "The reviewed proposal is presented to you."
+        },
+        {
+          "title": "Approval",
+          "customerProvides": "You review the final price and conditions and make your formal decision.",
+          "voyaraPrepares": "VOYARA presents the final price, conditions, and any availability notes clearly.",
+          "commercialValue": "You make a decision with no surprises and full transparency — final price and conditions are shown before approval.",
+          "approvalPoint": "This is your own approval — payment or booking only proceeds after your consent.",
+          "nextStep": "Booking coordination begins."
+        },
+        {
+          "title": "Booking coordination",
+          "customerProvides": "You provide any required documentation or payment information.",
+          "voyaraPrepares": "VOYARA coordinates hotel, flight and ancillary bookings (visa, insurance, transfer) and keeps you informed at every step.",
+          "commercialValue": "Instead of negotiating with each supplier yourself, you get full coordination from a single point of contact.",
+          "approvalPoint": "Risk-sensitive or change-requiring actions go through human approval again.",
+          "nextStep": "Your trip is organized in the Trip Room."
+        },
+        {
+          "title": "Trip Room",
+          "customerProvides": "Nothing further is required — the Trip Room is created automatically.",
+          "voyaraPrepares": "All documents, the itinerary, booking confirmations and contact points are gathered in one place.",
+          "commercialValue": "You get access to every detail of your trip from one place, at any time.",
+          "approvalPoint": "Any change request again goes through human approval.",
+          "nextStep": "Ongoing support begins for the duration of the trip."
+        },
+        {
+          "title": "Ongoing support",
+          "customerProvides": "You report questions, change requests, or urgent situations.",
+          "voyaraPrepares": "AI tracks deadlines and changes; the human team handles disruptions, delays, or urgent cases.",
+          "commercialValue": "You're not on your own during the trip — support continues at a level matched to your membership.",
+          "approvalPoint": "Any change involving payment or affecting a booking goes through human approval.",
+          "nextStep": "Your preferences and history are saved for your next journey."
+        }
+      ]
+    }
+  },
+  "agents": {
+    "az": {
+      "title": "VOYARA AI agent sistemi",
+      "intro": "Üzvlüyünüzün arxasında işləyən agentlər — hər biri hazırlıq işini görür, insan mütəxəssis təsdiqləyir.",
+      "fieldLabels": {
+        "benefit": "Üzvlük faydası",
+        "prepares": "Hazırladığı",
+        "automates": "Təhlükəsiz avtomatlaşdırdığı",
+        "approval": "İnsan təsdiqi tələb olunan",
+        "channel": "Kanal",
+        "status": "Status"
+      },
+      "agents": [
+        {
+          "key": "VOICE_RECEPTION",
+          "name": "Səs Qəbulu Agenti",
+          "memberBenefit": "Zəngləriniz 24/7 qəbul olunur, əsas məlumat toplanır və lazım olduqda insan komandasına yönləndirilir.",
+          "prepares": "Zəng məzmununu qeyd edir və aşağı riskli sorğular üçün cavab layihəsi hazırlayır.",
+          "safelyAutomates": "Adi sualların ilkin qeydə alınmasını və məlumat toplanmasını.",
+          "requiresApproval": "Hər hansı rezervasiya, ödəniş və ya riskli əməliyyat tələb edən zəng insan komandasına ötürülür.",
+          "channel": "Telefon / səs",
+          "status": "SIMULATED",
+          "statusLabel": "Simulyasiya rejimində"
+        },
+        {
+          "key": "SALES",
+          "name": "Satış Agenti",
+          "memberBenefit": "Sorğunuz araşdırılır və mütəxəssis komandası üçün hazır təklif layihəsi hazırlanır.",
+          "prepares": "Təyinat, tarif və təklif araşdırmasını; təqib mesajlarının layihəsini.",
+          "safelyAutomates": "Lead-lərin qaydaya əsaslanan bölüşdürülməsini və planlaşdırılmış xatırlatmaları.",
+          "requiresApproval": "Hər hansı mesajın müştəriyə göndərilməsi və kommersiya öhdəliyi insan tərəfindən təsdiqlənir.",
+          "channel": "WhatsApp / Instagram / veb",
+          "status": "DETERMINISTIC",
+          "statusLabel": "Qaydaya əsaslanan (deterministik)"
+        },
+        {
+          "key": "CONCIERGE",
+          "name": "Konsyerj Agenti",
+          "memberBenefit": "Premium və Black üzvlər üçün planlaşdırılan davamlı səyahət koordinasiyası.",
+          "prepares": "Gələcəkdə: restoran, fəaliyyət və xüsusi tələb koordinasiyasını.",
+          "safelyAutomates": "Hazırda tətbiq olunmuş avtomatlaşdırma yoxdur.",
+          "requiresApproval": "Bütün konsyerj tələbləri insan komandası tərəfindən icra olunur.",
+          "channel": "WhatsApp / Trip Room",
+          "status": "ACTIVATION_PENDING",
+          "statusLabel": "Aktivləşdirmə gözlənilir"
+        },
+        {
+          "key": "OPERATIONS",
+          "name": "Əməliyyat Agenti",
+          "memberBenefit": "Son tarixlər və dəyişikliklər arxa planda izlənilir ki, heç nə gözdən qaçmasın.",
+          "prepares": "Təchizatçı cavabı, bilet son tarixi və sənəd yoxlama siyahısı üçün xatırlatmaları.",
+          "safelyAutomates": "Son tarix izlənməsini və daxili eskalasiya qeydlərinin yaradılmasını.",
+          "requiresApproval": "Pozuntu, ləğvetmə və ya təcili vəziyyət insan komandası tərəfindən idarə olunur.",
+          "channel": "Daxili əməliyyat paneli",
+          "status": "DETERMINISTIC",
+          "statusLabel": "Qaydaya əsaslanan (deterministik)"
+        },
+        {
+          "key": "CORPORATE_DESK",
+          "name": "Korporativ Masa Agenti",
+          "memberBenefit": "Planlaşdırılan: korporativ tələblərin mərkəzləşdirilmiş qəbulu və təsdiq iş axını.",
+          "prepares": "Gələcəkdə: işçi tələbi qəbulunu və menecer təsdiqinə hazırlığı.",
+          "safelyAutomates": "Hazırda tətbiq olunmuş avtomatlaşdırma yoxdur.",
+          "requiresApproval": "Bütün korporativ təsdiqlər müəyyən edilmiş menecer tərəfindən verilir.",
+          "channel": "Korporativ portal",
+          "status": "ACTIVATION_PENDING",
+          "statusLabel": "Aktivləşdirmə gözlənilir"
+        },
+        {
+          "key": "SMM_CONTENT",
+          "name": "SMM və Kontent Agenti",
+          "memberBenefit": "Marka məzmunu qaydaya uyğun hazırlanır, lakin yalnız insan təsdiqi ilə dərc olunur.",
+          "prepares": "Kontent təqvimi qeydlərini və AZ/RU/EN məzmun layihələrini.",
+          "safelyAutomates": "Məzmun layihəsi yaradılmasını və planlaşdırma qeydlərini.",
+          "requiresApproval": "Faktiki dərc etmə yalnız insan təsdiqindən sonra baş verir (hazırda dərc funksiyası tətbiq olunmayıb).",
+          "channel": "Instagram / veb",
+          "status": "DETERMINISTIC",
+          "statusLabel": "Qaydaya əsaslanan (deterministik)"
+        },
+        {
+          "key": "MARKETING_STRATEGIST",
+          "name": "Marketinq Strateji Agenti",
+          "memberBenefit": "Planlaşdırılan: kampaniya strategiyası və büdcə tövsiyələri.",
+          "prepares": "Gələcəkdə: bazar araşdırması və strateji tövsiyələri.",
+          "safelyAutomates": "Hazırda tətbiq olunmuş avtomatlaşdırma yoxdur.",
+          "requiresApproval": "Bütün strateji qərarlar founder/idarəetmə tərəfindən verilir.",
+          "channel": "Daxili idarəetmə paneli",
+          "status": "ACTIVATION_PENDING",
+          "statusLabel": "Aktivləşdirmə gözlənilir"
+        },
+        {
+          "key": "COO",
+          "name": "COO Agenti",
+          "memberBenefit": "Əməliyyat sağlamlığı davamlı izlənilir ki, problemlər erkən aşkarlansın.",
+          "prepares": "Gündəlik əməliyyat xülasəsini və məsləhət xarakterli təklifləri.",
+          "safelyAutomates": "Xülasə hesabatının hazırlanmasını.",
+          "requiresApproval": "Hər hansı təklif olunan əməliyyat dəyişikliyi insan rəhbərliyi tərəfindən qərarlaşdırılır.",
+          "channel": "Daxili idarəetmə paneli",
+          "status": "DETERMINISTIC",
+          "statusLabel": "Qaydaya əsaslanan (deterministik)"
+        }
+      ]
+    },
+    "ru": {
+      "title": "Система ИИ-агентов VOYARA",
+      "intro": "Агенты, работающие за вашим членством, — каждый выполняет подготовительную работу, а подтверждает человек-эксперт.",
+      "fieldLabels": {
+        "benefit": "Выгода для участника",
+        "prepares": "Что готовит",
+        "automates": "Что безопасно автоматизирует",
+        "approval": "Требует подтверждения человеком",
+        "channel": "Канал",
+        "status": "Статус"
+      },
+      "agents": [
+        {
+          "key": "VOICE_RECEPTION",
+          "name": "Агент голосового приёма",
+          "memberBenefit": "Ваши звонки принимаются круглосуточно, собирается основная информация и при необходимости передаётся команде людей.",
+          "prepares": "Фиксирует содержание звонка и готовит проект ответа для запросов низкого риска.",
+          "safelyAutomates": "Первичную фиксацию обычных вопросов и сбор информации.",
+          "requiresApproval": "Любой звонок, требующий бронирования, оплаты или рискованного действия, передаётся команде людей.",
+          "channel": "Телефон / голос",
+          "status": "SIMULATED",
+          "statusLabel": "В режиме симуляции"
+        },
+        {
+          "key": "SALES",
+          "name": "Агент продаж",
+          "memberBenefit": "Ваш запрос исследуется, и для команды экспертов готовится проект предложения.",
+          "prepares": "Исследование направления, тарифа и предложения; проекты писем для последующего контакта.",
+          "safelyAutomates": "Распределение лидов на основе правил и запланированные напоминания.",
+          "requiresApproval": "Отправка любого сообщения клиенту и коммерческое обязательство подтверждаются человеком.",
+          "channel": "WhatsApp / Instagram / веб",
+          "status": "DETERMINISTIC",
+          "statusLabel": "Детерминированное (на основе правил)"
+        },
+        {
+          "key": "CONCIERGE",
+          "name": "Агент консьержа",
+          "memberBenefit": "Запланированная непрерывная координация поездки для участников Premium и Black.",
+          "prepares": "В будущем: координацию ресторанов, активностей и особых запросов.",
+          "safelyAutomates": "На данный момент реализованной автоматизации нет.",
+          "requiresApproval": "Все запросы к консьержу выполняются командой людей.",
+          "channel": "WhatsApp / Trip Room",
+          "status": "ACTIVATION_PENDING",
+          "statusLabel": "Ожидает активации"
+        },
+        {
+          "key": "OPERATIONS",
+          "name": "Агент операций",
+          "memberBenefit": "Сроки и изменения отслеживаются за кулисами, чтобы ничего не упустить.",
+          "prepares": "Напоминания об ответе поставщика, сроке выписки билета и чек-листе документов.",
+          "safelyAutomates": "Отслеживание сроков и создание внутренних записей эскалации.",
+          "requiresApproval": "Сбои, отмены или экстренные ситуации обрабатываются командой людей.",
+          "channel": "Внутренняя панель операций",
+          "status": "DETERMINISTIC",
+          "statusLabel": "Детерминированное (на основе правил)"
+        },
+        {
+          "key": "CORPORATE_DESK",
+          "name": "Агент корпоративного отдела",
+          "memberBenefit": "Запланировано: централизованный приём корпоративных заявок и процесс утверждения.",
+          "prepares": "В будущем: приём заявок сотрудников и подготовку к утверждению менеджером.",
+          "safelyAutomates": "На данный момент реализованной автоматизации нет.",
+          "requiresApproval": "Все корпоративные утверждения выдаёт назначенный менеджер.",
+          "channel": "Корпоративный портал",
+          "status": "ACTIVATION_PENDING",
+          "statusLabel": "Ожидает активации"
+        },
+        {
+          "key": "SMM_CONTENT",
+          "name": "Агент SMM и контента",
+          "memberBenefit": "Контент бренда готовится по правилам, но публикуется только после подтверждения человеком.",
+          "prepares": "Записи контент-календаря и проекты контента на AZ/RU/EN.",
+          "safelyAutomates": "Создание черновиков контента и записей планирования.",
+          "requiresApproval": "Фактическая публикация происходит только после подтверждения человеком (функция публикации пока не реализована).",
+          "channel": "Instagram / веб",
+          "status": "DETERMINISTIC",
+          "statusLabel": "Детерминированное (на основе правил)"
+        },
+        {
+          "key": "MARKETING_STRATEGIST",
+          "name": "Агент маркетинговой стратегии",
+          "memberBenefit": "Запланировано: стратегия кампаний и рекомендации по бюджету.",
+          "prepares": "В будущем: исследование рынка и стратегические рекомендации.",
+          "safelyAutomates": "На данный момент реализованной автоматизации нет.",
+          "requiresApproval": "Все стратегические решения принимает учредитель/руководство.",
+          "channel": "Внутренняя панель управления",
+          "status": "ACTIVATION_PENDING",
+          "statusLabel": "Ожидает активации"
+        },
+        {
+          "key": "COO",
+          "name": "Агент COO",
+          "memberBenefit": "Операционное состояние отслеживается непрерывно, чтобы проблемы выявлялись рано.",
+          "prepares": "Ежедневную операционную сводку и рекомендательные предложения.",
+          "safelyAutomates": "Подготовку сводного отчёта.",
+          "requiresApproval": "Любое предложенное операционное изменение решает руководство.",
+          "channel": "Внутренняя панель управления",
+          "status": "DETERMINISTIC",
+          "statusLabel": "Детерминированное (на основе правил)"
+        }
+      ]
+    },
+    "en": {
+      "title": "VOYARA AI agent system",
+      "intro": "The agents working behind your membership — each does the preparation work, a human expert approves.",
+      "fieldLabels": {
+        "benefit": "Member benefit",
+        "prepares": "What it prepares",
+        "automates": "What it safely automates",
+        "approval": "What requires human approval",
+        "channel": "Channel",
+        "status": "Status"
+      },
+      "agents": [
+        {
+          "key": "VOICE_RECEPTION",
+          "name": "Voice Reception Agent",
+          "memberBenefit": "Your calls are received around the clock, key information is captured, and the call is routed to a human team when needed.",
+          "prepares": "Call-content capture and a draft response for low-risk requests.",
+          "safelyAutomates": "Initial logging of routine questions and information gathering.",
+          "requiresApproval": "Any call requiring booking, payment, or a risk-sensitive action is handed to the human team.",
+          "channel": "Phone / voice",
+          "status": "SIMULATED",
+          "statusLabel": "Simulated"
+        },
+        {
+          "key": "SALES",
+          "name": "Sales Agent",
+          "memberBenefit": "Your request is researched and a draft proposal is prepared for the expert team.",
+          "prepares": "Destination, rate and offer research; follow-up message drafts.",
+          "safelyAutomates": "Rule-based lead ownership assignment and scheduled reminders.",
+          "requiresApproval": "Sending any message to a customer and any commercial commitment is confirmed by a human.",
+          "channel": "WhatsApp / Instagram / web",
+          "status": "DETERMINISTIC",
+          "statusLabel": "Deterministic (rule-based)"
+        },
+        {
+          "key": "CONCIERGE",
+          "name": "Concierge Agent",
+          "memberBenefit": "Planned: ongoing trip coordination for Premium and Black members.",
+          "prepares": "Future: restaurant, activity and special-request coordination.",
+          "safelyAutomates": "No automation is implemented at this time.",
+          "requiresApproval": "All concierge requests are carried out by the human team.",
+          "channel": "WhatsApp / Trip Room",
+          "status": "ACTIVATION_PENDING",
+          "statusLabel": "Activation pending"
+        },
+        {
+          "key": "OPERATIONS",
+          "name": "Operations Agent",
+          "memberBenefit": "Deadlines and changes are tracked behind the scenes so nothing gets missed.",
+          "prepares": "Supplier-response, ticketing-deadline and document-checklist reminders.",
+          "safelyAutomates": "Deadline tracking and creation of internal escalation records.",
+          "requiresApproval": "Disruptions, cancellations, or emergencies are handled by the human team.",
+          "channel": "Internal operations console",
+          "status": "DETERMINISTIC",
+          "statusLabel": "Deterministic (rule-based)"
+        },
+        {
+          "key": "CORPORATE_DESK",
+          "name": "Corporate Desk Agent",
+          "memberBenefit": "Planned: centralized intake of corporate requests and an approval workflow.",
+          "prepares": "Future: employee travel-request intake and preparation for manager approval.",
+          "safelyAutomates": "No automation is implemented at this time.",
+          "requiresApproval": "All corporate approvals are issued by the designated manager.",
+          "channel": "Corporate portal",
+          "status": "ACTIVATION_PENDING",
+          "statusLabel": "Activation pending"
+        },
+        {
+          "key": "SMM_CONTENT",
+          "name": "SMM & Content Agent",
+          "memberBenefit": "Brand content is prepared to a consistent standard but only ever published after human approval.",
+          "prepares": "Content-calendar entries and AZ/RU/EN content drafts.",
+          "safelyAutomates": "Content-draft creation and scheduling records.",
+          "requiresApproval": "Actual publication only happens after human approval (a publish function is not implemented yet).",
+          "channel": "Instagram / web",
+          "status": "DETERMINISTIC",
+          "statusLabel": "Deterministic (rule-based)"
+        },
+        {
+          "key": "MARKETING_STRATEGIST",
+          "name": "Marketing Strategist Agent",
+          "memberBenefit": "Planned: campaign strategy and budget recommendations.",
+          "prepares": "Future: market research and strategic recommendations.",
+          "safelyAutomates": "No automation is implemented at this time.",
+          "requiresApproval": "All strategic decisions are made by the founder/leadership.",
+          "channel": "Internal admin console",
+          "status": "ACTIVATION_PENDING",
+          "statusLabel": "Activation pending"
+        },
+        {
+          "key": "COO",
+          "name": "COO Agent",
+          "memberBenefit": "Operational health is monitored continuously so issues surface early.",
+          "prepares": "A daily operations digest and advisory proposals.",
+          "safelyAutomates": "Preparation of the digest report.",
+          "requiresApproval": "Any proposed operational change is decided by human leadership.",
+          "channel": "Internal admin console",
+          "status": "DETERMINISTIC",
+          "statusLabel": "Deterministic (rule-based)"
+        }
+      ]
+    }
+  }
+}

@@ -9,6 +9,12 @@ export type PricedPlan = {
   displayName: string;
   monthly: string | null;
   annual: string | null;
+  /** From the authoritative membership catalogue (src/lib/membership-catalogue.ts).
+   *  Optional so PricedPlan stays usable anywhere pricing alone is needed. */
+  bestFor?: string;
+  benefits?: string[];
+  ctaLabel?: string;
+  inheritanceLabel?: string | null;
 };
 
 /** Personal + corporate membership pricing with a working monthly/annual selector.
@@ -60,6 +66,7 @@ export function MembershipPricing({
             <article className={`plan-v2${featured ? ' hot' : ''}${black ? ' black' : ''}`} key={plan.planCode}>
               {featured && <span className="plan-tag">{dictionary.landing.recommended}</span>}
               <span className="plan-nm">{plan.displayName}</span>
+              {plan.bestFor && <span className="plan-best-for">{plan.bestFor}</span>}
               <span className="plan-pr">
                 {price ?? '—'} ₼<span>/{unit}</span>
               </span>
@@ -67,11 +74,19 @@ export function MembershipPricing({
               <span className="plan-ann">
                 {plan.monthly ?? '—'} ₼/{dictionary.landing.monthly} · {plan.annual ?? '—'} ₼/{dictionary.landing.annually}
               </span>
+              {plan.inheritanceLabel && <span className="plan-inherit">{plan.inheritanceLabel}</span>}
+              {plan.benefits && plan.benefits.length > 0 && (
+                <ul className="plan-benefits">
+                  {plan.benefits.map((benefit) => (
+                    <li key={benefit}>{benefit}</li>
+                  ))}
+                </ul>
+              )}
               <Link
                 className={`btn btn-sm${featured ? ' btn-gold' : black ? ' btn-ghost-inverse' : ' btn-ghost'}`}
                 href={`/${locale}/trip-wizard`}
               >
-                {dictionary.landing.selectPlan}
+                {plan.ctaLabel ?? dictionary.landing.selectPlan}
               </Link>
             </article>
           );
@@ -92,13 +107,22 @@ export function MembershipPricing({
           {corporate.map((plan) => (
             <article className="plan-v2 corp2" key={plan.planCode}>
               <span className="plan-nm">{plan.displayName}</span>
+              {plan.bestFor && <span className="plan-best-for">{plan.bestFor}</span>}
               <span className="plan-pr plan-pr-corp">
                 {plan.monthly === null ? dictionary.landing.custom : `${plan.monthly} ₼`}
                 {plan.monthly !== null && <span>/{dictionary.landing.monthly}</span>}
               </span>
               <span className="plan-note">{dictionary.landing.planNotes[plan.planCode as keyof typeof dictionary.landing.planNotes]}</span>
+              {plan.inheritanceLabel && <span className="plan-inherit">{plan.inheritanceLabel}</span>}
+              {plan.benefits && plan.benefits.length > 0 && (
+                <ul className="plan-benefits">
+                  {plan.benefits.map((benefit) => (
+                    <li key={benefit}>{benefit}</li>
+                  ))}
+                </ul>
+              )}
               <Link className="btn btn-em btn-sm" href={`/${locale}/trip-wizard`}>
-                {dictionary.landing.requestDemo}
+                {plan.ctaLabel ?? dictionary.landing.requestDemo}
               </Link>
             </article>
           ))}

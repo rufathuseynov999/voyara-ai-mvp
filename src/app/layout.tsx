@@ -8,7 +8,14 @@ export const metadata: Metadata = {
   applicationName: 'VOYARA AI',
   title: 'VOYARA AI — Travel Operating System',
   description: 'Human-controlled travel operations for Azerbaijan.',
-  manifest: '/manifest.webmanifest'
+  manifest: '/manifest.webmanifest',
+  metadataBase: new URL('https://voyara.ai'),
+  openGraph: {
+    title: 'VOYARA AI — Travel Operating System',
+    description: 'Human-controlled travel operations for Azerbaijan.',
+    siteName: 'VOYARA AI',
+    type: 'website'
+  }
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

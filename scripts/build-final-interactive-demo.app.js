@@ -2,6 +2,11 @@
 const CONTENT = __CONTENT_JSON__;
 const MOCK = __MOCK_JSON__;
 const PRICING = __PRICING_JSON__;
+const MEMBERSHIP_CATALOGUE = __MEMBERSHIP_CATALOGUE_JSON__;
+const ANNUAL_VALUE_FRAMING = __ANNUAL_VALUE_FRAMING_JSON__;
+const COMPARISON_DATA = __COMPARISON_JSON__;
+const JOURNEY_DATA = __JOURNEY_JSON__;
+const AGENTS_DATA = __AGENTS_JSON__;
 const NUM_LOCALE = { az: 'az-AZ', ru: 'ru-RU', en: 'en-US' };
 const SCREEN_ORDER = ['landing','wizard','proposal','approvals','founder','tripRoom','payment','crm'];
 let LOCALE = 'az';
@@ -119,6 +124,9 @@ function renderLanding(){
   document.getElementById('corporate-body').textContent = d.corporateBody;
   document.getElementById('corp-bullets').innerHTML = d.corporateBullets.map(b=>`<li>${b}</li>`).join('');
   renderCorpPlans();
+  renderComparisonTables();
+  renderMemberValueJourney();
+  renderAiAgentSection();
 
   document.getElementById('founder-kicker').textContent = d.founderKicker;
   document.getElementById('founder-name').textContent = d.founderName;
@@ -143,35 +151,121 @@ function renderLanding(){
 function renderPlans(){
   const d = t().landing;
   const unit = PERIOD === 'monthly' ? d.monthly : d.annually;
-  document.getElementById('plans-v2').innerHTML = PRICING.personal.map(p=>{
-    const price = PERIOD === 'monthly' ? p.monthly : p.annual;
-    const note = d.planNotes[p.code] || '';
-    const hotTag = p.hot ? `<span class="plan-tag">${d.recommended}</span>` : '';
-    const cls = 'plan-v2' + (p.hot ? ' hot' : '') + (p.code==='black' ? ' black' : '');
+  const catalogue = MEMBERSHIP_CATALOGUE[LOCALE].filter(p => p.category === 'PERSONAL');
+  document.getElementById('plans-v2').innerHTML = catalogue.map(p=>{
+    const price = PERIOD === 'monthly' ? p.pricing.monthly : p.pricing.annual;
+    const hotTag = p.slug === 'premium' ? `<span class="plan-tag">${d.recommended}</span>` : '';
+    const cls = 'plan-v2' + (p.slug === 'premium' ? ' hot' : '') + (p.slug === 'black' ? ' black' : '');
+    const inheritHtml = p.inheritanceLabel ? `<span class="plan-inherit">${p.inheritanceLabel}</span>` : '';
+    const benefitsHtml = `<ul class="plan-benefits">${p.benefits.map(b => `<li>${b}</li>`).join('')}</ul>`;
     return `<article class="${cls}">${hotTag}
-      <span class="plan-nm">${p.code}</span>
+      <span class="plan-nm">${p.name}</span>
+      <span class="plan-best-for">${p.bestFor}</span>
       <span class="plan-pr">${fmtPrice(price)} \u20bc<span>/${unit}</span></span>
-      <span class="plan-note">${note}</span>
-      <span class="plan-ann">${fmtPrice(p.monthly)} \u20bc/${d.monthly} \u00b7 ${fmtPrice(p.annual)} \u20bc/${d.annually}</span>
-      <button class="btn btn-gold btn-sm" onclick="goScreen('wizard')">${d.selectPlan}</button>
+      <span class="plan-ann">${fmtPrice(p.pricing.monthly)} \u20bc/${d.monthly} \u00b7 ${fmtPrice(p.pricing.annual)} \u20bc/${d.annually}</span>
+      ${p.pricing.annualSaving ? `<span class="plan-annual-saving">${ANNUAL_VALUE_FRAMING[LOCALE]} \u2014 ${fmtPrice(p.pricing.annualSaving)} \u20bc</span>` : ''}
+      ${inheritHtml}
+      ${benefitsHtml}
+      <button class="btn btn-gold btn-sm" onclick="goScreen('wizard')">${p.ctaLabel}</button>
     </article>`;
   }).join('');
 }
 
 function renderCorpPlans(){
   const d = t().landing;
-  document.getElementById('corpgrid').innerHTML = PRICING.corporate.map(p=>{
-    const note = d.planNotes[p.code] || '';
-    const priceHtml = p.monthly === null
+  const catalogue = MEMBERSHIP_CATALOGUE[LOCALE].filter(p => p.category === 'CORPORATE');
+  document.getElementById('corpgrid').innerHTML = catalogue.map(p=>{
+    const priceHtml = p.pricing.isCustomPriced
       ? `<span class="plan-pr">${d.custom}</span>`
-      : `<span class="plan-pr">${fmtPrice(p.monthly)} \u20bc<span>/${d.monthly}</span></span>`;
+      : `<span class="plan-pr">${fmtPrice(p.pricing.monthly)} \u20bc<span>/${d.monthly}</span></span>`;
+    const inheritHtml = p.inheritanceLabel ? `<span class="plan-inherit">${p.inheritanceLabel}</span>` : '';
+    const benefitsHtml = `<ul class="plan-benefits">${p.benefits.map(b => `<li>${b}</li>`).join('')}</ul>`;
     return `<article class="plan-v2 corp2">
-      <span class="plan-nm">${p.code}</span>
+      <span class="plan-nm">${p.name}</span>
+      <span class="plan-best-for">${p.bestFor}</span>
       ${priceHtml}
-      <span class="plan-note">${note}</span>
-      <button class="btn btn-em btn-sm" onclick="goScreen('wizard')">${d.requestDemo}</button>
+      ${inheritHtml}
+      ${benefitsHtml}
+      <button class="btn btn-em btn-sm" onclick="goScreen('wizard')">${p.ctaLabel}</button>
     </article>`;
   }).join('');
+}
+
+function renderComparisonTable(containerId, table){
+  const rowsHtml = table.rows.map(row => `<tr data-row-key="${row.key}"><th scope="row">${row.label}</th>${
+    row.cells.map(cell => `<td>${cell === true ? '\u2713' : cell === false ? '\u2014' : cell}</td>`).join('')
+  }</tr>`).join('');
+  const cardsHtml = table.planNames.map((name, planIdx) => {
+    const rowsForCard = table.rows.map(row => {
+      const cell = row.cells[planIdx];
+      const display = cell === true ? '\u2713' : cell === false ? '\u2014' : cell;
+      return `<div class="membership-comparison-card-row" data-row-key="${row.key}"><dt>${row.label}</dt><dd>${display}</dd></div>`;
+    }).join('');
+    return `<div class="membership-comparison-card"><h3>${name}</h3><dl>${rowsForCard}</dl></div>`;
+  }).join('');
+  document.getElementById(containerId).innerHTML = `
+    <h2>${table.title}</h2>
+    <div class="membership-comparison-scroll" role="region" aria-label="${table.title}" tabindex="0">
+      <table class="membership-comparison-table">
+        <thead><tr><th scope="col">${table.featureLabel}</th>${table.planNames.map(n=>`<th scope="col">${n}</th>`).join('')}</tr></thead>
+        <tbody>${rowsHtml}</tbody>
+      </table>
+    </div>
+    <div class="membership-comparison-cards">${cardsHtml}</div>`;
+}
+
+function renderComparisonTables(){
+  const data = COMPARISON_DATA[LOCALE];
+  renderComparisonTable('personal-comparison', data.personal);
+  renderComparisonTable('corporate-comparison', data.corporate);
+}
+
+function renderMemberValueJourney(){
+  const data = JOURNEY_DATA[LOCALE];
+  const stepsHtml = data.steps.map((step, i) => `
+    <li class="mvj-step">
+      <div class="mvj-step-header"><span class="mvj-step-number">${i+1}</span><h3>${step.title}</h3></div>
+      <dl class="mvj-step-detail">
+        <dt>${data.fieldLabels.provides}</dt><dd>${step.customerProvides}</dd>
+        <dt>${data.fieldLabels.prepares}</dt><dd>${step.voyaraPrepares}</dd>
+        <dt>${data.fieldLabels.value}</dt><dd>${step.commercialValue}</dd>
+        <dt>${data.fieldLabels.approval}</dt><dd>${step.approvalPoint}</dd>
+        <dt>${data.fieldLabels.next}</dt><dd>${step.nextStep}</dd>
+      </dl>
+    </li>`).join('');
+  document.getElementById('member-value-journey').innerHTML = `
+    <div class="section-heading">
+      <span class="eyebrow">VOYARA AI</span>
+      <h2 id="mvj-title">${data.title}</h2>
+      <p>${data.intro}</p>
+      <p class="mvj-principle">${data.operatingPrinciple}</p>
+    </div>
+    <ol class="mvj-steps">${stepsHtml}</ol>`;
+}
+
+function renderAiAgentSection(){
+  const data = AGENTS_DATA[LOCALE];
+  const cardsHtml = data.agents.map(agent => `
+    <article class="ai-agent-card">
+      <div class="ai-agent-card-header">
+        <h3>${agent.name}</h3>
+        <span class="ai-agent-status ai-agent-status-${agent.status.toLowerCase().replace(/_/g,'-')}">${agent.statusLabel}</span>
+      </div>
+      <p class="ai-agent-benefit">${agent.memberBenefit}</p>
+      <dl class="ai-agent-detail-list">
+        <dt>${data.fieldLabels.prepares}</dt><dd>${agent.prepares}</dd>
+        <dt>${data.fieldLabels.automates}</dt><dd>${agent.safelyAutomates}</dd>
+        <dt>${data.fieldLabels.approval}</dt><dd>${agent.requiresApproval}</dd>
+        <dt>${data.fieldLabels.channel}</dt><dd>${agent.channel}</dd>
+      </dl>
+    </article>`).join('');
+  document.getElementById('ai-agent-section').innerHTML = `
+    <div class="section-heading">
+      <span class="eyebrow">VOYARA AI</span>
+      <h2 id="ai-agent-title">${data.title}</h2>
+      <p>${data.intro}</p>
+    </div>
+    <div class="ai-agent-grid">${cardsHtml}</div>`;
 }
 
 function setPeriod(p){

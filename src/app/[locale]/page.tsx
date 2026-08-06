@@ -4,6 +4,18 @@ import { PlatformShowcase } from '@/components/platform-showcase';
 import { getDictionary } from '@/i18n/dictionaries';
 import { requireLocale } from '@/i18n/server';
 import { loadPublicMembershipCatalogue } from '@/server/administration/queries';
+import { MEMBERSHIP_CATALOGUE, getInheritanceLabel } from '@/lib/membership-catalogue';
+import { PersonalMembershipComparison, CorporateMembershipComparison } from '@/components/membership-comparison';
+import { MemberValueJourney } from '@/components/member-value-journey';
+import { AiAgentMembershipSection } from '@/components/ai-agent-membership-section';
+
+/** Look up the rich catalogue entry for a legacy lowercase plan code
+ *  (e.g. 'smart', 'starter') by matching against the catalogue's `slug`.
+ *  Pricing itself still comes exclusively from loadPublicMembershipCatalogue
+ *  / plan-authority — this only supplies descriptive content. */
+function catalogueEntryForSlug(planCode: string) {
+  return MEMBERSHIP_CATALOGUE.find((p) => p.slug === planCode) ?? null;
+}
 
 export default async function LandingPage({ params }: { params: Promise<{ locale: string }> }) {
   const locale = requireLocale((await params).locale);
@@ -18,12 +30,19 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
   const plansFromMinor = monthlyMinors.length > 0 ? Math.min(...monthlyMinors) : null;
   const fmtMinor = (minor: number | null) => (minor === null ? null : numberFormat.format(minor / 100));
   const priceOf = (plans: typeof membershipCatalogue) =>
-    plans.map((plan) => ({
-      planCode: plan.planCode,
-      displayName: plan.displayName,
-      monthly: fmtMinor(plan.monthlyMinor),
-      annual: fmtMinor(plan.annualMinor)
-    }));
+    plans.map((plan) => {
+      const richEntry = catalogueEntryForSlug(plan.planCode);
+      return {
+        planCode: plan.planCode,
+        displayName: plan.displayName,
+        monthly: fmtMinor(plan.monthlyMinor),
+        annual: fmtMinor(plan.annualMinor),
+        bestFor: richEntry?.bestFor[locale],
+        benefits: richEntry ? richEntry.additionalBenefits[locale] : undefined,
+        ctaLabel: richEntry?.ctaLabel[locale],
+        inheritanceLabel: richEntry ? getInheritanceLabel(richEntry.planCode, locale) : undefined
+      };
+    });
   const personalPriced = priceOf(personalMemberships);
   const corporatePriced = priceOf(corporateMemberships);
 
@@ -169,7 +188,13 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
           locale={locale}
           personal={personalPriced}
         />
+        <PersonalMembershipComparison locale={locale} />
+        <CorporateMembershipComparison locale={locale} />
       </section>
+
+      <MemberValueJourney locale={locale} />
+
+      <AiAgentMembershipSection locale={locale} />
 
       <section className="authority-section founder-section landing-founder-band" id="founder">
         <figure className="founder-figure">
