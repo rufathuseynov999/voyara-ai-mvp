@@ -108,7 +108,7 @@ background:radial-gradient(140% 100% at 86% -12%,#F8EDD1 0%,transparent 46%),rad
 
 /* ===== scope grid ===== */
 .scope-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;list-style:none;margin-top:22px}
-.scope-grid li{padding:12px 16px;border-radius:999px;background:var(--paper);border:1px solid var(--hairline);font-size:13.5px;font-weight:550;text-align:center}
+.scope-grid li{padding:12px 16px;border-radius:999px;background:var(--paper);border:1px solid var(--hairline);font-size:13.5px;font-weight:550;text-align:center;min-width:0;overflow-wrap:break-word}
 
 /* ===== story rail ===== */
 .storyrail{display:flex;gap:10px;overflow-x:auto;padding:4px 0 10px;align-items:center}
@@ -135,7 +135,7 @@ background:radial-gradient(140% 100% at 86% -12%,#F8EDD1 0%,transparent 46%),rad
 .authbox{padding:12px 16px;border-radius:12px;background:#fff;font-weight:650;font-size:13px;box-shadow:var(--shadow);white-space:nowrap}
 .authbox.ai{color:var(--emerald)}
 .authbox.human{color:var(--champagne-deep)}
-.receipt-example{margin-top:20px;display:inline-flex;align-items:center;gap:12px;padding:10px 18px;border-radius:999px;background:rgba(255,255,255,.7);border:1px solid var(--hairline);font-size:13px;font-weight:550}
+.receipt-example{margin-top:20px;display:inline-flex;align-items:center;gap:12px;padding:10px 18px;border-radius:999px;background:rgba(255,255,255,.7);border:1px solid var(--hairline);font-size:13px;font-weight:550;max-width:100%;flex-wrap:wrap}
 .re-badge{padding:3px 10px;border-radius:999px;background:var(--champagne-soft);color:var(--champagne-deep);font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
 
 /* ===== membership ===== */
@@ -195,7 +195,7 @@ background:radial-gradient(140% 100% at 86% -12%,#F8EDD1 0%,transparent 46%),rad
 
 /* ===== screens showcase strip (on landing) ===== */
 .showcase-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
-.showcase-card{padding:16px;border-radius:12px;background:var(--paper);border:1px solid var(--hairline);cursor:pointer;transition:.15s}
+.showcase-card{padding:16px;border-radius:12px;background:var(--paper);border:1px solid var(--hairline);cursor:pointer;transition:.15s;min-width:0;overflow-wrap:break-word}
 .showcase-card:hover{border-color:var(--gold);transform:translateY(-2px)}
 .showcase-card .n{font-family:var(--disp);font-size:20px;color:var(--champagne-deep)}
 .showcase-card h4{font-size:13.5px;font-weight:650;margin:4px 0}
@@ -360,6 +360,15 @@ background:radial-gradient(140% 100% at 86% -12%,#F8EDD1 0%,transparent 46%),rad
   </section>
 
   <div class="wrap">
+    <section class="sect" id="showcase">
+      <div class="section-heading">
+        <span class="eyebrow">VOYARA</span>
+        <h2 id="showcase-title"></h2>
+        <p id="showcase-lead"></p>
+      </div>
+      <div class="showcase-grid" id="showcase-grid"></div>
+    </section>
+
     <section class="sect" id="scope">
       <div class="section-heading">
         <span class="eyebrow">VOYARA</span>
@@ -383,15 +392,6 @@ background:radial-gradient(140% 100% at 86% -12%,#F8EDD1 0%,transparent 46%),rad
         <h2 id="why-title"></h2>
       </div>
       <div class="why-grid" id="why-grid" style="padding:0 20px 20px"></div>
-    </section>
-
-    <section class="sect" id="showcase">
-      <div class="section-heading">
-        <span class="eyebrow">VOYARA</span>
-        <h2 id="showcase-title"></h2>
-        <p id="showcase-lead"></p>
-      </div>
-      <div class="showcase-grid" id="showcase-grid"></div>
     </section>
 
     <section class="sect authority-flow-section">

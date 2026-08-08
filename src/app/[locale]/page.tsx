@@ -97,6 +97,15 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
         </div>
       </section>
 
+      <section className="screens-section sect showcase" id="screens" aria-labelledby="screens-title">
+        <div className="section-heading section-heading-wide">
+          <span className="eyebrow">MVP 01—08</span>
+          <h2 id="screens-title">{dictionary.landing.showcaseTitle}</h2>
+          <p>{dictionary.landing.showcaseLead}</p>
+        </div>
+        <PlatformShowcase dictionary={dictionary} locale={locale} />
+      </section>
+
       <section className="sect scope-section" id="scope" aria-labelledby="scope-title">
         <div className="section-heading">
           <span className="eyebrow">VOYARA</span>
@@ -142,15 +151,6 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
             </article>
           ))}
         </div>
-      </section>
-
-      <section className="screens-section sect showcase" id="screens" aria-labelledby="screens-title">
-        <div className="section-heading section-heading-wide">
-          <span className="eyebrow">MVP 01—08</span>
-          <h2 id="screens-title">{dictionary.landing.showcaseTitle}</h2>
-          <p>{dictionary.landing.showcaseLead}</p>
-        </div>
-        <PlatformShowcase dictionary={dictionary} locale={locale} />
       </section>
 
       <section className="sect authority-flow-section" aria-labelledby="authority-title">

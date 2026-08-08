@@ -477,7 +477,7 @@ p {
   margin: 24px 0 0;
 }
 
-.screens-section {
+.landing-v2 .sect.screens-section {
   width: 100%;
   max-width: none;
   padding-inline: max(24px, calc((100vw - var(--content)) / 2));
@@ -5564,6 +5564,8 @@ p {
   font-weight: 550;
   text-align: center;
   transition: border-color 160ms ease, transform 160ms ease;
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 
 .scope-grid li:hover {
@@ -5584,6 +5586,8 @@ p {
   font-size: 13.5px;
   font-weight: 550;
   color: var(--ink);
+  max-width: 100%;
+  flex-wrap: wrap;
 }
 
 .re-badge {
@@ -5642,6 +5646,10 @@ p {
   .scope-grid { grid-template-columns: repeat(2, 1fr); }
   .cta-clarity { gap: 6px 14px; }
   .receipt-example { font-size: 12.5px; padding: 9px 14px; }
+}
+
+@media (max-width: 380px) {
+  .scope-grid { grid-template-columns: 1fr; }
 }
 
 /* Phase C2 — authenticated membership screen rich plan cards */
