@@ -1,0 +1,20 @@
+name: Export VOYARA source package
+
+on:
+  push:
+    branches:
+      - export/source-package-20260813
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Upload source package
+        uses: actions/upload-artifact@v4
+        with:
+          name: voyara-source-preview-final-landing
+          path: .
+          include-hidden-files: true
+          if-no-files-found: error
