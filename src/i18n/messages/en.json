@@ -21,11 +21,12 @@
     "dataSource": "Data source"
   },
   "landing": {
-    "eyebrow": "Human-controlled travel operating system for Azerbaijan",
-    "title": "A clear path from a travel idea to a verified outcome.",
-    "lead": "VOYARA AI researches, compares and drafts. Authorised people approve commercial terms, Payments and Bookings.",
-    "primaryAction": "Start planning a trip",
-    "secondaryAction": "View the eight MVP screens",
+    "eyebrow": "AI-powered travel operating system with human control",
+    "title": "We do more than plan the journey.",
+    "heroAccent": "We manage it through to the outcome.",
+    "lead": "VOYARA AI understands your intent, researches the options and structures the journey. A specialist reviews commercial decisions, you approve them, and VOYARA coordinates execution and support throughout the trip.",
+    "primaryAction": "Plan my journey",
+    "secondaryAction": "See the platform live",
     "personalTitle": "Personal membership",
     "corporateTitle": "Corporate membership",
     "monthly": "month",
@@ -45,7 +46,7 @@
     "journeyRenew": "Renewal",
     "journeyRefer": "Referral",
     "statPlansFrom": "Plans from {price} ₼/month",
-    "statApproval": "Every proposal is approved by a human",
+    "statApproval": "Price, payment and booking are human-approved",
     "recommended": "Recommended",
     "selectPlan": "Select plan",
     "requestDemo": "Request a demo",
@@ -58,49 +59,46 @@
     "showcaseLead": "Each screen shows a live interface state based on the real component.",
     "openScreen": "Open screen",
     "demoBadge": "Demo simulation",
-    "whyTitle": "Why VOYARA",
+    "whyTitle": "More than a booking site. More connected than a traditional agency.",
+    "whyLead": "VOYARA brings fragmented searches, messages and documents into one human-controlled operating flow.",
     "why": [
       [
-        "Personalised preparation",
-        "AI researches and prepares itineraries around your requests."
+        "Beyond search",
+        "The journey stays in one flow—from finding options to decisions, documents and support."
       ],
       [
-        "Qualified human review",
-        "Risk-sensitive decisions are reviewed by a specialist."
+        "Beyond a chatbot",
+        "AI accelerates research and preparation while authority and accountability remain with people."
       ],
       [
-        "Clear proposal & acceptance",
-        "Transparent proposals and a precise acceptance flow."
-      ],
-      [
-        "Verified payment & booking",
-        "Payment and booking steps progress in sequence, verified."
+        "Beyond an agency transaction",
+        "The system preserves approved preferences, decisions and next steps so service remains continuous."
       ],
       [
         "One Trip Room",
-        "A single hub for confirmed travel: itinerary, documents, support."
+        "The confirmed itinerary, documents, payment status and support are brought into a single place."
       ],
       [
-        "Human support",
-        "Exceptions and questions are handled by a real specialist."
+        "A visible approval boundary",
+        "You see what AI prepared, who reviewed it and which decision is expected from you."
+      ],
+      [
+        "Value that grows with each trip",
+        "The choices you approve help make future planning faster and more consistent."
       ]
     ],
-    "journeyTitle": "The complete travel journey",
+    "journeyTitle": "From one request to a continuous travel relationship",
+    "journeyLead": "Every stage makes the next step clear, while sensitive decisions are never executed without control.",
     "journeySteps": [
-      "Travel idea",
-      "AI Trip Wizard",
-      "Travel Request",
-      "AI Preparation",
+      "Travel intent",
+      "AI research",
       "Human Review",
-      "Published Proposal",
-      "Customer Acceptance",
-      "Payment Verification",
-      "Booking Verification",
-      "Voucher",
+      "Your approval",
+      "Controlled execution",
       "Trip Room",
-      "Support"
+      "Continuous service"
     ],
-    "authorityFlowTitle": "Human authority workflow",
+    "authorityFlowTitle": "AI accelerates. Authority stays human.",
     "authorityFlow": [
       "AI prepares",
       "Human reviews",
@@ -112,8 +110,8 @@
     ],
     "monthlyLabel": "Monthly",
     "annualLabel": "Annual",
-    "finalTitle": "Start planning your journey today",
-    "finalStart": "Start planning",
+    "finalTitle": "Start your next journey with one simple request",
+    "finalStart": "Plan my journey",
     "finalExplore": "Explore the platform",
     "signin": "Sign in",
     "navHow": "How it works",
@@ -146,7 +144,7 @@
       "professional": "Priority support and deeper reporting readiness",
       "enterprise": "Individually configured corporate service"
     },
-    "corporateBody": "VOYARA manages corporate travel at the team level: employee travel coordination, approval workflows, and policy-aware handling. Every payment and booking step proceeds only after human review.",
+    "corporateBody": "VOYARA coordinates corporate travel at team level: traveller profiles, policy-aware requests, approval workflows, execution status and reporting readiness. Payment and booking advance only after review by an authorised person.",
     "corporateBullets": [
       "Employee travel coordination",
       "Approval workflows",
@@ -157,7 +155,7 @@
       "Reporting readiness",
       "Controlled payment and booking flow"
     ],
-    "receiptExampleLabel": "Illustrative example",
+    "receiptExampleLabel": "Demonstration example",
     "receiptExampleLine": "142 stays examined. Expert selected 2.",
     "ctaStepsTitle": "What happens next?",
     "ctaSteps": [
@@ -165,7 +163,37 @@
       "AI prepares options",
       "A human reviews them",
       "No booking or payment happens automatically"
-    ]
+    ],
+    "audienceEyebrow": "One system · three service levels",
+    "audienceTitle": "Choose your VOYARA experience",
+    "audienceLead": "The same operating system adapts from personal travel to premium concierge and corporate management.",
+    "audiences": [
+      ["Personal travel", "Faster planning, coordination and journey support for individuals and families.", "View personal plans"],
+      ["Premium concierge", "For complex itineraries, time-sensitive travel and customers who value elevated attention.", "Explore Premium"],
+      ["Corporate travel", "Policy, approvals, traveller coordination and operational visibility for organisations.", "View corporate solutions"]
+    ],
+    "workReceiptKicker": "AI WORK RECORD · JOURNEY PREPARATION",
+    "workReceiptTitle": "Clear evidence of the work prepared",
+    "workReceiptStatus": "Awaiting human review",
+    "workReceiptMetricValue": "142",
+    "workReceiptMetricLabel": "stay options examined in a demonstration request",
+    "workReceiptSteps": [
+      ["AI research", "Complete"],
+      ["Expert shortlist", "2 options"],
+      ["Customer decision", "Awaiting approval"]
+    ],
+    "workReceiptBoundary": "No booking or payment starts automatically.",
+    "authorityPrinciples": [
+      ["AI prepares", "It structures the request, researches and compares options, and prepares decision material."],
+      ["A specialist reviews", "Within their authority, they check commercial terms, exceptions, payment and booking steps."],
+      ["You approve", "The proposal and next step are clear; no commitment arises without your explicit decision."]
+    ],
+    "authorityBoundary": "Search and draft preparation create no payment or booking obligation.",
+    "navMembership": "Membership",
+    "brandDescriptor": "AI · Travel Operating System",
+    "headerCta": "Plan a journey",
+    "menuLabel": "Open or close menu",
+    "navigationLabel": "Primary navigation"
   },
   "auth": {
     "title": "Secure sign-in required",

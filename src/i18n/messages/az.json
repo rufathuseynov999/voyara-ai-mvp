@@ -21,11 +21,12 @@
     "dataSource": "Məlumat mənbəyi"
   },
   "landing": {
-    "eyebrow": "Azərbaycan üçün insan nəzarətli səyahət əməliyyat sistemi",
-    "title": "Səyahət planından təsdiqlənmiş nəticəyə qədər aydın yol.",
-    "lead": "VOYARA AI araşdırır, müqayisə edir və layihə hazırlayır. Kommersiya, ödəniş və bron qərarlarını səlahiyyətli insanlar təsdiqləyir.",
-    "primaryAction": "Səyahət planlamağa başla",
-    "secondaryAction": "Səkkiz MVP ekranına bax",
+    "eyebrow": "AI ilə işləyən, insan nəzarətli səyahət əməliyyat sistemi",
+    "title": "Səyahəti sadəcə planlamırıq.",
+    "heroAccent": "Onu sona qədər idarə edirik.",
+    "lead": "VOYARA AI niyyətinizi anlayır, seçimləri araşdırır və səyahəti strukturlaşdırır. Mütəxəssis kommersiya qərarlarını yoxlayır, siz təsdiqləyirsiniz, VOYARA isə icranı və səfər boyu dəstəyi əlaqələndirir.",
+    "primaryAction": "Səyahətimi planla",
+    "secondaryAction": "Platformanı canlı gör",
     "personalTitle": "Şəxsi üzvlük",
     "corporateTitle": "Korporativ üzvlük",
     "monthly": "ay",
@@ -45,7 +46,7 @@
     "journeyRenew": "Yenilənmə",
     "journeyRefer": "Tövsiyə",
     "statPlansFrom": "Planlar {price} ₼/aydan",
-    "statApproval": "Hər təklif insan tərəfindən təsdiqlənir",
+    "statApproval": "Qiymət, ödəniş və bron insan tərəfindən təsdiqlənir",
     "recommended": "Tövsiyə olunur",
     "selectPlan": "Planı seç",
     "requestDemo": "Demo üçün müraciət et",
@@ -58,49 +59,46 @@
     "showcaseLead": "Hər ekran real komponent əsasında canlı interfeys vəziyyətini göstərir.",
     "openScreen": "Ekranı aç",
     "demoBadge": "Demo simulyasiyası",
-    "whyTitle": "Niyə VOYARA",
+    "whyTitle": "Rezervasiya saytından daha çox. Ənənəvi agentlikdən daha əlaqəli.",
+    "whyLead": "VOYARA ayrıca axtarış, mesaj və sənədləri bir insan nəzarətli əməliyyat axınında birləşdirir.",
     "why": [
       [
-        "Fərdi səyahət hazırlığı",
-        "AI istəklərinizə uyğun marşrutları araşdırır və hazırlayır."
+        "Sadəcə axtarış deyil",
+        "Seçimlərin tapılmasından qərar, sənəd və dəstəyə qədər səyahət bir axında idarə olunur."
       ],
       [
-        "Səlahiyyətli insan baxışı",
-        "Riskə həssas qərarları ixtisaslı mütəxəssis yoxlayır."
+        "Sadəcə çatbot deyil",
+        "AI araşdırma və hazırlığı sürətləndirir; səlahiyyət və məsuliyyət real insanlarda qalır."
       ],
       [
-        "Aydın təklif və qəbul",
-        "Şəffaf təkliflər və dəqiq müştəri qəbulu axını."
+        "Sadəcə agentlik deyil",
+        "Sistem üstünlükləri, qərarları və növbəti addımları qoruyaraq xidməti davamlı edir."
       ],
       [
-        "Yoxlanmış ödəniş və bron",
-        "Ödəniş və bron addımları ardıcıl və təsdiqlənmiş şəkildə irəliləyir."
+        "Bir Səyahət Otağı",
+        "Təsdiqlənmiş marşrut, sənədlər, ödəniş vəziyyəti və dəstək bir mərkəzdə toplanır."
       ],
       [
-        "Vahid Səyahət Otağı",
-        "Təsdiqlənmiş səyahət üçün bir mərkəz: marşrut, sənədlər, dəstək."
+        "Aydın təsdiq sərhədi",
+        "Nəyin AI tərəfindən hazırlandığını, kimin yoxladığını və sizdən hansı qərarın gözlənildiyini görürsünüz."
       ],
       [
-        "İnsan dəstəyi",
-        "İstisna halları və sualları real mütəxəssis idarə edir."
+        "Hər səfərdə artan dəyər",
+        "Təsdiqlədiyiniz seçimlər növbəti planlamanı daha sürətli və ardıcıl etməyə kömək edir."
       ]
     ],
-    "journeyTitle": "Tam səyahət axını",
+    "journeyTitle": "Bir sorğudan davamlı səyahət münasibətinə",
+    "journeyLead": "Hər mərhələ növbəti addımı aydınlaşdırır; həssas qərarlar isə heç vaxt nəzarətsiz icra olunmur.",
     "journeySteps": [
-      "Səyahət ideyası",
-      "AI Səyahət Planlayıcısı",
-      "Səyahət sorğusu",
-      "AI hazırlığı",
+      "Səyahət niyyəti",
+      "AI araşdırması",
       "İnsan baxışı",
-      "Dərc edilmiş təklif",
-      "Müştəri qəbulu",
-      "Ödənişin təsdiqi",
-      "Bronun təsdiqi",
-      "Vauçer",
+      "Sizin təsdiqiniz",
+      "Nəzarətli icra",
       "Səyahət otağı",
-      "Dəstək"
+      "Davamlı xidmət"
     ],
-    "authorityFlowTitle": "İnsan səlahiyyət axını",
+    "authorityFlowTitle": "AI sürətləndirir. Səlahiyyət insanda qalır.",
     "authorityFlow": [
       "AI hazırlayır",
       "İnsan yoxlayır",
@@ -112,8 +110,8 @@
     ],
     "monthlyLabel": "Aylıq",
     "annualLabel": "İllik",
-    "finalTitle": "Səyahətinizi bu gün planlamağa başlayın",
-    "finalStart": "Səyahət planla",
+    "finalTitle": "Növbəti səfərinizi sadə bir sorğu ilə başladın",
+    "finalStart": "Səyahətimi planla",
     "finalExplore": "Platformanı kəşf et",
     "signin": "Daxil ol",
     "navHow": "Necə işləyir",
@@ -146,7 +144,7 @@
       "professional": "Prioritet dəstək və daha geniş hesabat hazırlığı",
       "enterprise": "Fərdi qurulan korporativ xidmət"
     },
-    "corporateBody": "VOYARA korporativ səyahəti komanda səviyyəsində idarə edir: işçi səyahətlərinin əlaqələndirilməsi, təsdiq iş axınları və siyasətə həssas emal. Bütün ödəniş və bron addımları insan yoxlaması ilə irəliləyir.",
+    "corporateBody": "VOYARA korporativ səyahəti komanda səviyyəsində əlaqələndirir: işçi profilləri, siyasətə həssas sorğular, təsdiq axınları, icra vəziyyəti və hesabat hazırlığı. Ödəniş və bron addımları yalnız səlahiyyətli insan baxışından sonra irəliləyir.",
     "corporateBullets": [
       "İşçi səyahətinin əlaqələndirilməsi",
       "Təsdiq iş axınları",
@@ -157,7 +155,7 @@
       "Hesabat hazırlığı",
       "Nəzarətli ödəniş və bron axını"
     ],
-    "receiptExampleLabel": "İllüstrativ nümunə",
+    "receiptExampleLabel": "Demo nümunəsi",
     "receiptExampleLine": "142 qalma araşdırıldı. Mütəxəssis 2-ni seçdi.",
     "ctaStepsTitle": "Sonra nə baş verir?",
     "ctaSteps": [
@@ -165,7 +163,37 @@
       "AI seçimləri hazırlayır",
       "Mütəxəssis onları yoxlayır",
       "Heç bir bron və ya ödəniş avtomatik baş vermir"
-    ]
+    ],
+    "audienceEyebrow": "Bir sistem · üç xidmət səviyyəsi",
+    "audienceTitle": "Sizə uyğun VOYARA təcrübəsini seçin",
+    "audienceLead": "Eyni əməliyyat sistemi fərdi səfərdən yüksək səviyyəli konsyerjə və korporativ idarəetməyə qədər uyğunlaşır.",
+    "audiences": [
+      ["Şəxsi səyahət", "Fərdi şəxslər və ailələr üçün daha sürətli planlama, əlaqələndirmə və səfər dəstəyi.", "Şəxsi planlara bax"],
+      ["Premium konsyerj", "Mürəkkəb marşrutlar, vaxta qənaət və yüksək diqqət istəyən səyahətçilər üçün.", "Premium-u kəşf et"],
+      ["Korporativ səyahət", "Komandalar üçün siyasət, təsdiq, səyahətçi əlaqələndirməsi və əməliyyat görünürlüğü.", "Korporativ həllərə bax"]
+    ],
+    "workReceiptKicker": "AI İŞ QEYDİ · SƏYAHƏT HAZIRLIĞI",
+    "workReceiptTitle": "Hazırlanan işin aydın sübutu",
+    "workReceiptStatus": "İnsan baxışı gözlənilir",
+    "workReceiptMetricValue": "142",
+    "workReceiptMetricLabel": "qalma variantı demo sorğusunda araşdırıldı",
+    "workReceiptSteps": [
+      ["AI araşdırması", "Tamamlandı"],
+      ["Ekspert qısa siyahısı", "2 seçim"],
+      ["Müştəri qərarı", "Təsdiq gözlənilir"]
+    ],
+    "workReceiptBoundary": "Heç bir bron və ya ödəniş avtomatik başlamır.",
+    "authorityPrinciples": [
+      ["AI hazırlayır", "Sorğunu strukturlaşdırır, seçimləri araşdırır, müqayisə edir və qərar üçün material hazırlayır."],
+      ["Mütəxəssis yoxlayır", "Kommersiya şərtlərini, istisnaları, ödəniş və bron addımlarını səlahiyyət daxilində yoxlayır."],
+      ["Siz təsdiqləyirsiniz", "Təklif və növbəti addım aydın təqdim olunur; sizin açıq qərarınız olmadan öhdəlik yaranmır."]
+    ],
+    "authorityBoundary": "Axtarış və layihə hazırlığı ödəniş və ya bron öhdəliyi yaratmır.",
+    "navMembership": "Üzvlük",
+    "brandDescriptor": "AI · Səyahət Əməliyyat Sistemi",
+    "headerCta": "Səyahət planla",
+    "menuLabel": "Menyunu aç və ya bağla",
+    "navigationLabel": "Əsas naviqasiya"
   },
   "auth": {
     "title": "Təhlükəsiz giriş tələb olunur",

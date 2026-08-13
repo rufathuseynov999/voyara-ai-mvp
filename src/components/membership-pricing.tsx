@@ -63,12 +63,16 @@ export function MembershipPricing({
           const black = plan.planCode === 'black';
           const price = period === 'monthly' ? plan.monthly : plan.annual;
           return (
-            <article className={`plan-v2${featured ? ' hot' : ''}${black ? ' black' : ''}`} key={plan.planCode}>
+            <article
+              className={`plan-v2${featured ? ' hot' : ''}${black ? ' black' : ''}`}
+              id={`membership-${plan.planCode}`}
+              key={plan.planCode}
+            >
               {featured && <span className="plan-tag">{dictionary.landing.recommended}</span>}
               <span className="plan-nm">{plan.displayName}</span>
               {plan.bestFor && <span className="plan-best-for">{plan.bestFor}</span>}
               <span className="plan-pr">
-                {price ?? '—'} ₼<span>/{unit}</span>
+                {price ?? '—'} <span className="currency-symbol">₼</span><span>/{unit}</span>
               </span>
               <span className="plan-note">{dictionary.landing.planNotes[plan.planCode as keyof typeof dictionary.landing.planNotes]}</span>
               <span className="plan-ann">
@@ -93,7 +97,7 @@ export function MembershipPricing({
         })}
       </div>
 
-      <div className="corpwrap">
+      <div className="corpwrap" id="corporate-memberships">
         <div className="section-heading corporate-heading">
           <span className="eyebrow">{dictionary.landing.corporateTitle}</span>
           <p>{dictionary.landing.corporateBody}</p>
@@ -109,7 +113,9 @@ export function MembershipPricing({
               <span className="plan-nm">{plan.displayName}</span>
               {plan.bestFor && <span className="plan-best-for">{plan.bestFor}</span>}
               <span className="plan-pr plan-pr-corp">
-                {plan.monthly === null ? dictionary.landing.custom : `${plan.monthly} ₼`}
+                {plan.monthly === null ? dictionary.landing.custom : (
+                  <>{plan.monthly} <span className="currency-symbol">₼</span></>
+                )}
                 {plan.monthly !== null && <span>/{dictionary.landing.monthly}</span>}
               </span>
               <span className="plan-note">{dictionary.landing.planNotes[plan.planCode as keyof typeof dictionary.landing.planNotes]}</span>

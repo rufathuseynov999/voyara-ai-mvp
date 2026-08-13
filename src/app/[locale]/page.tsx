@@ -48,16 +48,21 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
 
   const journey = dictionary.landing.journeySteps;
   const authorityFlow = dictionary.landing.authorityFlow;
+  const audienceTargets = ['memberships', 'membership-premium', 'corporate-memberships'] as const;
 
   return (
     <main className="landing-v2" id="main-content" tabIndex={-1}>
       <section className="hero-v2">
         <div className="hero-veil" aria-hidden="true" />
-        <img alt="" aria-hidden="true" className="hero-watermark" decoding="async" height={520} src="/brand/voyara-logo.jpg" width={520} />
+        <div className="hero-ambient hero-ambient-one" aria-hidden="true" />
+        <div className="hero-ambient hero-ambient-two" aria-hidden="true" />
         <div className="hero-grid">
           <div className="hero-in">
             <span className="eyebrow eyebrow-inverse">{dictionary.landing.eyebrow}</span>
-            <h1>{dictionary.landing.title}</h1>
+            <h1>
+              <span>{dictionary.landing.title}</span>
+              <em>{dictionary.landing.heroAccent}</em>
+            </h1>
             <p>{dictionary.landing.lead}</p>
             <div className="hero-actions">
               <Link className="btn btn-gold" href={`/${locale}/trip-wizard`}>
@@ -67,32 +72,74 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
                 {dictionary.landing.secondaryAction}
               </Link>
             </div>
-            <ol className="cta-clarity" aria-label={dictionary.landing.ctaStepsTitle}>
-              {dictionary.landing.ctaSteps.map((step, index) => (
-                <li key={step}>
-                  <span className="cc-i" aria-hidden="true">{index + 1}</span>
-                  {step}
-                </li>
-              ))}
-            </ol>
             <div className="statline">
               {plansFromMinor !== null && (
                 <span className="statline-chip">
                   {dictionary.landing.statPlansFrom.replace('{price}', numberFormat.format(plansFromMinor / 100))}
                 </span>
               )}
-              <i aria-hidden="true">✦</i>
               <span className="statline-chip statline-chip-trust">{dictionary.landing.statApproval}</span>
             </div>
           </div>
-          <div className="hero-preview" aria-hidden="true">
-            <div className="hp-top">
-              <span className="dot" /><span className="dot" /><span className="dot" />
-              <span className="hp-top-label">{dictionary.landing.authorityFlowTitle}</span>
+
+          <div className="hero-proof">
+            <div className="hero-brand-card" aria-hidden="true">
+              <img
+                alt=""
+                decoding="async"
+                fetchPriority="high"
+                height={260}
+                src="/brand/voyara-logo-master.jpg"
+                width={260}
+              />
             </div>
-            <div className="hp-row">{journey[1]}<span className="tag ai">{authorityFlow[0]}</span></div>
-            <div className="hp-row">{journey[5]}<span className="tag human">{authorityFlow[1]}</span></div>
-            <div className="hp-row">{journey[9]}<span className="tag ok">✓</span></div>
+            <article className="work-receipt" aria-labelledby="work-receipt-title">
+              <div className="work-receipt-topline">
+                <span className="work-receipt-demo">{dictionary.landing.receiptExampleLabel}</span>
+                <span className="work-receipt-status">
+                  <i aria-hidden="true" />
+                  {dictionary.landing.workReceiptStatus}
+                </span>
+              </div>
+              <span className="work-receipt-kicker">{dictionary.landing.workReceiptKicker}</span>
+              <h2 id="work-receipt-title">{dictionary.landing.workReceiptTitle}</h2>
+              <div className="work-receipt-metric">
+                <strong>{dictionary.landing.workReceiptMetricValue}</strong>
+                <span>{dictionary.landing.workReceiptMetricLabel}</span>
+              </div>
+              <ol className="work-receipt-steps">
+                {dictionary.landing.workReceiptSteps.map(([label, value], index) => (
+                  <li className={`receipt-step receipt-step-${index + 1}`} key={label}>
+                    <span>{label}</span>
+                    <strong>{value}</strong>
+                  </li>
+                ))}
+              </ol>
+              <p className="work-receipt-boundary">
+                <i aria-hidden="true">✦</i>
+                {dictionary.landing.workReceiptBoundary}
+              </p>
+            </article>
+          </div>
+        </div>
+
+        <div className="hero-audience" aria-labelledby="audience-title">
+          <div className="hero-audience-heading">
+            <span>{dictionary.landing.audienceEyebrow}</span>
+            <h2 id="audience-title">{dictionary.landing.audienceTitle}</h2>
+            <p>{dictionary.landing.audienceLead}</p>
+          </div>
+          <div className="hero-audience-grid">
+            {dictionary.landing.audiences.map(([title, body, action], index) => (
+              <Link className="audience-card" href={`/${locale}#${audienceTargets[index]}`} key={title}>
+                <span className="audience-index" aria-hidden="true">0{index + 1}</span>
+                <span className="audience-copy">
+                  <strong>{title}</strong>
+                  <span>{body}</span>
+                </span>
+                <span className="audience-action">{action} <i aria-hidden="true">→</i></span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -123,10 +170,11 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
         <div className="story-cap">
           <span className="eyebrow">{dictionary.landing.journeyEyebrow}</span>
           <h2>{dictionary.landing.journeyTitle}</h2>
+          <p>{dictionary.landing.journeyLead}</p>
         </div>
         <div className="storyrail">
           {journey.map((node, index) => {
-            const tone = index === 4 || index === 7 || index === 8 ? 'gold' : index === 3 ? 'em' : '';
+            const tone = index === 1 ? 'em' : index === 2 || index === 3 ? 'gold' : '';
             return (
               <span className="storyrail-item" key={node}>
                 <span className={`snode${tone ? ` ${tone}` : ''}`}>{node}</span>
@@ -141,6 +189,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
         <div className="section-heading">
           <span className="eyebrow">VOYARA</span>
           <h2 id="why-title">{dictionary.landing.whyTitle}</h2>
+          <p>{dictionary.landing.whyLead}</p>
         </div>
         <div className="why-grid">
           {dictionary.landing.why.map(([title, body], index) => (
@@ -153,11 +202,20 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
         </div>
       </section>
 
-      <section className="sect authority-flow-section" aria-labelledby="authority-title">
+      <section className="sect authority-flow-section" id="authority" aria-labelledby="authority-title">
         <div className="section-heading">
           <span className="eyebrow">VOYARA</span>
           <h2 id="authority-title">{dictionary.landing.authorityFlowTitle}</h2>
           <p>{dictionary.landing.authorityBody}</p>
+        </div>
+        <div className="authority-principles">
+          {dictionary.landing.authorityPrinciples.map(([title, body], index) => (
+            <article className={`authority-principle authority-principle-${index + 1}`} key={title}>
+              <span aria-hidden="true">0{index + 1}</span>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </article>
+          ))}
         </div>
         <div className="authflow">
           {authorityFlow.map((step, index) => {
@@ -171,9 +229,9 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
             );
           })}
         </div>
-        <p className="receipt-example">
-          <span className="re-badge">{dictionary.landing.receiptExampleLabel}</span>
-          {dictionary.landing.receiptExampleLine}
+        <p className="authority-boundary">
+          <i aria-hidden="true">✦</i>
+          {dictionary.landing.authorityBoundary}
         </p>
       </section>
 
@@ -203,6 +261,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
             className="founder-logo"
             decoding="async"
             height={160}
+            loading="lazy"
             src="/brand/founder-rufat-huseynov-logo.jpg"
             width={160}
           />
