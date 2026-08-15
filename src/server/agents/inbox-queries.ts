@@ -207,7 +207,11 @@ export async function loadInboxConversations(viewer: Viewer, filters: InboxFilte
 
 export type InboxConversationDetail = InboxConversationSummary & {
   linkedIdentities: Array<{ identityKind: string; externalId: string; verified: boolean }>;
-  messages: Array<{ messageId: string; direction: string; senderKind: string; body: string; status: string; createdAt: string }>;
+  linkedCustomerId: string | null;
+  messages: Array<{
+    messageId: string; direction: string; senderKind: string; body: string; status: string; createdAt: string;
+    approvedBy: string | null; sentAt: string | null; contentHash: string; deliveryStatus: string | null; providerOccurredAt: string | null;
+  }>;
   paymentLinks: Array<{ paymentLinkId: string; orderReference: string; status: string; amountMinor: number; currency: string; transactionType: string }>;
 };
 
@@ -217,16 +221,16 @@ export async function loadInboxConversationDetail(viewer: Viewer, conversationId
 
   const { data: conversation, error: convError } = await admin
     .from('conversations')
-    .select('id, contact_id, channel, customer_facing_brand, status, handover_status, assigned_owner_id, last_message_at, last_inbound_at, last_read_at, created_at, contacts(display_name, preferred_locale)')
+    .select('id, contact_id, channel, customer_facing_brand, status, handover_status, assigned_owner_id, last_message_at, last_inbound_at, last_read_at, created_at, contacts(display_name, preferred_locale, linked_customer_id)')
     .eq('id', conversationId)
     .maybeSingle();
   if (convError) throw new Error(`INBOX_DETAIL_FAILED:${convError.code}`);
   if (!conversation) return null;
-  const contact = (conversation as unknown as { contacts: { display_name: string | null; preferred_locale: string | null } | null }).contacts;
+  const contact = (conversation as unknown as { contacts: { display_name: string | null; preferred_locale: string | null; linked_customer_id: string | null } | null }).contacts;
 
   const [{ data: identities }, { data: messages }, { data: links }] = await Promise.all([
     admin.from('linked_identities').select('identity_kind, external_id, verified').eq('contact_id', conversation.contact_id),
-    admin.from('messages').select('id, direction, sender_kind, body, status, created_at').eq('conversation_id', conversationId).order('created_at', { ascending: true }),
+    admin.from('messages').select('id, direction, sender_kind, body, status, created_at, approved_by, sent_at, content_hash, delivery_status, provider_occurred_at').eq('conversation_id', conversationId).order('created_at', { ascending: true }),
     admin.from('payment_link_requests').select('id, order_reference, status, amount_minor, currency, transaction_type').eq('originating_conversation_id', conversationId)
   ]);
 
@@ -247,7 +251,11 @@ export async function loadInboxConversationDetail(viewer: Viewer, conversationId
     lastMessageAt: conversation.last_message_at,
     createdAt: conversation.created_at,
     linkedIdentities: (identities ?? []).map((i) => ({ identityKind: i.identity_kind, externalId: i.external_id, verified: i.verified })),
-    messages: (messages ?? []).map((m) => ({ messageId: m.id, direction: m.direction, senderKind: m.sender_kind, body: m.body, status: m.status, createdAt: m.created_at })),
+    linkedCustomerId: contact?.linked_customer_id ?? null,
+    messages: (messages ?? []).map((m) => ({
+      messageId: m.id, direction: m.direction, senderKind: m.sender_kind, body: m.body, status: m.status, createdAt: m.created_at,
+      approvedBy: m.approved_by, sentAt: m.sent_at, contentHash: m.content_hash, deliveryStatus: m.delivery_status, providerOccurredAt: m.provider_occurred_at
+    })),
     paymentLinks: (links ?? []).map((l) => ({ paymentLinkId: l.id, orderReference: l.order_reference, status: l.status, amountMinor: l.amount_minor, currency: l.currency, transactionType: l.transaction_type }))
   };
 }

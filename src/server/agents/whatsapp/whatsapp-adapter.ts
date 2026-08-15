@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto';
 import type { WhatsAppCredentials } from '@/config/env-core';
 import type { ChannelAdapter, ChannelResult } from '../channel-adapter';
 import { verifyWebhookChallenge, verifyWebhookSignature } from './whatsapp-signature';
-import { whatsappWebhookPayloadSchema, WHATSAPP_SERVICE_WINDOW_HOURS, type WhatsAppWebhookPayload } from './whatsapp-contract';
+import { WHATSAPP_SERVICE_WINDOW_HOURS } from './whatsapp-contract';
 
 /**
  * Phase 4C — WhatsApp Cloud API adapter (SANDBOX only).
@@ -21,6 +21,14 @@ export type WhatsAppAdapterOptions = {
   fetchImpl?: typeof fetch;
   clock?: () => Date;
   timeoutMs?: number;
+  /**
+   * E.2A — defense in depth: the founder activation flag is checked here,
+   * inside the adapter itself, in addition to wherever the caller checks
+   * it. This guarantees no call site can construct a working "live" send
+   * path by accident just because it has valid credentials — the flag
+   * must be threaded through explicitly.
+   */
+  activationEnabled?: boolean;
 };
 
 export class WhatsAppChannelAdapter implements ChannelAdapter {
@@ -31,11 +39,13 @@ export class WhatsAppChannelAdapter implements ChannelAdapter {
   private readonly fetchImpl: typeof fetch;
   private readonly clock: () => Date;
   private readonly timeoutMs: number;
+  private readonly activationEnabled: boolean;
 
   constructor(private readonly credentials: WhatsAppCredentials, options: WhatsAppAdapterOptions = {}) {
     this.fetchImpl = options.fetchImpl ?? fetch;
     this.clock = options.clock ?? (() => new Date());
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
+    this.activationEnabled = options.activationEnabled ?? false;
   }
 
   /** Verifies Meta's webhook setup GET challenge. */
@@ -43,18 +53,20 @@ export class WhatsAppChannelAdapter implements ChannelAdapter {
     return verifyWebhookChallenge({ mode, verifyToken, challenge, configuredVerifyToken: this.credentials.webhookVerifyToken });
   }
 
-  /** Verifies the signed webhook POST body and parses it. Signature
+  /** Verifies the signed webhook POST body and parses it as JSON. Signature
    *  verification always happens on the raw string body, before any JSON
-   *  parsing. */
-  verifyAndParseWebhook(rawBody: string, signatureHeader: string | null): { valid: boolean; payload: WhatsAppWebhookPayload | null } {
+   *  parsing. This no longer forces the body into any particular shape —
+   *  see normalizeMetaWebhookEnvelope() in whatsapp-activation.ts for
+   *  turning the parsed JSON into the real Meta object/entry/changes/value
+   *  envelope this project actually receives. */
+  verifyAndParseWebhook(rawBody: string, signatureHeader: string | null): { valid: boolean; body: unknown | null } {
     if (!verifyWebhookSignature(rawBody, signatureHeader, this.credentials.appSecret)) {
-      return { valid: false, payload: null };
+      return { valid: false, body: null };
     }
     try {
-      const parsed = whatsappWebhookPayloadSchema.safeParse(JSON.parse(rawBody));
-      return parsed.success ? { valid: true, payload: parsed.data } : { valid: true, payload: null };
+      return { valid: true, body: JSON.parse(rawBody) };
     } catch {
-      return { valid: true, payload: null };
+      return { valid: true, body: null };
     }
   }
 
@@ -66,9 +78,23 @@ export class WhatsAppChannelAdapter implements ChannelAdapter {
     return hoursSince < WHATSAPP_SERVICE_WINDOW_HOURS;
   }
 
-  async sendOutbound(params: { contactExternalId: string; body: string; correlationId: string }): Promise<ChannelResult<{ externalMessageId: string }>> {
+  async sendOutbound(params: { contactExternalId: string; body: string; correlationId: string; lastInboundAt?: Date | null }): Promise<ChannelResult<{ externalMessageId: string }>> {
+    if (!this.activationEnabled) {
+      return { ok: false, error: { kind: 'TERMINAL_FAILURE', code: 'WHATSAPP_ACTIVATION_DISABLED' } };
+    }
     if (!params.body || params.body.length > 4_096) {
       return { ok: false, error: { kind: 'VALIDATION', code: 'INVALID_BODY' } };
+    }
+    // E.2A fix: the 24h service-window rule is now enforced HERE, at the
+    // actual send boundary, instead of only existing as an unused helper
+    // method callers could forget to call. Outside the window — or if a
+    // caller using the generic ChannelAdapter interface doesn't know about
+    // this WhatsApp-specific field and omits it — this fails closed with
+    // an explicit "template required" result. It never fabricates an
+    // approved template or attempts the free-form send anyway; this is a
+    // safe default even for a not-yet-fully-wired generic dispatch path.
+    if (!this.withinServiceWindow(params.lastInboundAt ?? null)) {
+      return { ok: false, error: { kind: 'VALIDATION', code: 'WHATSAPP_SERVICE_WINDOW_CLOSED_TEMPLATE_REQUIRED' } };
     }
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), this.timeoutMs);
@@ -98,9 +124,16 @@ export class WhatsAppChannelAdapter implements ChannelAdapter {
   }
 
   async health() {
-    return { channel: this.channel, healthy: false, checkedAt: this.clock().toISOString() };
-    // Always reports unhealthy without a real network probe having succeeded
-    // — never fabricates a successful live connection, same rule as every
-    // other adapter's health() in this project.
+    // E.2A: reports the truthful multi-state model (see
+    // whatsapp-activation.ts) instead of a bare boolean. Still never
+    // fabricates a successful live connection — LIVE_TEST_CERTIFIED can
+    // only be reached with real network evidence this class never
+    // produces on its own.
+    return {
+      channel: this.channel,
+      healthy: false,
+      checkedAt: this.clock().toISOString(),
+      activationState: this.activationEnabled ? ('READY_FOR_TEST_ACTIVATION' as const) : ('CONFIGURED_BUT_DISABLED' as const)
+    };
   }
 }

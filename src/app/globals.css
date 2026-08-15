@@ -4719,8 +4719,8 @@ p {
 .crm-inbox { margin: 0 0 26px; padding: 20px; }
 .inbox-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 16px; }
 .inbox-filters select { border: 1px solid var(--hairline); border-radius: 8px; padding: 7px 10px; font-size: 12.5px; background: var(--paper); }
-.inbox-layout { display: grid; grid-template-columns: 300px 1fr; gap: 16px; align-items: start; }
-.inbox-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; max-height: 640px; overflow-y: auto; }
+.inbox-layout { display: grid; grid-template-columns: 300px 1fr; gap: 16px; align-items: start; min-width: 0; }
+.inbox-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; max-height: 640px; overflow-y: auto; min-width: 0; }
 .inbox-empty { color: var(--mist); font-size: 13px; padding: 10px; }
 .inbox-row { width: 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; text-align: left; padding: 9px 10px; border: 1px solid var(--hairline); border-radius: 8px; background: var(--paper); cursor: pointer; font-size: 12.5px; }
 .inbox-row.is-unread { border-color: var(--gold, #b08d3f); font-weight: 650; }
@@ -4732,7 +4732,7 @@ p {
 .inbox-brand-badge { font-size: 10px; font-weight: 700; letter-spacing: 0.04em; padding: 2px 7px; border-radius: 999px; background: var(--hairline); }
 .inbox-brand-rtravel { background: #e8dcc4; color: #6b4e16; }
 .inbox-brand-voyara { background: #cfe0d8; color: #0b3d2c; }
-.inbox-detail { border: 1px solid var(--hairline); border-radius: 10px; padding: 16px; min-height: 300px; background: var(--paper); }
+.inbox-detail { border: 1px solid var(--hairline); border-radius: 10px; padding: 16px; min-height: 300px; background: var(--paper); min-width: 0; }
 .inbox-detail-header { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; font-size: 13px; }
 .inbox-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
 .inbox-identities, .inbox-payment-links, .inbox-timeline { list-style: none; margin: 6px 0 14px; padding: 0; display: grid; gap: 6px; font-size: 12.5px; }

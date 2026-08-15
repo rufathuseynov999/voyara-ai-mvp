@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState, type FormEvent } from 'react';
 import type { Dictionary } from '@/i18n/dictionaries';
@@ -9,6 +10,7 @@ import type {
   PaymentCommandResult,
   PaymentRequestStatus
 } from '@/server/payment/contract';
+import type { CustomerBookingView } from '@/server/booking/contract';
 
 const numberLocales: Record<Locale, string> = { az: 'az-AZ', ru: 'ru-RU', en: 'en-US' };
 const stageKeys = ['request', 'evidence', 'review', 'verified', 'allocation', 'readiness'] as const;
@@ -183,20 +185,58 @@ function PaymentCard({
 }
 
 export function CustomerPaymentWorkspace({
+  bookings = [],
+  continuityMessages,
   locale,
   messages,
-  payments
+  payments,
+  proposalHref,
+  tripRoomHref
 }: {
+  bookings?: CustomerBookingView[];
+  continuityMessages?: Dictionary['journeyContinuity'];
   locale: Locale;
   messages: Dictionary['paymentCustomer'];
   payments: CustomerPaymentRequestView[];
+  proposalHref?: string;
+  tripRoomHref?: string;
 }) {
-  if (payments.length === 0) return <div className="empty-state"><p>{messages.empty}</p></div>;
+  if (payments.length === 0) {
+    return (
+      <div className="empty-state">
+        <p>{messages.empty}</p>
+        {continuityMessages && proposalHref ? (
+          <Link className="button button-outline-dark" href={proposalHref}>
+            {continuityMessages.ctaBackToProposal}
+          </Link>
+        ) : null}
+      </div>
+    );
+  }
   return (
     <section className="payment-card-list">
-      {payments.map((payment) => (
-        <PaymentCard key={payment.id} locale={locale} messages={messages} payment={payment} />
-      ))}
+      {payments.map((payment) => {
+        const hasBooking = bookings.some((booking) => booking.quotationId === payment.quotationId);
+        return (
+          <div key={payment.id}>
+            <PaymentCard locale={locale} messages={messages} payment={payment} />
+            {continuityMessages ? (
+              <div className="payment-cross-links">
+                {proposalHref ? (
+                  <Link className="button button-outline-dark" href={proposalHref}>
+                    {continuityMessages.ctaBackToProposal}
+                  </Link>
+                ) : null}
+                {hasBooking && tripRoomHref ? (
+                  <Link className="button button-primary" href={tripRoomHref}>
+                    {continuityMessages.ctaOpenTripRoom}
+                  </Link>
+                ) : null}
+              </div>
+            ) : null}
+          </div>
+        );
+      })}
     </section>
   );
 }

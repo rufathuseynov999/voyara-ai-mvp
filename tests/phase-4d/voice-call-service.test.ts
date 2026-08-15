@@ -21,6 +21,7 @@ import { SimulationChannelAdapter } from '@/server/agents/simulation-channel-ada
 import { SimulationLlmRouter } from '@/server/agents/llm-routing';
 import { buildApprovedPolicy } from '@/server/agents/low-risk-auto-send';
 import { VoiceAuthorityError, voiceLowRiskIntents, voiceSensitiveActionKinds } from '@/server/agents/voice/voice-contract';
+import { RiskPolicyAuthorityError } from '@/server/agents/risk-policy-contract';
 
 const FIXED = new Date('2026-08-01T09:00:00.000Z');
 
@@ -179,7 +180,7 @@ test('scheduling a callback creates a real callback task tied to the call and co
 
 /* -------------------------------- WhatsApp follow-up reuse -------------------------------- */
 
-test('WhatsApp follow-up reuses sendLowRiskMessage unchanged and is subject to the same policy gate', async () => {
+test('WhatsApp follow-up reuses sendLowRiskMessage unchanged and is subject to the same policy gate — including E.2A\'s WhatsApp low-risk auto-send block, with no bypass for this call path', async () => {
   const c = ctx();
   await activatePolicy(c, ['CALLBACK_SCHEDULING']);
   const contactId = randomUUID();
@@ -188,10 +189,15 @@ test('WhatsApp follow-up reuses sendLowRiskMessage unchanged and is subject to t
   await c.conversationStore.createConversation({ conversationId, accountId: randomUUID(), contactId, channel: 'WHATSAPP', status: 'OPEN', assignedAgentRole: null, relatedQuoteId: null, correlationId: c.correlationId, createdAt: FIXED.toISOString() });
 
   const lowRiskCtx = { store: c.conversationStore, policyStore: c.policyStore, channel: new SimulationChannelAdapter('WHATSAPP'), correlationId: c.correlationId, now: c.now };
-  const result = await triggerWhatsAppFollowUp(lowRiskCtx, conversationId, 'CALLBACK_SCHEDULING', 'We will call you back at 3pm.', 'sim-cheap-v1', '994501234567');
-  assert.equal(result.sent, true);
-  const message = await c.conversationStore.loadMessage(result.messageId);
-  assert.equal(message?.riskClass, 'LOW_RISK_INFORMATIONAL');
+  // E.2A (whatsapp-inbound.ts checkpoint) deliberately disabled ALL
+  // WhatsApp low-risk auto-send, including this voice-call follow-up
+  // path — this proves that block is real and has no bypass for a
+  // specific caller, rather than the earlier pre-E.2A expectation that
+  // this path could auto-send.
+  await assert.rejects(
+    () => triggerWhatsAppFollowUp(lowRiskCtx, conversationId, 'CALLBACK_SCHEDULING', 'We will call you back at 3pm.', 'sim-cheap-v1', '994501234567'),
+    (error: unknown) => error instanceof RiskPolicyAuthorityError && error.code === 'WHATSAPP_AUTOSEND_NOT_ACTIVATED'
+  );
 });
 
 /* -------------------------------- end call -------------------------------- */

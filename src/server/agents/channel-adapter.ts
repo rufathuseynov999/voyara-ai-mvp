@@ -34,7 +34,7 @@ export interface ChannelAdapter {
    *  agent-operating-layer.ts's approveAndSendMessage(), after a human actor
    *  has approved the exact message content by id. No adapter implementation
    *  may skip this call chain; there is no other public send path. */
-  sendOutbound(params: { contactExternalId: string; body: string; correlationId: string }): Promise<ChannelResult<{ externalMessageId: string }>>;
+  sendOutbound(params: { contactExternalId: string; body: string; correlationId: string; lastInboundAt?: Date | null }): Promise<ChannelResult<{ externalMessageId: string }>>;
 
   health(): Promise<{ channel: ChannelKind; healthy: boolean; checkedAt: string }>;
 }

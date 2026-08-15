@@ -123,7 +123,12 @@ test('checkout creation and send are refused before approval', async () => {
 test('after approval, the link is created and delivered ONLY into the originating conversation', async () => {
   const c = ctx();
   const conversationId = randomUUID();
-  const { paymentLinkId } = await draftPaymentLink(c, draftInput({ originatingConversationId: conversationId }));
+  const draft = draftInput({ originatingConversationId: conversationId });
+  await c.conversationStore.createConversation({
+    conversationId, accountId: 'acct-payment-link-tests', contactId: draft.contactId, channel: 'WEB_CHAT', status: 'OPEN',
+    assignedAgentRole: null, relatedQuoteId: null, correlationId: c.correlationId, createdAt: c.now().toISOString(), handoverStatus: 'HUMAN', lastInboundAt: null
+  });
+  const { paymentLinkId } = await draftPaymentLink(c, draft);
   const drafted = await c.store.loadLink(paymentLinkId);
   await approvePaymentLink(c, paymentLinkId, drafted!.contentHash);
   const { hostedUrl, messageId } = await createAndSendPaymentLink(c, paymentLinkId);
@@ -160,7 +165,19 @@ test('cancellation is refused once a link is already VERIFIED (terminal)', async
 /* ------------------------------ webhook + reconciliation ------------------------------ */
 
 async function toSent(c: ReturnType<typeof ctx>) {
-  const { paymentLinkId } = await draftPaymentLink(c, draftInput());
+  const input = draftInput();
+  // The in-memory store now mirrors the real database's FK constraint:
+  // a message can only be saved against a conversation that actually
+  // exists (E.2A's channel-derivation invariant depends on this). This
+  // fixture previously used a bare random UUID with no real conversation
+  // behind it — create one for real here, matching what any real
+  // payment-link send already requires in production.
+  await c.conversationStore.createConversation({
+    conversationId: input.originatingConversationId, accountId: 'acct-payment-link-tests', contactId: input.contactId,
+    channel: 'WEB_CHAT', status: 'OPEN', assignedAgentRole: null, relatedQuoteId: null,
+    correlationId: c.correlationId, createdAt: c.now().toISOString(), handoverStatus: 'HUMAN', lastInboundAt: null
+  });
+  const { paymentLinkId } = await draftPaymentLink(c, input);
   const drafted = await c.store.loadLink(paymentLinkId);
   await approvePaymentLink(c, paymentLinkId, drafted!.contentHash);
   await createAndSendPaymentLink(c, paymentLinkId);

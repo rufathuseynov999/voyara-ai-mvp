@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { headers } from 'next/headers';
 import './globals.css';
+import '../styles/experience-os.css';
 import { defaultLocale, isLocale } from '@/i18n/config';
 import { PwaRegistration } from '@/components/pwa-registration';
 

@@ -1,7 +1,8 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { readWhatsAppCredentials } from '@/config/env-core';
+import { readWhatsAppCredentials, readWhatsAppActivationFlag } from '@/config/env-core';
 import { WhatsAppChannelAdapter } from '@/server/agents/whatsapp/whatsapp-adapter';
 import { processInboundWhatsAppMessage } from '@/server/agents/whatsapp/whatsapp-inbound';
+import { normalizeMetaWebhookEnvelope } from '@/server/agents/whatsapp/whatsapp-activation';
 import { SupabaseConversationStore } from '@/server/agents/supabase-conversation-store';
 import { SupabaseIdentityStore } from '@/server/agents/supabase-identity-store';
 import { createAdminSupabaseClient } from '@/lib/supabase/admin';
@@ -57,34 +58,31 @@ export async function POST(request: NextRequest) {
   // valid:true.
   const rawBody = await request.text();
   const signatureHeader = request.headers.get('x-hub-signature-256');
-  const adapter = new WhatsAppChannelAdapter(credentials);
-  const { valid, payload } = adapter.verifyAndParseWebhook(rawBody, signatureHeader);
+  const adapter = new WhatsAppChannelAdapter(credentials, { activationEnabled: readWhatsAppActivationFlag() });
+  const { valid, body } = adapter.verifyAndParseWebhook(rawBody, signatureHeader);
 
   if (!valid) {
     reportError(new Error('WhatsApp webhook signature verification failed'), { code: 'WHATSAPP_WEBHOOK_INVALID_SIGNATURE' });
     return noStore({ error: 'INVALID_SIGNATURE' }, 401);
   }
-  if (!payload) {
-    // Signature was valid but the body didn't parse into a known shape —
-    // acknowledge with 200 (Meta shouldn't retry a body it will send
-    // identically again) but do nothing with it.
-    return noStore({ ok: true, processed: false }, 200);
-  }
 
+  const { createHash, randomUUID } = await import('node:crypto');
+  const correlationId = request.headers.get('x-correlation-id') || randomUUID();
   const admin = createAdminSupabaseClient();
   if (!admin) return noStore({ error: 'STORE_UNAVAILABLE' }, 503);
 
-  // Reserve-first idempotency: one event id per delivery attempt from Meta.
-  // Since a single POST body can carry multiple messages/statuses, the
-  // event id used here is derived from the raw body itself — an identical
-  // retry produces an identical hash and is correctly rejected as duplicate.
-  const { createHash, randomUUID } = await import('node:crypto');
+  // Reserve-first idempotency: one event id per delivery attempt from Meta,
+  // derived from the raw body itself so an identical retry (Meta retries
+  // delivery on anything short of a fast 200) produces an identical hash
+  // and is correctly rejected as a duplicate. This happens BEFORE envelope
+  // normalization and BEFORE the activation-flag check, so a duplicate
+  // delivery is always recognized regardless of activation state.
   const eventId = createHash('sha256').update(rawBody).digest('hex');
-  const correlationId = request.headers.get('x-correlation-id') || randomUUID();
-
+  const normalized = normalizeMetaWebhookEnvelope(body);
   const { error: reserveError } = await admin.from('whatsapp_webhook_receipts').insert({
-    id: randomUUID(), event_id: eventId, phone_number_id: payload.phoneNumberId,
-    event_type: payload.messages.length > 0 ? 'messages' : 'statuses', accepted: true, correlation_id: correlationId
+    id: randomUUID(), event_id: eventId, phone_number_id: normalized.batches[0]?.phoneNumberId ?? null,
+    event_type: normalized.batches.some((b) => b.messages.length > 0) ? 'messages' : 'statuses',
+    accepted: true, correlation_id: correlationId
   });
   if (reserveError) {
     if (reserveError.code === '23505') {
@@ -94,34 +92,105 @@ export async function POST(request: NextRequest) {
     return noStore({ error: 'RECEIPT_FAILED' }, 500);
   }
 
-  if (payload.messages.length > 0) {
+  if (normalized.malformed) {
+    // Structurally unrecognizable body — signature was valid (it really is
+    // from Meta) but the shape doesn't match the documented envelope at
+    // all. Acknowledged (Meta shouldn't retry a body it will send
+    // identically again) but nothing is written beyond the receipt above.
+    return noStore({ ok: true, processed: false, malformed: true }, 200);
+  }
+
+  // E.2A founder activation gate: credentials being complete and valid is
+  // NOT sufficient. Without the explicit flag, the event's receipt is
+  // still durably recorded (above, for audit/idempotency proof and so a
+  // founder can verify the webhook pipeline is reachable) but nothing is
+  // written to contacts/conversations/messages.
+  if (!readWhatsAppActivationFlag()) {
+    return noStore({ ok: true, processed: false, activationDisabled: true }, 200);
+  }
+
+  const processedBatches: string[] = [];
+  for (const batch of normalized.batches) {
+    if (batch.messages.length === 0 && batch.statuses.length === 0) continue;
     try {
-      const { data: account } = await admin.from('whatsapp_accounts').select('brand').eq('phone_number_id', payload.phoneNumberId).maybeSingle();
-      await processInboundWhatsAppMessage(
-        {
-          conversationStore: new SupabaseConversationStore(),
-          identityStore: new SupabaseIdentityStore(),
-          adapter,
-          accountId: VOYARA_BUSINESS_ACCOUNT_ID, // single-business context — must be a valid uuid; phone number id is used separately below for brand resolution
-          brand: (account?.brand as 'RTRAVEL' | 'VOYARA' | undefined) ?? 'RTRAVEL',
-          correlationId,
-          now: () => new Date()
-        },
-        payload
-      );
+      // Fail closed: an inbound payload is only processed when its
+      // phone_number_id exactly matches an existing ACTIVE whatsapp_accounts
+      // row. No silent fallback to any brand for an unknown or inactive
+      // number — the previous `?? 'RTRAVEL'` default is removed entirely.
+      const { data: account, error: accountError } = await admin
+        .from('whatsapp_accounts')
+        .select('brand, active')
+        .eq('phone_number_id', batch.phoneNumberId)
+        .maybeSingle();
+      if (accountError) {
+        reportError(new Error(`WhatsApp account lookup failed: ${accountError.code}`), { code: 'WHATSAPP_ACCOUNT_LOOKUP_FAILED' });
+        continue;
+      }
+      if (!account || account.active !== true) {
+        reportError(new Error('WhatsApp inbound for unknown or inactive phone_number_id — failed closed, no brand fallback'), {
+          code: 'WHATSAPP_UNKNOWN_OR_INACTIVE_ACCOUNT'
+        });
+        continue;
+      }
+      if (account.brand !== 'RTRAVEL' && account.brand !== 'VOYARA') {
+        // Structurally shouldn't happen (the column is a Postgres enum),
+        // but never blindly cast an unrecognized value into a real brand.
+        reportError(new Error('WhatsApp account row has an unrecognized brand value — failed closed'), { code: 'WHATSAPP_UNRECOGNIZED_BRAND' });
+        continue;
+      }
+
+      if (batch.messages.length > 0) {
+        await processInboundWhatsAppMessage(
+          {
+            conversationStore: new SupabaseConversationStore(),
+            identityStore: new SupabaseIdentityStore(),
+            adapter,
+            accountId: VOYARA_BUSINESS_ACCOUNT_ID,
+            brand: account.brand,
+            correlationId,
+            now: () => new Date()
+          },
+          batch
+        );
+        processedBatches.push(batch.phoneNumberId);
+      }
+
+      // E.2A §3 — delivery-status reconciliation, scoped to exactly this
+      // resolved (account, brand) context. Meta's own status strings map
+      // to the existing delivery_status enum; anything else is safely
+      // acknowledged and ignored rather than guessed at. A status-only
+      // webhook creates no Conversation, Contact, Intent or Travel Request
+      // — this is purely an update to an existing message row, or a no-op
+      // if no matching row/context exists.
+      const statusMap: Record<string, 'PENDING' | 'DELIVERED' | 'READ' | 'FAILED'> = {
+        sent: 'PENDING', delivered: 'DELIVERED', read: 'READ', failed: 'FAILED'
+      };
+      const store = new SupabaseConversationStore();
+      for (const status of batch.statuses) {
+        const mapped = statusMap[status.status];
+        if (!mapped) continue;
+        await store.reconcileDeliveryStatus({
+          externalMessageId: status.id,
+          deliveryStatus: mapped,
+          webhookStatus: status.status, // Meta's own short status string only — never a raw error payload
+          expectedAccountId: VOYARA_BUSINESS_ACCOUNT_ID,
+          expectedBrand: account.brand
+        });
+      }
     } catch (error) {
       reportError(error instanceof Error ? error : new Error('WhatsApp inbound processing failed'), { code: 'WHATSAPP_INBOUND_PROCESSING_FAILED' });
-      // Still return 200 — the event is durably recorded as received; a
-      // processing failure is investigated via logs/error-reporter, not by
-      // asking Meta to retry a webhook it already successfully delivered.
+      // Still return 200 overall — the event is durably recorded as
+      // received; a processing failure is investigated via logs/
+      // error-reporter, not by asking Meta to retry a webhook it already
+      // successfully delivered.
     }
   }
 
-  // Delivery/read/failure status updates are recorded on the message rows
-  // they refer to when a real account mapping exists; this phase records
-  // their receipt (via whatsapp_webhook_receipts, above) and defers full
-  // per-message delivery-status reconciliation to when the inbox UI
-  // consumes WhatsApp data directly (noted in the final report).
+  // Delivery/read/failure status updates: their receipt is durably
+  // recorded above (whatsapp_webhook_receipts); full per-message
+  // reconciliation onto the exact outbound message row they refer to is
+  // scoped out of this checkpoint and flagged explicitly in the final
+  // report rather than implemented partially/silently.
 
-  return noStore({ ok: true }, 200);
+  return noStore({ ok: true, processedPhoneNumberIds: processedBatches, unsupportedEvents: normalized.unsupportedEvents }, 200);
 }

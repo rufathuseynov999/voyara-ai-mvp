@@ -5,6 +5,7 @@ import { TravelRequestForm } from '@/components/travel-request-form';
 import { getDictionary } from '@/i18n/dictionaries';
 import { SimulationBanner } from '@/components/simulation-banner';
 import { OrchestrationConsole } from '@/components/orchestration-console';
+import { ExperienceShell } from '@/components/experience-shell';
 import { requireLocale } from '@/i18n/server';
 import { getViewer } from '@/server/auth/viewer';
 import { loadCustomerTravelRequests } from '@/server/travel-request/queries';
@@ -18,7 +19,7 @@ export default async function TripWizardPage({ params }: { params: Promise<{ loc
     ? await loadCustomerTravelRequests(viewer)
     : { draft: null, recent: [] };
 
-  return (
+  const content = (
     <main className="screen-page travel-request-page" id="main-content" tabIndex={-1}>
       <SimulationBanner dictionary={dictionary} />
       <OrchestrationConsole mode="wizard" labels={dictionary.phase3b} />
@@ -48,5 +49,15 @@ export default async function TripWizardPage({ params }: { params: Promise<{ loc
         />
       )}
     </main>
+  );
+
+  // The wizard remains reachable by signed-out visitors (it shows its own
+  // sign-in gate above), so it cannot use the (customer) route group's
+  // requireViewerRole-gated layout. It still gets the same continuous
+  // Experience Shell chrome by mounting it directly here.
+  return (
+    <ExperienceShell dictionary={dictionary} locale={locale}>
+      {content}
+    </ExperienceShell>
   );
 }

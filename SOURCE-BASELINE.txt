@@ -1,0 +1,5 @@
+VOYARA source baseline
+Repository: rufathuseynov999/voyara-ai-mvp
+Branch: preview/final-landing
+Verified baseline commit: 4598e9e3c4d08df7278bafb1c2deaf137073cf90
+Packaged for normal Claude on 2026-08-13.

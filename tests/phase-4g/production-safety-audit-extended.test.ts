@@ -50,9 +50,15 @@ test('prepareProposal persists the caller-supplied material exactly — every fi
 });
 
 test('createApprovedPaymentLink records the exact named approver passed in, never a generic or system actor', async () => {
-  const { ports } = makePorts();
+  const { ports, paymentLinkStore, conversationStore } = makePorts();
   const { proposalDraftId } = await ports.prepareProposal(randomUUID(), randomUUID(), 'HOTEL', REAL_HOTEL_MATERIAL as never);
   const { approvalRequestId } = await ports.preparePaymentLinkApproval(proposalDraftId);
+  const link = await paymentLinkStore.loadLink(approvalRequestId);
+  await conversationStore.createConversation({
+    conversationId: link!.originatingConversationId, accountId: 'acct-safety-audit-tests', contactId: link!.contactId,
+    channel: 'WEB_CHAT', status: 'OPEN', assignedAgentRole: null, relatedQuoteId: null,
+    correlationId: `corr-${randomUUID().slice(0, 8)}`, createdAt: FIXED.toISOString(), handoverStatus: 'HUMAN', lastInboundAt: null
+  });
   const namedApprover = randomUUID();
   const otherPossibleApprover = randomUUID();
   const result = await ports.createApprovedPaymentLink(approvalRequestId, namedApprover);
@@ -74,9 +80,15 @@ test('calling recordProposalApproval twice on the same already-approved quote is
 });
 
 test('createApprovedPaymentLink refuses a second time for the same link once it has already been sent — no repeated send operation', async () => {
-  const { ports } = makePorts();
+  const { ports, paymentLinkStore, conversationStore } = makePorts();
   const { proposalDraftId } = await ports.prepareProposal(randomUUID(), randomUUID(), 'HOTEL', REAL_HOTEL_MATERIAL as never);
   const { approvalRequestId } = await ports.preparePaymentLinkApproval(proposalDraftId);
+  const link = await paymentLinkStore.loadLink(approvalRequestId);
+  await conversationStore.createConversation({
+    conversationId: link!.originatingConversationId, accountId: 'acct-safety-audit-tests', contactId: link!.contactId,
+    channel: 'WEB_CHAT', status: 'OPEN', assignedAgentRole: null, relatedQuoteId: null,
+    correlationId: `corr-${randomUUID().slice(0, 8)}`, createdAt: FIXED.toISOString(), handoverStatus: 'HUMAN', lastInboundAt: null
+  });
   const approver = randomUUID();
   await ports.createApprovedPaymentLink(approvalRequestId, approver);
   await assert.rejects(

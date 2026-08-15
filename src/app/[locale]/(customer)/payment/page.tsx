@@ -8,13 +8,17 @@ import { OrchestrationConsole } from '@/components/orchestration-console';
 import { requireLocale } from '@/i18n/server';
 import { requireViewerRole } from '@/server/auth/viewer';
 import { loadCustomerPaymentRequests } from '@/server/payment/queries';
+import { loadCustomerBookings } from '@/server/booking/queries';
 
 export default async function PaymentPage({ params }: { params: Promise<{ locale: string }> }) {
   const locale = requireLocale((await params).locale);
   const dictionary = getDictionary(locale);
   const path = `/${locale}/payment`;
   const viewer = await requireViewerRole(locale, ['customer'], path);
-  const { payments, availableLocales } = await loadCustomerPaymentRequests(viewer, locale);
+  const [{ payments, availableLocales }, { bookings }] = await Promise.all([
+    loadCustomerPaymentRequests(viewer, locale),
+    loadCustomerBookings(viewer, locale)
+  ]);
 
   if (payments.length === 0 && availableLocales.length > 0 && availableLocales[0] !== locale) {
     redirect(`/${availableLocales[0]}/payment`);
@@ -30,7 +34,15 @@ export default async function PaymentPage({ params }: { params: Promise<{ locale
         <h1>{dictionary.screens.payment.title}</h1>
         <p>{dictionary.paymentCustomer.intro}</p>
       </section>
-      <CustomerPaymentWorkspace locale={locale} messages={dictionary.paymentCustomer} payments={payments} />
+      <CustomerPaymentWorkspace
+        bookings={bookings}
+        continuityMessages={dictionary.journeyContinuity}
+        locale={locale}
+        messages={dictionary.paymentCustomer}
+        payments={payments}
+        proposalHref={`/${locale}/proposal`}
+        tripRoomHref={`/${locale}/trip-room`}
+      />
     </main>
   );
 }

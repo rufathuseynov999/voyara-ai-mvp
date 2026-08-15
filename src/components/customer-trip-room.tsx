@@ -1,8 +1,11 @@
+import Link from 'next/link';
 import type { Dictionary } from '@/i18n/dictionaries';
 import type { Locale } from '@/i18n/config';
 import type { BookingStatus, CustomerBookingView } from '@/server/booking/contract';
 import type { CustomerSupportCase } from '@/server/support/contract';
 import { CustomerSupportPanel } from './customer-support-panel';
+import { NextActionCard } from './next-action-card';
+import { deriveBookingStage } from '@/lib/journey-continuity';
 
 const numberLocales: Record<Locale, string> = { az: 'az-AZ', ru: 'ru-RU', en: 'en-US' };
 const statusOrder: Record<BookingStatus, number> = {
@@ -21,13 +24,17 @@ export function CustomerTripRoom({
   supportCases,
   locale,
   messages,
-  supportMessages
+  supportMessages,
+  continuityMessages,
+  proposalHref
 }: {
   bookings: CustomerBookingView[];
   supportCases: CustomerSupportCase[];
   locale: Locale;
   messages: Dictionary['bookingCustomer'];
   supportMessages: Dictionary['supportCustomer'];
+  continuityMessages?: Dictionary['journeyContinuity'];
+  proposalHref?: string;
 }) {
   if (bookings.length === 0) {
     return (
@@ -81,6 +88,15 @@ export function CustomerTripRoom({
                   ))}
                 </ol>
               </section>
+
+              {continuityMessages ? (
+                <NextActionCard
+                  action={{ ...deriveBookingStage(booking.status), primaryAction: null, paymentRequestId: null, bookingId: booking.id }}
+                  compact
+                  locale={locale}
+                  messages={continuityMessages}
+                />
+              ) : null}
 
               {booking.voucher ? (
                 <>
@@ -159,6 +175,11 @@ export function CustomerTripRoom({
         })}
       </div>
       <p className="authority-note">{messages.boundary}</p>
+      {continuityMessages && proposalHref ? (
+        <Link className="button button-outline-dark trip-room-back-link" href={proposalHref}>
+          {continuityMessages.ctaBackToProposal}
+        </Link>
+      ) : null}
     </section>
   );
 }

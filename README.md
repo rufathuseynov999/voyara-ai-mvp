@@ -1,6 +1,6 @@
 # VOYARA AI MVP
 
-This repository contains the implementation through the final Task 012 for the Azerbaijan-first VOYARA AI MVP and the preserved Task 001 eight-screen reference.
+This repository contains the implementation through the final Task 012 for the Azerbaijan-first VOYARA AI MVP and the preserved Task 001 eight-screen reference, plus later-dated Phase D1, D2 and E1 landing-page work layered on top of Task 012 (see "Later landing-page phases (D1 / D2 / E1)" below).
 
 ## Current implementation boundary
 
@@ -235,6 +235,34 @@ Task 012-specific and browser checks are available with:
 npm run test:task012
 npx playwright install chromium
 npm run test:browser
+```
+
+## Later landing-page phases (D1 / D2 / E1)
+
+After Task 012 closed the numbered implementation sequence, further
+landing-page work was done under a separate D/E phase label, not a new
+numbered Task:
+
+- **D1** — brand asset correction (compact emblem-only header mark
+  replacing an illegible miniature wordmark). Verified by
+  `tests/standalone/brand-assets-d1.test.ts`.
+- **D2** — responsive landing-page correction (showcase section moved
+  immediately after the hero; default showcase screen fixed from screen 02
+  to screen 01; a CSS specificity bug and a CSS grid overflow at narrow
+  widths both fixed). Verified by
+  `tests/standalone/responsive-landing-d2.test.ts` and reported in
+  `VOYARA-RESPONSIVE-LANDING-D2-REPORT.md`.
+- **E1** — hybrid landing-page acceptance tests protecting the synthesis of
+  the earlier premium-identity landing page and a later conversion-focused
+  rebuild. Verified by `tests/standalone/hybrid-landing-e1.test.ts`.
+  **This "E1" is landing-page naming only and is unrelated to
+  `VOYARA-STRATEGIC-CONSTITUTION-v2.md`'s "Phase E — First Revenue"**
+  (WhatsApp/payments activation), which has not begun in this repository.
+
+Run all three together with:
+
+```bash
+node --import tsx --test tests/standalone/brand-assets-d1.test.ts tests/standalone/responsive-landing-d2.test.ts tests/standalone/hybrid-landing-e1.test.ts
 ```
 
 Backup and restore commands are safe plans unless their explicit execution confirmations are provided:

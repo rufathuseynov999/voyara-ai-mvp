@@ -408,26 +408,70 @@ export type WhatsAppCredentials = z.infer<typeof whatsappCredentialsSchema>;
 
 const WHATSAPP_DEFAULT_BASE_URL = 'https://graph.facebook.com/v20.0';
 
-export function readWhatsAppCredentials(
-  environment: NodeJS.ProcessEnv = process.env
-): WhatsAppCredentials | null {
-  const phoneNumberId = environment.VOYARA_WHATSAPP_PHONE_NUMBER_ID;
-  const wabaId = environment.VOYARA_WHATSAPP_WABA_ID;
-  const accessToken = environment.VOYARA_WHATSAPP_ACCESS_TOKEN;
-  const appSecret = environment.VOYARA_WHATSAPP_APP_SECRET;
-  const webhookVerifyToken = environment.VOYARA_WHATSAPP_WEBHOOK_VERIFY_TOKEN;
-  if (!phoneNumberId && !wabaId && !accessToken && !appSecret && !webhookVerifyToken) return null;
+export type WhatsAppCredentialsState =
+  | { status: 'ABSENT' }
+  | { status: 'INVALID'; reason: 'PARTIAL' | 'PLACEHOLDER' | 'MALFORMED' }
+  | { status: 'VALID'; credentials: WhatsAppCredentials };
+
+/**
+ * E.2A — the single source of truth for WhatsApp credential state,
+ * distinguishing three genuinely different situations that
+ * readWhatsAppCredentials() (kept below for backward compatibility)
+ * collapses into just null-or-not:
+ *   - ABSENT: no WhatsApp env vars set at all — an entirely expected,
+ *     unremarkable state (this project has never had live credentials).
+ *   - INVALID: SOME fields are set but not a complete, valid set — this is
+ *     a real misconfiguration a founder should be told about, never
+ *     silently treated the same as ABSENT. The reason is a coarse
+ *     category only (never which field, never any value) so nothing
+ *     secret-shaped is ever exposed.
+ *   - VALID: a complete, non-placeholder credential set.
+ */
+export function readWhatsAppCredentialsState(environment: NodeJS.ProcessEnv = process.env): WhatsAppCredentialsState {
+  const fields = {
+    phoneNumberId: environment.VOYARA_WHATSAPP_PHONE_NUMBER_ID,
+    wabaId: environment.VOYARA_WHATSAPP_WABA_ID,
+    accessToken: environment.VOYARA_WHATSAPP_ACCESS_TOKEN,
+    appSecret: environment.VOYARA_WHATSAPP_APP_SECRET,
+    webhookVerifyToken: environment.VOYARA_WHATSAPP_WEBHOOK_VERIFY_TOKEN
+  };
+  const setCount = Object.values(fields).filter((value) => value !== undefined && value !== '').length;
+  if (setCount === 0) return { status: 'ABSENT' };
 
   const baseUrl = environment.VOYARA_WHATSAPP_BASE_URL ?? WHATSAPP_DEFAULT_BASE_URL;
-  const parsed = whatsappCredentialsSchema.parse({ phoneNumberId, wabaId, accessToken, appSecret, webhookVerifyToken, baseUrl });
+  const parseResult = whatsappCredentialsSchema.safeParse({ ...fields, baseUrl });
+  if (!parseResult.success) return { status: 'INVALID', reason: 'PARTIAL' };
+
+  const parsed = parseResult.data;
   if (
     containsPlaceholder(parsed.phoneNumberId) || containsPlaceholder(parsed.wabaId)
     || containsPlaceholder(parsed.accessToken) || containsPlaceholder(parsed.appSecret)
     || containsPlaceholder(parsed.webhookVerifyToken)
   ) {
-    throw new Error('WhatsApp credentials cannot contain placeholder text.');
+    return { status: 'INVALID', reason: 'PLACEHOLDER' };
   }
-  return parsed;
+  return { status: 'VALID', credentials: parsed };
+}
+
+export function readWhatsAppCredentials(
+  environment: NodeJS.ProcessEnv = process.env
+): WhatsAppCredentials | null {
+  const state = readWhatsAppCredentialsState(environment);
+  return state.status === 'VALID' ? state.credentials : null;
+}
+
+/**
+ * E.2A — founder-gated activation switch, deliberately SEPARATE from
+ * credential completeness. Per the fail-closed-by-composition rule this
+ * project already uses elsewhere (e.g. VOYARA_DEMO_MODE): the presence of
+ * complete, valid credentials alone must never be sufficient to let
+ * VOYARA send or process WhatsApp traffic. Both this flag AND complete
+ * credentials are required — see whatsappActivationState() below, the
+ * single source of truth every caller must use instead of checking either
+ * one independently.
+ */
+export function readWhatsAppActivationFlag(environment: NodeJS.ProcessEnv = process.env): boolean {
+  return environment.VOYARA_WHATSAPP_ACTIVATION_ENABLED === 'true';
 }
 
 /**

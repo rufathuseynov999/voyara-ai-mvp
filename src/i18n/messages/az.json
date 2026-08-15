@@ -168,9 +168,21 @@
     "audienceTitle": "Sizə uyğun VOYARA təcrübəsini seçin",
     "audienceLead": "Eyni əməliyyat sistemi fərdi səfərdən yüksək səviyyəli konsyerjə və korporativ idarəetməyə qədər uyğunlaşır.",
     "audiences": [
-      ["Şəxsi səyahət", "Fərdi şəxslər və ailələr üçün daha sürətli planlama, əlaqələndirmə və səfər dəstəyi.", "Şəxsi planlara bax"],
-      ["Premium konsyerj", "Mürəkkəb marşrutlar, vaxta qənaət və yüksək diqqət istəyən səyahətçilər üçün.", "Premium-u kəşf et"],
-      ["Korporativ səyahət", "Komandalar üçün siyasət, təsdiq, səyahətçi əlaqələndirməsi və əməliyyat görünürlüğü.", "Korporativ həllərə bax"]
+      [
+        "Şəxsi səyahət",
+        "Fərdi şəxslər və ailələr üçün daha sürətli planlama, əlaqələndirmə və səfər dəstəyi.",
+        "Şəxsi planlara bax"
+      ],
+      [
+        "Premium konsyerj",
+        "Mürəkkəb marşrutlar, vaxta qənaət və yüksək diqqət istəyən səyahətçilər üçün.",
+        "Premium-u kəşf et"
+      ],
+      [
+        "Korporativ səyahət",
+        "Komandalar üçün siyasət, təsdiq, səyahətçi əlaqələndirməsi və əməliyyat görünürlüğü.",
+        "Korporativ həllərə bax"
+      ]
     ],
     "workReceiptKicker": "AI İŞ QEYDİ · SƏYAHƏT HAZIRLIĞI",
     "workReceiptTitle": "Hazırlanan işin aydın sübutu",
@@ -178,15 +190,33 @@
     "workReceiptMetricValue": "142",
     "workReceiptMetricLabel": "qalma variantı demo sorğusunda araşdırıldı",
     "workReceiptSteps": [
-      ["AI araşdırması", "Tamamlandı"],
-      ["Ekspert qısa siyahısı", "2 seçim"],
-      ["Müştəri qərarı", "Təsdiq gözlənilir"]
+      [
+        "AI araşdırması",
+        "Tamamlandı"
+      ],
+      [
+        "Ekspert qısa siyahısı",
+        "2 seçim"
+      ],
+      [
+        "Müştəri qərarı",
+        "Təsdiq gözlənilir"
+      ]
     ],
     "workReceiptBoundary": "Heç bir bron və ya ödəniş avtomatik başlamır.",
     "authorityPrinciples": [
-      ["AI hazırlayır", "Sorğunu strukturlaşdırır, seçimləri araşdırır, müqayisə edir və qərar üçün material hazırlayır."],
-      ["Mütəxəssis yoxlayır", "Kommersiya şərtlərini, istisnaları, ödəniş və bron addımlarını səlahiyyət daxilində yoxlayır."],
-      ["Siz təsdiqləyirsiniz", "Təklif və növbəti addım aydın təqdim olunur; sizin açıq qərarınız olmadan öhdəlik yaranmır."]
+      [
+        "AI hazırlayır",
+        "Sorğunu strukturlaşdırır, seçimləri araşdırır, müqayisə edir və qərar üçün material hazırlayır."
+      ],
+      [
+        "Mütəxəssis yoxlayır",
+        "Kommersiya şərtlərini, istisnaları, ödəniş və bron addımlarını səlahiyyət daxilində yoxlayır."
+      ],
+      [
+        "Siz təsdiqləyirsiniz",
+        "Təklif və növbəti addım aydın təqdim olunur; sizin açıq qərarınız olmadan öhdəlik yaranmır."
+      ]
     ],
     "authorityBoundary": "Axtarış və layihə hazırlığı ödəniş və ya bron öhdəliyi yaratmır.",
     "navMembership": "Üzvlük",
@@ -1368,7 +1398,41 @@
     "consentLabel": "razılıq",
     "dueLabel": "son tarix",
     "unreadAria": "oxunmamış",
-    "slaOverdueTitle": "SLA gecikib"
+    "slaOverdueTitle": "SLA gecikib",
+    "conversionTitle": "Səfər sorğusuna çevir",
+    "conversionSubtitle": "Bu WhatsApp söhbətini rəsmi Səfər Sorğusuna və Niyyətə çevirin. Bu heç bir rezervasiya, ödəniş və ya təchizatçı icrası yaratmır.",
+    "conversionCustomerLinked": "Müştəri hesabı bağlıdır",
+    "conversionCustomerUnlinked": "Müştəri hələ bağlanmayıb",
+    "conversionBrandConfirmed": "Brend",
+    "conversionConfirmationLabel": "Təsdiq sorğusu (VOYARA tərəfindən göndərilib)",
+    "conversionConfirmationPlaceholder": "Göndərilmiş təsdiq mesajını seçin",
+    "conversionAckLabel": "Müştərinin təsdiqi (daxil olan cavab)",
+    "conversionAckPlaceholder": "Müştərinin təsdiq mesajını seçin",
+    "conversionDisclosureLabel": "Açıqlama versiyası",
+    "conversionDestination": "İstiqamət",
+    "conversionDates": "Tarixlər",
+    "conversionTravelers": "Böyüklərin sayı",
+    "conversionBudget": "Büdcə (AZN)",
+    "conversionNotes": "Qeydlər",
+    "conversionSubmit": "Niyyət və Səfər Sorğusu yarat",
+    "conversionAuthorityNote": "Bu, yalnız Səfər Sorğusu və Niyyəti yaradır — heç bir ödəniş, rezervasiya və ya təchizatçı icrası vermir.",
+    "conversionSuccess": "Səfər Sorğusu və Niyyət uğurla yaradıldı.",
+    "conversionDenied": "Rədd edildi",
+    "conversionAlreadyDone": "Bu söhbət artıq çevrilib.",
+    "previewBannerLabel": "Nümunə məlumat — Simulyasiya (E.2A daxili baxış)",
+    "conversionDenialAckBeforeConfirmation": "Müştərinin cavabı təsdiq sorğusundan əvvəl gəlib — düzgün ardıcıllıqla yeni təsdiq göndərin.",
+    "conversionDenialStaleEvidence": "Seçilmiş təsdiq mesajı gözlənilən məzmunla uyğun gəlmir — mesajı yenidən seçin.",
+    "conversionDenialUnlinkedContact": "Bu əlaqə real müştəri hesabına bağlanmayıb.",
+    "conversionDenialMissingBrand": "Söhbətin brendi müəyyən edilməyib.",
+    "conversionDenialNotWhatsApp": "Bu söhbət WhatsApp kanalı deyil.",
+    "conversionDenialMissingTimestamp": "Müştərinin cavabının etibarlı vaxt möhürü yoxdur.",
+    "conversionDenialConfirmationNotSent": "Seçilmiş təsdiq mesajı hələ göndərilməyib və ya təsdiqlənməyib.",
+    "conversionDenialInvalidContent": "Səfər məlumatları etibarlı deyil — bütün sahələri yoxlayın.",
+    "conversionDenialGeneric": "Çevrilmə mümkün olmadı. Zəhmət olmasa yenidən cəhd edin və ya nəzarətçi ilə əlaqə saxlayın.",
+    "conversionTravelRequestIdLabel": "Səfər Sorğusu ID",
+    "conversionIntentIdLabel": "Niyyət ID",
+    "conversionPreviewIdsNote": "Bu ID-lər simulyasiya məlumatıdır, real qeydlər deyil.",
+    "conversionWaitingForCustomer": "Müştəridən təsdiqdən sonrakı cavab hələ yoxdur — çevrilmə mövcud deyil."
   },
   "chat": {
     "openLabel": "Bizimlə yazışın",
@@ -1489,5 +1553,83 @@
       "paymentLinkStatus": "Ödəniş linki statusu",
       "unavailableMetrics": "Əlçatan olmayan göstəricilər"
     }
+  },
+  "experienceShell": {
+    "navHome": "Ana səhifə",
+    "navAsk": "VOYARA-ya soruş",
+    "navTrips": "Səfərlərim",
+    "navMembership": "Üzvlük",
+    "navigationLabel": "Müştəri iş mühiti naviqasiyası",
+    "wizardLink": "Struktur formada davam et",
+    "contextComingSoon": "Tezliklə",
+    "contextMe": "Mən",
+    "contextFamily": "Ailə",
+    "contextWork": "İş",
+    "skipToContent": "Əsas məzmuna keç"
+  },
+  "askVoyara": {
+    "eyebrow": "VOYARA-ya soruş",
+    "title": "Səfəriniz haqqında VOYARA-ya danışın",
+    "intro": "Səfəri öz sözlərinizlə təsvir edin. Heç nə sizin təsdiqiniz olmadan rezerv edilmir — hər şeyi əvvəlcə komanda üzvü yoxlayır.",
+    "placeholder": "məs: Sentyabrda həyat yoldaşımla Komo gölündə beş gecə, təxminən 5000 avro",
+    "send": "Göndər",
+    "working": "Sorğunuz oxunur…",
+    "parsedTitle": "VOYARA bunu belə başa düşdü",
+    "confirmCta": "Səfər sorğusu yarat",
+    "editInWizard": "Tam formada dəqiqləşdir",
+    "emptyHint": "İstiqamət, tarix, səyahət edənlərin sayı və büdcəni daxil etməyə çalışın.",
+    "disclaimer": "VOYARA bunu yazdıqlarınız əsasında hazırlayır. Müştəriyə göstərilən hər şeyi əvvəlcə komanda üzvü yoxlayır.",
+    "quickChipsLabel": "Bunlardan birini sınayın",
+    "sample1": "Sentyabrda Komo gölündə beş gecə, ~5000 avro",
+    "sample2": "Növbəti həftə sonu üçün isti bir yer",
+    "sample3": "Antalyaya ailəvi səfər, iki böyük iki uşaq",
+    "createdStatus": "Qaralama yaradıldı — tarixləri təsdiqləyib göndərmək üçün səfər formasında davam edin.",
+    "detectedDestination": "İstiqamət",
+    "detectedDates": "Tarixlər",
+    "detectedTravelers": "Səyahət edənlər",
+    "detectedBudget": "Büdcə",
+    "notDetected": "Hələ müəyyən edilməyib"
+  },
+  "journeyCanvas": {
+    "eyebrow": "Səyahət lövhəsi",
+    "title": "Səfəriniz — hazırlanıb və yoxlanılıb",
+    "stageAiPrepared": "AI hazırladı",
+    "stageExpertReviewed": "Ekspert yoxladı",
+    "stageApprovalRequired": "Sizin təsdiqiniz lazımdır",
+    "stageReadyToBook": "Rezervasiyaya hazırdır",
+    "stageBooked": "Rezerv edildi",
+    "itineraryTitle": "Marşrut",
+    "summaryTitle": "Səfər xülasəsi",
+    "mapUnavailable": "İstiqamət koordinatları təsdiqlənəndə xəritə önizləməsi buradan görünəcək",
+    "alternativesTitle": "Alternativlər",
+    "alternativesUnavailable": "Alternativ variantlar hazırda mövcud deyil",
+    "askAboutItem": "Bu barədə VOYARA-ya soruş",
+    "sampleDataNotice": "Nümunə məlumat — real tarix/qiymət deyil"
+  },
+  "journeyContinuity": {
+    "cardEyebrow": "Növbəti addım",
+    "awaitingPaymentTitle": "Səfər təsdiqləndi",
+    "awaitingPaymentBody": "VOYARA növbəti rezervasiya/ödəniş addımını hazırlayır. Hazırda sizdən əlavə hərəkət tələb olunmur.",
+    "paymentActionRequiredTitle": "Ödəniş tələb olunur",
+    "paymentActionRequiredBody": "Ödəniş sorğunuz hazırdır və sizin hərəkətinizi gözləyir.",
+    "paymentInReviewTitle": "Ödəniş yoxlanılır",
+    "paymentInReviewBody": "Təqdim etdiyiniz ödəniş məlumatı VOYARA komandası tərəfindən yoxlanılır.",
+    "awaitingBookingTitle": "Ödəniş təsdiqləndi",
+    "awaitingBookingBody": "VOYARA rezervasiya addımını hazırlayır. Hazırda sizdən əlavə hərəkət tələb olunmur.",
+    "bookingInProgressTitle": "Rezervasiya davam edir",
+    "bookingInProgressBody": "VOYARA təchizatçı ilə rezervasiyanı təsdiqləyir və yoxlayır.",
+    "readyToTravelTitle": "Səfərə hazırsınız",
+    "readyToTravelBody": "Rezervasiyanız yoxlanılıb və sənədləriniz Səfər Otağında hazırdır.",
+    "responsibilityVoyara": "VOYARA bunu idarə edir",
+    "responsibilityCustomer": "Sizin hərəkətiniz tələb olunur",
+    "responsibilityReady": "Hazırdır",
+    "ctaContinueToPayment": "Ödənişə davam et",
+    "ctaOpenTripRoom": "Səfər Otağını aç",
+    "ctaBackToProposal": "Qəbul edilmiş təklifə qayıt",
+    "sourceNote": "Bu, sizin real ödəniş və rezervasiya qeydlərinizə əsaslanır."
+  },
+  "membershipContext": {
+    "currentPlanLabel": "Cari plan",
+    "planBadgeSuffix": "üzv"
   }
 }

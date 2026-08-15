@@ -7,6 +7,7 @@ import { assignConversation, setHandoverStatus } from '@/server/agents/inbox-act
 import { escalateConversation } from '@/server/agents/agent-operating-layer';
 import { SupabaseConversationStore } from '@/server/agents/supabase-conversation-store';
 import { SimulationChannelAdapter } from '@/server/agents/simulation-channel-adapter';
+import { executeWhatsAppConversionCommand, whatsappConversionInputSchema } from '@/server/whatsapp/whatsapp-conversion-command';
 
 /**
  * Phase 4B — CRM inbox API. Same transport hardening as
@@ -66,7 +67,8 @@ export async function GET(request: NextRequest) {
 const actionSchema = z.discriminatedUnion('action', [
   z.object({ action: z.literal('assign'), conversationId: z.uuid() }).strict(),
   z.object({ action: z.literal('handover'), conversationId: z.uuid(), status: z.enum(['AI', 'HUMAN']) }).strict(),
-  z.object({ action: z.literal('escalate'), conversationId: z.uuid(), reasonCode: z.string().min(1).max(120) }).strict()
+  z.object({ action: z.literal('escalate'), conversationId: z.uuid(), reasonCode: z.string().min(1).max(120) }).strict(),
+  z.object({ action: z.literal('convertWhatsApp'), input: whatsappConversionInputSchema }).strict()
 ]);
 
 export async function POST(request: NextRequest) {
@@ -92,6 +94,13 @@ export async function POST(request: NextRequest) {
       await assignConversation(parsed.data.conversationId, viewer.id, correlationId);
     } else if (parsed.data.action === 'handover') {
       await setHandoverStatus(parsed.data.conversationId, parsed.data.status, viewer.id, correlationId);
+    } else if (parsed.data.action === 'convertWhatsApp') {
+      // The wrapper itself re-derives actor/session/AAL from `viewer`
+      // (already cryptographically verified above by requireAal2Staff)
+      // — this route never passes anything from parsed.data as authority,
+      // only the business-input fields the schema allows.
+      const result = await executeWhatsAppConversionCommand(viewer, parsed.data.input);
+      return noStore({ ok: true, conversion: result }, 200);
     } else {
       await escalateConversation(
         { store: new SupabaseConversationStore(), channel: new SimulationChannelAdapter(), actor: { id: viewer.id, kind: 'human' }, accountId: viewer.id, correlationId, now: () => new Date() },

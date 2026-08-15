@@ -36,8 +36,10 @@ export default async function TripRoomPage({ params }: { params: Promise<{ local
       </section>
       <CustomerTripRoom
         bookings={bookings}
+        continuityMessages={dictionary.journeyContinuity}
         locale={locale}
         messages={dictionary.bookingCustomer}
+        proposalHref={`/${locale}/proposal`}
         supportCases={supportCases}
         supportMessages={dictionary.supportCustomer}
       />

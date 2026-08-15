@@ -70,13 +70,30 @@ test('recordProposalApproval (Level 2) refuses without a real human approver', a
 });
 
 test('preparePaymentLinkApproval and createApprovedPaymentLink genuinely call the real payment-link service end to end', async () => {
-  const { ports, paymentLinkStore } = makePorts();
-  const { proposalDraftId } = await ports.prepareProposal(randomUUID(), randomUUID(), "HOTEL", REAL_HOTEL_MATERIAL as never);
+  const { ports, paymentLinkStore, conversationStore } = makePorts();
+  const contactId = randomUUID();
+  const conversationId = randomUUID();
+  await conversationStore.createConversation({
+    conversationId, accountId: 'acct-journey-ports-tests', contactId, channel: 'WEB_CHAT', status: 'OPEN',
+    assignedAgentRole: null, relatedQuoteId: null, correlationId: `corr-${randomUUID().slice(0, 8)}`, createdAt: FIXED.toISOString(),
+    handoverStatus: 'HUMAN', lastInboundAt: null
+  });
+  const { proposalDraftId } = await ports.prepareProposal(contactId, conversationId, "HOTEL", REAL_HOTEL_MATERIAL as never);
   const { approvalRequestId } = await ports.preparePaymentLinkApproval(proposalDraftId);
   assert.ok(!approvalRequestId.startsWith('payapprreq-'));
   const link = await paymentLinkStore.loadLink(approvalRequestId);
   assert.ok(link);
   assert.equal(link?.status, 'DRAFTED');
+  // preparePaymentLinkApproval (production-journey-ports.ts) generates its
+  // own internal conversationId — read it back from the drafted link and
+  // create a REAL matching conversation before the send path needs it,
+  // rather than pre-guessing an ID or weakening the store's real
+  // missing-conversation invariant.
+  await conversationStore.createConversation({
+    conversationId: link!.originatingConversationId, accountId: 'acct-journey-ports-tests', contactId: link!.contactId,
+    channel: 'WEB_CHAT', status: 'OPEN', assignedAgentRole: null, relatedQuoteId: null,
+    correlationId: `corr-${randomUUID().slice(0, 8)}`, createdAt: FIXED.toISOString(), handoverStatus: 'HUMAN', lastInboundAt: null
+  });
 
   const approver = randomUUID();
   const result = await ports.createApprovedPaymentLink(approvalRequestId, approver);

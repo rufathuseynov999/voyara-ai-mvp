@@ -5,7 +5,8 @@ import test from 'node:test';
 import { WhatsAppChannelAdapter } from '@/server/agents/whatsapp/whatsapp-adapter';
 import { verifyWebhookChallenge, verifyWebhookSignature } from '@/server/agents/whatsapp/whatsapp-signature';
 import { processInboundWhatsAppMessage } from '@/server/agents/whatsapp/whatsapp-inbound';
-import { WHATSAPP_FIXTURE_INBOUND_BUTTON, WHATSAPP_FIXTURE_INBOUND_TEXT } from '@/server/agents/whatsapp/whatsapp-fixtures';
+import { WHATSAPP_FIXTURE_INBOUND_BUTTON, WHATSAPP_FIXTURE_INBOUND_TEXT, META_FIXTURE_INBOUND_TEXT } from '@/server/agents/whatsapp/whatsapp-fixtures';
+import { normalizeMetaWebhookEnvelope } from '@/server/agents/whatsapp/whatsapp-activation';
 import { InMemoryConversationStore } from '@/server/agents/in-memory-conversation-store';
 import { InMemoryIdentityStore } from '@/server/agents/in-memory-identity-store';
 import { createChannelAdapter, ChannelAdapterError } from '@/server/agents/channel-registry';
@@ -54,18 +55,23 @@ test('a missing or malformed signature header is rejected', () => {
 
 test('the adapter\'s verifyAndParseWebhook rejects an invalid signature before ever parsing the body', () => {
   const adapter = new WhatsAppChannelAdapter(CREDENTIALS, { clock: () => FIXED });
-  const result = adapter.verifyAndParseWebhook(JSON.stringify(WHATSAPP_FIXTURE_INBOUND_TEXT), 'sha256=' + 'f'.repeat(64));
+  const result = adapter.verifyAndParseWebhook(JSON.stringify(META_FIXTURE_INBOUND_TEXT), 'sha256=' + 'f'.repeat(64));
   assert.equal(result.valid, false);
-  assert.equal(result.payload, null);
+  assert.equal(result.body, null);
 });
 
-test('the adapter\'s verifyAndParseWebhook accepts and parses a genuinely signed body', () => {
+test('the adapter\'s verifyAndParseWebhook accepts and parses a genuinely signed real Meta envelope', () => {
   const adapter = new WhatsAppChannelAdapter(CREDENTIALS, { clock: () => FIXED });
-  const body = JSON.stringify(WHATSAPP_FIXTURE_INBOUND_TEXT);
+  const body = JSON.stringify(META_FIXTURE_INBOUND_TEXT);
   const signature = `sha256=${createHmac('sha256', APP_SECRET).update(body).digest('hex')}`;
   const result = adapter.verifyAndParseWebhook(body, signature);
   assert.equal(result.valid, true);
-  assert.equal(result.payload?.messages.length, 1);
+  assert.ok(result.body, 'parsed JSON body is returned');
+  const normalized = normalizeMetaWebhookEnvelope(result.body);
+  assert.equal(normalized.malformed, false);
+  assert.equal(normalized.batches.length, 1);
+  assert.equal(normalized.batches[0].phoneNumberId, 'test-phone-number-id-000001');
+  assert.equal(normalized.batches[0].messages.length, 1);
 });
 
 /* -------------------------------- service window -------------------------------- */

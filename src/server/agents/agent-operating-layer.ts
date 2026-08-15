@@ -3,6 +3,7 @@ import { sha256 } from '@/server/bos/canonical-json';
 import { reportError } from '@/server/observability/error-reporter';
 import type { ChannelAdapter } from './channel-adapter';
 import type { ConversationStore } from './conversation-store';
+import type { IdentityStore } from './identity-store';
 import {
   AgentAuthorityError,
   agentDraftSchema,
@@ -29,6 +30,9 @@ import {
 
 export type AgentOperatingContext = {
   store: ConversationStore;
+  /** E.2A — only required for WhatsApp sends (verified-identity recipient
+   *  resolution). Other channels never read this. */
+  identityStore?: IdentityStore;
   channel: ChannelAdapter;
   actor: { id: string; kind: 'human' | 'agent' | 'system' };
   accountId: string;
@@ -164,14 +168,33 @@ export async function rejectMessage(ctx: AgentOperatingContext, messageId: strin
  *  first, by a human) — an agent-drafted message can never reach this
  *  function's send call without that step, and the database's own CHECK
  *  constraint (`messages_sent_requires_approval`) refuses the write even if
- *  application logic were somehow bypassed. */
-export async function approveAndSendMessage(ctx: AgentOperatingContext, messageId: string, contactExternalId: string): Promise<{ sent: boolean }> {
+ *  application logic were somehow bypassed.
+ *
+ *  E.2A: this remains the ONE canonical send path for every channel,
+ *  including WhatsApp. `contactExternalId` is now optional — for WhatsApp,
+ *  the recipient is ALWAYS resolved from the conversation's own linked
+ *  contact record (never trusted from a caller-supplied value), which also
+ *  structurally prevents a cross-contact/cross-conversation/cross-brand
+ *  recipient substitution: the phone number sent to is the one actually on
+ *  file for message.conversationId's contactId, full stop. Other channels
+ *  (voice, web chat, Instagram) keep the existing explicit
+ *  contactExternalId behaviour unchanged — this is additive, not a
+ *  behaviour change for them. */
+export async function approveAndSendMessage(ctx: AgentOperatingContext, messageId: string, contactExternalId?: string): Promise<{ sent: boolean }> {
   const message = await ctx.store.loadMessage(messageId);
   if (!message) throw new AgentAuthorityError('Message not found.', 'NOT_FOUND');
   if (message.status !== 'APPROVED') {
     throw new AgentAuthorityError(`Message must be APPROVED before it can be sent (currently ${message.status}).`, 'VALIDATION');
   }
 
+  const conversation = await ctx.store.loadConversation(message.conversationId);
+  if (!conversation) throw new AgentAuthorityError('Conversation not found.', 'NOT_FOUND');
+
+  if (conversation.channel === 'WHATSAPP') {
+    return sendApprovedWhatsAppMessageInternal(ctx, message, conversation);
+  }
+
+  if (!contactExternalId) throw new AgentAuthorityError('contactExternalId is required for this channel.', 'VALIDATION');
   const result = await ctx.channel.sendOutbound({ contactExternalId, body: message.body, correlationId: ctx.correlationId });
   if (!result.ok) {
     await audit(ctx, 'MESSAGE_SEND_FAILED', message.conversationId, messageId, result.error.code);
@@ -183,6 +206,111 @@ export async function approveAndSendMessage(ctx: AgentOperatingContext, messageI
   await ctx.store.saveMessage(sent);
   await ctx.store.updateConversationStatus(message.conversationId, 'OPEN', sent.sentAt!);
   await audit(ctx, 'MESSAGE_SENT', message.conversationId, messageId, undefined, message.contentHash);
+  return { sent: true };
+}
+
+/**
+ * E.2A §1 — the ONLY way this layer resolves a WhatsApp send destination.
+ * `contacts.phone` alone is never trusted as recipient authority — it can
+ * exist without ever having been proven to be this contact's verified
+ * WhatsApp identity (e.g. entered by staff from a different channel). This
+ * requires a real `LinkedIdentity` row with `identityKind: 'WHATSAPP'`,
+ * `verified: true`, and `contactId` matching exactly. If `contacts.phone`
+ * is also present, it must agree with the verified identity's externalId
+ * (allowing for a leading '+') or the operation fails closed — a
+ * disagreement between the two is treated as a real inconsistency worth
+ * refusing to send over, not something to silently prefer one side of.
+ */
+type VerifiedRecipientResult =
+  | { ok: true; externalId: string }
+  | { ok: false; reasonCode: 'WHATSAPP_NO_VERIFIED_IDENTITY' | 'WHATSAPP_AMBIGUOUS_IDENTITY' | 'WHATSAPP_PHONE_IDENTITY_MISMATCH' };
+
+async function resolveVerifiedWhatsAppRecipient(
+  store: ConversationStore,
+  identityStore: IdentityStore,
+  contactId: string
+): Promise<VerifiedRecipientResult> {
+  const identities = await identityStore.listIdentitiesForContact(contactId);
+  const verifiedWhatsApp = identities.filter((identity) => identity.identityKind === 'WHATSAPP' && identity.verified === true && identity.contactId === contactId);
+
+  if (verifiedWhatsApp.length === 0) return { ok: false, reasonCode: 'WHATSAPP_NO_VERIFIED_IDENTITY' };
+  if (verifiedWhatsApp.length > 1) {
+    // More than one verified WhatsApp identity for the same contact is an
+    // ambiguous state this layer refuses to guess between, rather than
+    // silently picking the first/most-recent one.
+    return { ok: false, reasonCode: 'WHATSAPP_AMBIGUOUS_IDENTITY' };
+  }
+
+  const identity = verifiedWhatsApp[0];
+  const contact = await store.loadContact(contactId);
+  if (contact?.phone) {
+    const normalizedPhone = contact.phone.replace(/^\+/, '');
+    const normalizedIdentity = identity.externalId.replace(/^\+/, '');
+    if (normalizedPhone !== normalizedIdentity) {
+      return { ok: false, reasonCode: 'WHATSAPP_PHONE_IDENTITY_MISMATCH' };
+    }
+  }
+
+  return { ok: true, externalId: `+${identity.externalId.replace(/^\+/, '')}` };
+}
+
+/**
+ * E.2A — internal helper, invoked ONLY by approveAndSendMessage above. Not
+ * exported; there is no route or client entrypoint that can reach this
+ * function without going through the same approval check every other
+ * channel's send goes through. Resolves the recipient from the
+ * conversation's own contact record — never from caller input — which is
+ * what makes cross-contact/cross-brand recipient substitution structurally
+ * impossible rather than merely validated against.
+ */
+async function sendApprovedWhatsAppMessageInternal(
+  ctx: AgentOperatingContext,
+  message: Message,
+  conversation: Conversation
+): Promise<{ sent: boolean }> {
+  if (conversation.channel !== 'WHATSAPP') {
+    throw new AgentAuthorityError('sendApprovedWhatsAppMessageInternal called for a non-WHATSAPP conversation.', 'VALIDATION');
+  }
+  if (!conversation.customerFacingBrand) {
+    await audit(ctx, 'MESSAGE_SEND_FAILED', message.conversationId, message.messageId, 'WHATSAPP_MISSING_BRAND');
+    return { sent: false };
+  }
+  if (!ctx.identityStore) {
+    await audit(ctx, 'MESSAGE_SEND_FAILED', message.conversationId, message.messageId, 'WHATSAPP_NO_IDENTITY_STORE');
+    return { sent: false };
+  }
+  const recipient = await resolveVerifiedWhatsAppRecipient(ctx.store, ctx.identityStore, conversation.contactId);
+  if (!recipient.ok) {
+    await audit(ctx, 'MESSAGE_SEND_FAILED', message.conversationId, message.messageId, recipient.reasonCode);
+    return { sent: false };
+  }
+
+  const result = await ctx.channel.sendOutbound({
+    contactExternalId: recipient.externalId,
+    body: message.body,
+    correlationId: ctx.correlationId,
+    lastInboundAt: conversation.lastInboundAt ? new Date(conversation.lastInboundAt) : null
+  });
+
+  if (!result.ok) {
+    await audit(ctx, 'MESSAGE_SEND_FAILED', message.conversationId, message.messageId, result.error.code);
+    reportError(new Error(`WhatsApp send failed: ${result.error.code}`), { code: 'AGENT_WHATSAPP_SEND_FAILED', messageId: message.messageId });
+    return { sent: false };
+  }
+
+  const sentAt = ctx.now().toISOString();
+  await ctx.store.saveMessage({
+    ...message,
+    status: 'SENT',
+    sentAt,
+    externalMessageId: result.value.externalMessageId,
+    deliveryStatus: 'PENDING',
+    webhookStatus: null
+  });
+  // Outbound-only write: last_message_at is bumped, last_inbound_at is
+  // never touched (updateConversationStatus, not recordInboundActivity).
+  await ctx.store.updateConversationStatus(message.conversationId, conversation.status, sentAt);
+  await audit(ctx, 'MESSAGE_SENT', message.conversationId, message.messageId, undefined, message.contentHash);
   return { sent: true };
 }
 

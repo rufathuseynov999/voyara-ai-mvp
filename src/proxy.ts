@@ -9,11 +9,18 @@ function contentSecurityPolicy(nonce: string, supabaseOrigin: string | null): st
   const scriptSources = ["'self'", `'nonce-${nonce}'`, "'strict-dynamic'", process.env.NODE_ENV === 'development' ? "'unsafe-eval'" : null]
     .filter(Boolean)
     .join(' ');
+  // Turbopack's Fast Refresh injects inline <style> tags for CSS hot module
+  // replacement in development. Production extracts CSS into static files
+  // and never needs this, so this relaxation is strictly dev-only and does
+  // not change the certified production CSP at all.
+  const styleSources = ["'self'", process.env.NODE_ENV === 'development' ? "'unsafe-inline'" : null]
+    .filter(Boolean)
+    .join(' ');
 
   return [
     "default-src 'self'",
     `script-src ${scriptSources}`,
-    "style-src 'self'",
+    `style-src ${styleSources}`,
     "img-src 'self' data: blob:",
     "font-src 'self'",
     `connect-src ${connectSources}`,

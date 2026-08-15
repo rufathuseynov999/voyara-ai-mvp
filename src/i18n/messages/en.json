@@ -168,9 +168,21 @@
     "audienceTitle": "Choose your VOYARA experience",
     "audienceLead": "The same operating system adapts from personal travel to premium concierge and corporate management.",
     "audiences": [
-      ["Personal travel", "Faster planning, coordination and journey support for individuals and families.", "View personal plans"],
-      ["Premium concierge", "For complex itineraries, time-sensitive travel and customers who value elevated attention.", "Explore Premium"],
-      ["Corporate travel", "Policy, approvals, traveller coordination and operational visibility for organisations.", "View corporate solutions"]
+      [
+        "Personal travel",
+        "Faster planning, coordination and journey support for individuals and families.",
+        "View personal plans"
+      ],
+      [
+        "Premium concierge",
+        "For complex itineraries, time-sensitive travel and customers who value elevated attention.",
+        "Explore Premium"
+      ],
+      [
+        "Corporate travel",
+        "Policy, approvals, traveller coordination and operational visibility for organisations.",
+        "View corporate solutions"
+      ]
     ],
     "workReceiptKicker": "AI WORK RECORD · JOURNEY PREPARATION",
     "workReceiptTitle": "Clear evidence of the work prepared",
@@ -178,15 +190,33 @@
     "workReceiptMetricValue": "142",
     "workReceiptMetricLabel": "stay options examined in a demonstration request",
     "workReceiptSteps": [
-      ["AI research", "Complete"],
-      ["Expert shortlist", "2 options"],
-      ["Customer decision", "Awaiting approval"]
+      [
+        "AI research",
+        "Complete"
+      ],
+      [
+        "Expert shortlist",
+        "2 options"
+      ],
+      [
+        "Customer decision",
+        "Awaiting approval"
+      ]
     ],
     "workReceiptBoundary": "No booking or payment starts automatically.",
     "authorityPrinciples": [
-      ["AI prepares", "It structures the request, researches and compares options, and prepares decision material."],
-      ["A specialist reviews", "Within their authority, they check commercial terms, exceptions, payment and booking steps."],
-      ["You approve", "The proposal and next step are clear; no commitment arises without your explicit decision."]
+      [
+        "AI prepares",
+        "It structures the request, researches and compares options, and prepares decision material."
+      ],
+      [
+        "A specialist reviews",
+        "Within their authority, they check commercial terms, exceptions, payment and booking steps."
+      ],
+      [
+        "You approve",
+        "The proposal and next step are clear; no commitment arises without your explicit decision."
+      ]
     ],
     "authorityBoundary": "Search and draft preparation create no payment or booking obligation.",
     "navMembership": "Membership",
@@ -1368,7 +1398,41 @@
     "consentLabel": "consent",
     "dueLabel": "due",
     "unreadAria": "unread",
-    "slaOverdueTitle": "SLA overdue"
+    "slaOverdueTitle": "SLA overdue",
+    "conversionTitle": "Convert to Travel Request",
+    "conversionSubtitle": "Convert this WhatsApp conversation into a real Travel Request and Intent. This creates no booking, payment, or supplier execution.",
+    "conversionCustomerLinked": "Customer account linked",
+    "conversionCustomerUnlinked": "Customer not yet linked",
+    "conversionBrandConfirmed": "Brand",
+    "conversionConfirmationLabel": "Confirmation request (sent by VOYARA)",
+    "conversionConfirmationPlaceholder": "Select the sent confirmation message",
+    "conversionAckLabel": "Customer acknowledgement (inbound reply)",
+    "conversionAckPlaceholder": "Select the customer's acknowledgement message",
+    "conversionDisclosureLabel": "Disclosure version",
+    "conversionDestination": "Destination",
+    "conversionDates": "Dates",
+    "conversionTravelers": "Adults",
+    "conversionBudget": "Budget (AZN)",
+    "conversionNotes": "Notes",
+    "conversionSubmit": "Create Intent and Travel Request",
+    "conversionAuthorityNote": "This only creates a Travel Request and Intent — it grants no payment, booking, or supplier authority.",
+    "conversionSuccess": "Travel Request and Intent created successfully.",
+    "conversionDenied": "Denied",
+    "conversionAlreadyDone": "This conversation has already been converted.",
+    "previewBannerLabel": "Preview data — Simulation (E.2A internal preview)",
+    "conversionDenialAckBeforeConfirmation": "The customer's reply came before the confirmation request — send a new confirmation in the correct order.",
+    "conversionDenialStaleEvidence": "The selected acknowledgement message no longer matches the expected content — reselect it.",
+    "conversionDenialUnlinkedContact": "This contact is not linked to a real customer account.",
+    "conversionDenialMissingBrand": "This conversation has no confirmed brand.",
+    "conversionDenialNotWhatsApp": "This conversation is not a WhatsApp channel.",
+    "conversionDenialMissingTimestamp": "The customer's reply has no valid provider timestamp.",
+    "conversionDenialConfirmationNotSent": "The selected confirmation message has not been sent/approved yet.",
+    "conversionDenialInvalidContent": "The trip details are not valid — please check all fields.",
+    "conversionDenialGeneric": "Conversion could not be completed. Please try again or contact a supervisor.",
+    "conversionTravelRequestIdLabel": "Travel Request ID",
+    "conversionIntentIdLabel": "Intent ID",
+    "conversionPreviewIdsNote": "These identifiers are simulation data, not real records.",
+    "conversionWaitingForCustomer": "No customer reply after the confirmation yet — conversion is not available."
   },
   "chat": {
     "openLabel": "Chat with us",
@@ -1489,5 +1553,83 @@
       "paymentLinkStatus": "Payment-link status",
       "unavailableMetrics": "Unavailable metrics"
     }
+  },
+  "experienceShell": {
+    "navHome": "Home",
+    "navAsk": "Ask VOYARA",
+    "navTrips": "My Trips",
+    "navMembership": "Membership",
+    "navigationLabel": "Customer workspace navigation",
+    "wizardLink": "Continue in structured form",
+    "contextComingSoon": "Coming soon",
+    "contextMe": "Me",
+    "contextFamily": "Family",
+    "contextWork": "Work",
+    "skipToContent": "Skip to main content"
+  },
+  "askVoyara": {
+    "eyebrow": "Ask VOYARA",
+    "title": "Tell VOYARA about your trip",
+    "intro": "Describe the trip in your own words. Nothing is ever booked without your approval — a team member checks everything a customer sees first.",
+    "placeholder": "e.g. Five nights in Lake Como with my wife in September, around €5,000",
+    "send": "Send",
+    "working": "Reading your request…",
+    "parsedTitle": "Here's what VOYARA understood",
+    "confirmCta": "Create travel request",
+    "editInWizard": "Refine in the full form",
+    "emptyHint": "Try including a destination, when you'd like to go, who's travelling, and a budget.",
+    "disclaimer": "VOYARA prepares this from what you write. A team member reviews everything a customer sees before it's final.",
+    "quickChipsLabel": "Try one of these",
+    "sample1": "Five nights in Lake Como, September, ~€5,000",
+    "sample2": "Somewhere warm next weekend",
+    "sample3": "Family trip to Antalya, two adults two kids",
+    "createdStatus": "Draft created — continue in the trip form to confirm dates and submit.",
+    "detectedDestination": "Destination",
+    "detectedDates": "Dates",
+    "detectedTravelers": "Travellers",
+    "detectedBudget": "Budget",
+    "notDetected": "Not detected yet"
+  },
+  "journeyCanvas": {
+    "eyebrow": "Journey Canvas",
+    "title": "Your journey — prepared and verified",
+    "stageAiPrepared": "AI prepared",
+    "stageExpertReviewed": "Expert reviewed",
+    "stageApprovalRequired": "Your approval needed",
+    "stageReadyToBook": "Ready to book",
+    "stageBooked": "Booked",
+    "itineraryTitle": "Itinerary",
+    "summaryTitle": "Trip summary",
+    "mapUnavailable": "A map preview will appear here once destination coordinates are confirmed",
+    "alternativesTitle": "Alternatives",
+    "alternativesUnavailable": "No alternatives available yet",
+    "askAboutItem": "Ask VOYARA about this",
+    "sampleDataNotice": "Sample data — not a live date or price"
+  },
+  "journeyContinuity": {
+    "cardEyebrow": "What happens next",
+    "awaitingPaymentTitle": "Trip accepted",
+    "awaitingPaymentBody": "VOYARA is preparing the next booking/payment step. No action is needed from you right now.",
+    "paymentActionRequiredTitle": "Payment required",
+    "paymentActionRequiredBody": "Your payment request is ready and waiting on you.",
+    "paymentInReviewTitle": "Payment under review",
+    "paymentInReviewBody": "The payment evidence you submitted is being reviewed by the VOYARA team.",
+    "awaitingBookingTitle": "Payment confirmed",
+    "awaitingBookingBody": "VOYARA is preparing the booking step. No action is needed from you right now.",
+    "bookingInProgressTitle": "Booking in progress",
+    "bookingInProgressBody": "VOYARA is confirming and verifying your booking with the supplier.",
+    "readyToTravelTitle": "Ready to travel",
+    "readyToTravelBody": "Your booking is verified and your documents are ready in the Trip Room.",
+    "responsibilityVoyara": "VOYARA is handling this",
+    "responsibilityCustomer": "Your action is required",
+    "responsibilityReady": "Ready",
+    "ctaContinueToPayment": "Continue to payment",
+    "ctaOpenTripRoom": "Open Trip Room",
+    "ctaBackToProposal": "Back to accepted proposal",
+    "sourceNote": "This reflects your real payment and booking records."
+  },
+  "membershipContext": {
+    "currentPlanLabel": "Current plan",
+    "planBadgeSuffix": "member"
   }
 }

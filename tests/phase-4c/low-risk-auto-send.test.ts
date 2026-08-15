@@ -13,7 +13,7 @@ async function seededConversation(store: InMemoryConversationStore, accountId: s
   const contactId = randomUUID();
   await store.upsertContact({ contactId, accountId, linkedCustomerId: null, displayName: 'Test', phone: '+994500000001', email: null, instagramHandle: null, preferredLocale: 'en' });
   const conversationId = randomUUID();
-  await store.createConversation({ conversationId, accountId, contactId, channel: 'WHATSAPP', status: 'OPEN', assignedAgentRole: null, relatedQuoteId: null, correlationId, createdAt: FIXED.toISOString() });
+  await store.createConversation({ conversationId, accountId, contactId, channel: 'WEB_CHAT', status: 'OPEN', assignedAgentRole: null, relatedQuoteId: null, correlationId, createdAt: FIXED.toISOString() });
   return conversationId;
 }
 
@@ -21,7 +21,7 @@ function ctx(): LowRiskAutoSendContext & { store: InMemoryConversationStore; pol
   return {
     store: new InMemoryConversationStore(),
     policyStore: new InMemoryPolicyStore(),
-    channel: new SimulationChannelAdapter('WHATSAPP'),
+    channel: new SimulationChannelAdapter('WEB_CHAT'),
     correlationId: `corr-${randomUUID().slice(0, 8)}`,
     now: () => FIXED
   };
@@ -141,4 +141,46 @@ test('sendLowRiskMessage is the only function in low-risk-auto-send.ts that can 
   const codeOnly = raw.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/.*$/gm, '');
   const sentAssignments = (codeOnly.match(/status:\s*'SENT'/g) ?? []).length;
   assert.equal(sentAssignments, 1, 'exactly one place constructs a SENT status');
+});
+
+/* ---------------- E.2A §2 — WhatsApp low-risk auto-send stays disabled ---------------- */
+
+test('a fully valid, active, correctly-hashed policy still refuses to auto-send on a WHATSAPP conversation', async () => {
+  const c = ctx();
+  const policy = await activatePolicy(c, ['GREETING']);
+  const contactId = randomUUID();
+  const accountId = `acct-${randomUUID().slice(0, 8)}`;
+  await c.store.upsertContact({ contactId, accountId, linkedCustomerId: null, displayName: 'Test', phone: '+994500000002', email: null, instagramHandle: null, preferredLocale: 'en' });
+  const conversationId = randomUUID();
+  await c.store.createConversation({ conversationId, accountId, contactId, channel: 'WHATSAPP', status: 'OPEN', assignedAgentRole: null, relatedQuoteId: null, correlationId: c.correlationId, createdAt: FIXED.toISOString() });
+
+  let networkCalls = 0;
+  const countingChannel = { ...c.channel, sendOutbound: async (...args: Parameters<typeof c.channel.sendOutbound>) => { networkCalls += 1; return c.channel.sendOutbound(...args); } };
+
+  await assert.rejects(
+    () => sendLowRiskMessage({ ...c, channel: countingChannel }, {
+      conversationId, intent: 'GREETING', agentRole: 'sales', body: 'Salam!', modelName: 'test-model', correlationId: c.correlationId
+    }, '+994500000002'),
+    (error: unknown) => error instanceof RiskPolicyAuthorityError && error.code === 'WHATSAPP_AUTOSEND_NOT_ACTIVATED'
+  );
+  assert.equal(networkCalls, 0, 'zero network calls — refused before the channel is ever touched');
+  void policy;
+});
+
+test('WhatsApp auto-send refusal is itself audited with an explicit reason code', async () => {
+  const c = ctx();
+  await activatePolicy(c, ['GREETING']);
+  const contactId = randomUUID();
+  const accountId = `acct-${randomUUID().slice(0, 8)}`;
+  await c.store.upsertContact({ contactId, accountId, linkedCustomerId: null, displayName: 'Test', phone: '+994500000003', email: null, instagramHandle: null, preferredLocale: 'en' });
+  const conversationId = randomUUID();
+  await c.store.createConversation({ conversationId, accountId, contactId, channel: 'WHATSAPP', status: 'OPEN', assignedAgentRole: null, relatedQuoteId: null, correlationId: c.correlationId, createdAt: FIXED.toISOString() });
+
+  await assert.rejects(() => sendLowRiskMessage(c, {
+    conversationId, intent: 'GREETING', agentRole: 'sales', body: 'Salam!', modelName: 'test-model', correlationId: c.correlationId
+  }, '+994500000003'));
+
+  const events = (c.store as unknown as { auditEvents: Array<{ reasonCode?: string | null; kind: string }> })['auditEvents' as never] as unknown as Array<{ reasonCode?: string | null; kind: string }>;
+  const refusal = events.find((e) => e.reasonCode === 'WHATSAPP_AUTOSEND_NOT_ACTIVATED');
+  assert.ok(refusal, 'the refusal itself is recorded as an audit event, not silently swallowed');
 });

@@ -55,7 +55,7 @@ export type LowRiskSendRequest = z.infer<typeof lowRiskSendRequestSchema>;
 export class RiskPolicyAuthorityError extends Error {
   constructor(
     message: string,
-    readonly code: 'VALIDATION' | 'NO_ACTIVE_POLICY' | 'INTENT_NOT_ALLOWED' | 'STALE_POLICY_HASH' | 'NOT_FOUND'
+    readonly code: 'VALIDATION' | 'NO_ACTIVE_POLICY' | 'INTENT_NOT_ALLOWED' | 'STALE_POLICY_HASH' | 'NOT_FOUND' | 'WHATSAPP_AUTOSEND_NOT_ACTIVATED'
   ) {
     super(message);
     this.name = 'RiskPolicyAuthorityError';

@@ -27,9 +27,13 @@ type VoiceCall = {
   callbackTasks: Array<{ taskId: string; dueAt: string; status: string; notes: string | null }>;
   callEvents: Array<{ kind: string; actorKind: string; reasonCode: string | null; occurredAt: string }>;
 };
-type Detail = Summary & {
+export type Detail = Summary & {
   linkedIdentities: Array<{ identityKind: string; externalId: string; verified: boolean }>;
-  messages: Array<{ messageId: string; direction: string; senderKind: string; body: string; status: string; createdAt: string }>;
+  linkedCustomerId: string | null;
+  messages: Array<{
+    messageId: string; direction: string; senderKind: string; body: string; status: string; createdAt: string;
+    approvedBy: string | null; sentAt: string | null; contentHash: string; deliveryStatus: string | null; providerOccurredAt: string | null;
+  }>;
   paymentLinks: Array<{ paymentLinkId: string; orderReference: string; status: string; amountMinor: number; currency: string; transactionType: string }>;
   voiceCall: VoiceCall | null;
 };
@@ -44,6 +48,16 @@ export type InboxLabels = {
   callbackTasksTitle: string; callAuditTitle: string; calledLabel: string; callerLabel: string; statusLabel: string; durationLabel: string;
   languageLabel: string; urgencyLabel: string; transferLabel: string; recordingLabel: string; enabledWord: string; disabledWord: string;
   consentLabel: string; dueLabel: string; unreadAria: string; slaOverdueTitle: string;
+  conversionTitle: string; conversionSubtitle: string; conversionCustomerLinked: string; conversionCustomerUnlinked: string;
+  conversionBrandConfirmed: string; conversionConfirmationLabel: string; conversionConfirmationPlaceholder: string;
+  conversionAckLabel: string; conversionAckPlaceholder: string; conversionDisclosureLabel: string;
+  conversionDestination: string; conversionDates: string; conversionTravelers: string; conversionBudget: string; conversionNotes: string;
+  conversionSubmit: string; conversionAuthorityNote: string; conversionSuccess: string; conversionDenied: string; conversionAlreadyDone: string;
+  conversionDenialAckBeforeConfirmation: string; conversionDenialStaleEvidence: string; conversionDenialUnlinkedContact: string;
+  conversionDenialMissingBrand: string; conversionDenialNotWhatsApp: string; conversionDenialMissingTimestamp: string;
+  conversionDenialConfirmationNotSent: string; conversionDenialInvalidContent: string; conversionDenialGeneric: string;
+  previewBannerLabel: string;
+  conversionTravelRequestIdLabel: string; conversionIntentIdLabel: string; conversionPreviewIdsNote: string; conversionWaitingForCustomer: string;
 };
 
 export function CrmInbox({ labels }: { labels: InboxLabels }) {
@@ -242,10 +256,218 @@ export function CrmInbox({ labels }: { labels: InboxLabels }) {
                   </li>
                 ))}
               </ul>
+
+              {selected.channel === 'WHATSAPP' ? <WhatsAppConversionPanel detail={selected} labels={labels} onConverted={() => openConversation(selected.conversationId)} /> : null}
             </>
           )}
         </div>
       </div>
+    </section>
+  );
+}
+
+export type ConversionResult =
+  | { status: 'accepted'; travelRequestId: string; versionNumber: number; intentId: string }
+  | { status: 'denied'; reasonCode: string };
+
+const DISCLOSURE_VERSION_BY_LOCALE: Record<string, 'E2A_AZ_V1' | 'E2A_RU_V1' | 'E2A_EN_V1'> = { az: 'E2A_AZ_V1', ru: 'E2A_RU_V1', en: 'E2A_EN_V1' };
+
+export function denialGuidance(reasonCode: string, labels: InboxLabels): string {
+  const known: Record<string, string> = {
+    ALREADY_CONVERTED: labels.conversionAlreadyDone,
+    ACKNOWLEDGEMENT_BEFORE_CONFIRMATION: labels.conversionDenialAckBeforeConfirmation,
+    STALE_ACKNOWLEDGEMENT_EVIDENCE: labels.conversionDenialStaleEvidence,
+    UNLINKED_CONTACT: labels.conversionDenialUnlinkedContact,
+    MISSING_BRAND: labels.conversionDenialMissingBrand,
+    CONVERSATION_NOT_WHATSAPP: labels.conversionDenialNotWhatsApp,
+    ACKNOWLEDGEMENT_MISSING_PROVIDER_TIMESTAMP: labels.conversionDenialMissingTimestamp,
+    CONFIRMATION_REQUEST_NOT_SENT: labels.conversionDenialConfirmationNotSent,
+    INVALID_TRAVEL_REQUEST: labels.conversionDenialInvalidContent
+  };
+  // Never surface a raw reason code — an unmapped code still gets a
+  // generic, staff-safe recovery message, never the enum itself.
+  return known[reasonCode] ?? labels.conversionDenialGeneric;
+}
+
+/**
+ * E.2A — the CRM-side half of the staff conversion workflow. This
+ * component NEVER writes to the database directly: every submit goes
+ * through POST /api/v1/inbox { action: 'convertWhatsApp' }, which calls
+ * the one canonical server-only wrapper (executeWhatsAppConversionCommand)
+ * that in turn calls the one canonical database RPC
+ * (execute_whatsapp_conversion_command). This panel only ever sends the
+ * business-input fields the schema allows — conversationId, the two
+ * selected message ids, the content, the disclosure version, and an
+ * idempotency key. It has no way to send an actorId, sessionId, AAL,
+ * account, customer, brand, or any hash — those fields don't exist on the
+ * request schema at all.
+ */
+/**
+ * E.2A — the CRM-side half of the staff conversion workflow. This
+ * component NEVER writes to the database directly: every submit goes
+ * through POST /api/v1/inbox { action: 'convertWhatsApp' }, which calls
+ * the one canonical server-only wrapper (executeWhatsAppConversionCommand)
+ * that in turn calls the one canonical database RPC
+ * (execute_whatsapp_conversion_command). This panel only ever sends the
+ * business-input fields the schema allows — conversationId, the two
+ * selected message ids, the content, the disclosure version, and an
+ * idempotency key. It has no way to send an actorId, sessionId, AAL,
+ * account, customer, brand, or any hash — those fields don't exist on the
+ * request schema at all.
+ *
+ * `previewMode` (only ever set by the internal preview route, never by
+ * production) disables the real fetch entirely — submit becomes a no-op —
+ * and `initialResult` lets the preview show the accepted/denied outcome
+ * states without ever calling the network.
+ */
+export function WhatsAppConversionPanel({
+  detail,
+  labels,
+  onConverted,
+  previewMode = false,
+  initialResult = null,
+  initialConfirmationId = '',
+  initialAckId = '',
+  initialContent
+}: {
+  detail: Detail;
+  labels: InboxLabels;
+  onConverted: () => void;
+  previewMode?: boolean;
+  initialResult?: ConversionResult | null;
+  initialConfirmationId?: string;
+  initialAckId?: string;
+  initialContent?: { destination: string; departureDate: string; returnDate: string; adults: number; budgetAzn: number };
+}) {
+  const outboundSentByStaff = detail.messages.filter((m) => m.direction === 'OUTBOUND' && m.senderKind === 'STAFF' && m.status === 'SENT' && m.approvedBy);
+
+  const [confirmationId, setConfirmationId] = useState(initialConfirmationId);
+  const [ackId, setAckId] = useState(initialAckId);
+  const [destination, setDestination] = useState(initialContent?.destination ?? '');
+  const [departureCity, setDepartureCity] = useState('');
+  const [departureDate, setDepartureDate] = useState(initialContent?.departureDate ?? '');
+  const [returnDate, setReturnDate] = useState(initialContent?.returnDate ?? '');
+  const [adults, setAdults] = useState(initialContent?.adults ?? 2);
+  const [budgetAzn, setBudgetAzn] = useState(initialContent?.budgetAzn ?? 1000);
+  const [notes, setNotes] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [result, setResult] = useState<ConversionResult | null>(initialResult);
+  const [idempotencyKey] = useState(() => crypto.randomUUID());
+
+  const selectedConfirmation = outboundSentByStaff.find((m) => m.messageId === confirmationId) ?? null;
+  // Only offer acknowledgement candidates that genuinely occurred AFTER
+  // the selected confirmation was sent — mirrors the database's own
+  // ordering check exactly, so this UI never even offers an option the
+  // real RPC would deny. Before a confirmation is selected, no
+  // acknowledgement candidates are offered at all.
+  const inboundFromContact = selectedConfirmation
+    ? detail.messages.filter((m) => {
+        if (m.direction !== 'INBOUND' || m.senderKind !== 'CONTACT') return false;
+        const occurredAt = m.providerOccurredAt ?? m.createdAt;
+        const confirmedAt = selectedConfirmation.sentAt ?? selectedConfirmation.createdAt;
+        return new Date(occurredAt).getTime() > new Date(confirmedAt).getTime();
+      })
+    : [];
+
+  const disclosureVersion = DISCLOSURE_VERSION_BY_LOCALE[detail.preferredLocale ?? 'az'] ?? 'E2A_AZ_V1';
+  const readyToSubmit = Boolean(detail.linkedCustomerId) && Boolean(detail.customerFacingBrand) && confirmationId && ackId && destination && departureDate && returnDate;
+
+  async function submit() {
+    if (previewMode) return; // preview never performs a real write, ever
+    setBusy(true);
+    setResult(null);
+    try {
+      const response = await fetch('/api/v1/inbox', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-correlation-id': crypto.randomUUID() },
+        body: JSON.stringify({
+          action: 'convertWhatsApp',
+          input: {
+            conversationId: detail.conversationId,
+            confirmationRequestMessageId: confirmationId,
+            acknowledgementMessageId: ackId,
+            disclosureVersion,
+            idempotencyKey,
+            content: {
+              destination, departureCity, departureDate, returnDate,
+              travelers: { adults, children: 0, infants: 0 },
+              budgetAzn, tripPurpose: 'leisure', notes, locale: detail.preferredLocale ?? 'az',
+              submissionAcknowledgements: { accuracyConfirmed: true, dataProcessingAcknowledged: true }
+            }
+          }
+        })
+      });
+      const body = await response.json();
+      const conversion: ConversionResult | undefined = body?.conversion;
+      setResult(conversion ?? { status: 'denied', reasonCode: 'ACTION_FAILED' });
+      if (conversion?.status === 'accepted') onConverted();
+    } catch {
+      setResult({ status: 'denied', reasonCode: 'ACTION_FAILED' });
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <section className="inbox-conversion-panel">
+      <h3>{labels.conversionTitle}</h3>
+      <p className="orch-note">{labels.conversionSubtitle}</p>
+
+      <ul className="inbox-conversion-readiness">
+        <li className={detail.linkedCustomerId ? 'is-ready' : 'is-blocked'}>{detail.linkedCustomerId ? labels.conversionCustomerLinked : labels.conversionCustomerUnlinked}</li>
+        <li className={detail.customerFacingBrand ? 'is-ready' : 'is-blocked'}>{labels.conversionBrandConfirmed}: {detail.customerFacingBrand ?? '—'}</li>
+      </ul>
+
+      {result?.status === 'accepted' ? (
+        <div className="inbox-conversion-success">
+          <p>{labels.conversionSuccess}</p>
+          <dl className="inbox-conversion-result-ids">
+            <div><dt>{labels.conversionTravelRequestIdLabel}</dt><dd>{result.travelRequestId}</dd></div>
+            <div><dt>{labels.conversionIntentIdLabel}</dt><dd>{result.intentId}</dd></div>
+          </dl>
+          {previewMode ? <p className="inbox-conversion-preview-note">{labels.conversionPreviewIdsNote}</p> : null}
+        </div>
+      ) : (
+        <div className="inbox-conversion-form">
+          <label>
+            {labels.conversionConfirmationLabel}
+            <select value={confirmationId} onChange={(e) => setConfirmationId(e.target.value)}>
+              <option value="">{labels.conversionConfirmationPlaceholder}</option>
+              {outboundSentByStaff.map((m) => <option key={m.messageId} value={m.messageId}>{new Date(m.sentAt ?? m.createdAt).toLocaleDateString()} — {m.body.slice(0, 30)}</option>)}
+            </select>
+          </label>
+          {selectedConfirmation && inboundFromContact.length === 0 ? (
+            <p className="inbox-conversion-waiting-note">{labels.conversionWaitingForCustomer}</p>
+          ) : null}
+          <label>
+            {labels.conversionAckLabel}
+            <select value={ackId} onChange={(e) => setAckId(e.target.value)} disabled={inboundFromContact.length === 0}>
+              <option value="">{labels.conversionAckPlaceholder}</option>
+              {inboundFromContact.map((m) => <option key={m.messageId} value={m.messageId}>{new Date(m.providerOccurredAt ?? m.createdAt).toLocaleDateString()} — {m.body.slice(0, 30)}</option>)}
+            </select>
+          </label>
+          <label>{labels.conversionDisclosureLabel}: {disclosureVersion}</label>
+          <label>{labels.conversionDestination}<input value={destination} onChange={(e) => setDestination(e.target.value)} /></label>
+          <label>{labels.conversionDates}
+            <input type="date" value={departureDate} onChange={(e) => setDepartureDate(e.target.value)} />
+            <input type="date" value={returnDate} onChange={(e) => setReturnDate(e.target.value)} />
+          </label>
+          <label>{labels.conversionTravelers}<input type="number" min={1} value={adults} onChange={(e) => setAdults(Number(e.target.value))} /></label>
+          <label>{labels.conversionBudget}<input type="number" min={0} value={budgetAzn} onChange={(e) => setBudgetAzn(Number(e.target.value))} /></label>
+          <label>{labels.conversionNotes}<input value={notes} onChange={(e) => setNotes(e.target.value)} /></label>
+          <input type="hidden" value={departureCity} onChange={() => setDepartureCity(departureCity)} />
+
+          <p className="inbox-conversion-authority-note">{labels.conversionAuthorityNote}</p>
+          <button className="button button-primary" disabled={!readyToSubmit || busy} onClick={submit}>
+            {labels.conversionSubmit}
+          </button>
+          {result?.status === 'denied' ? (
+            <p className="inbox-conversion-denied">
+              {denialGuidance(result.reasonCode, labels)}
+            </p>
+          ) : null}
+        </div>
+      )}
     </section>
   );
 }

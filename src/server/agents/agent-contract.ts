@@ -53,6 +53,21 @@ export type Contact = z.infer<typeof contactSchema>;
 
 /* ------------------------------- Conversation ------------------------------- */
 
+export const customerFacingBrands = ['RTRAVEL', 'VOYARA'] as const;
+export type CustomerFacingBrand = (typeof customerFacingBrands)[number];
+
+export const handoverStatuses = ['AI', 'HUMAN'] as const;
+export type HandoverStatus = (typeof handoverStatuses)[number];
+
+/**
+ * E.2A — these three fields already exist as real database columns
+ * (migrations 20260727090000_task017 / 20260728090000_task018) but were
+ * never exposed in this TypeScript contract, which is the actual gap —
+ * not a missing column. `.default(...)` keeps every pre-existing
+ * `Conversation`-shaped object in this codebase (tests, in-memory store
+ * fixtures) valid without modification; new WhatsApp/Instagram code sets
+ * them explicitly.
+ */
 export const conversationSchema = z.object({
   conversationId: z.uuid(),
   accountId: z.uuid(),
@@ -63,7 +78,10 @@ export const conversationSchema = z.object({
   relatedQuoteId: z.uuid().nullable(),
   correlationId: z.string().min(1).max(128),
   createdAt: z.iso.datetime(),
-  lastMessageAt: z.iso.datetime().nullable()
+  lastMessageAt: z.iso.datetime().nullable(),
+  customerFacingBrand: z.enum(customerFacingBrands).nullable().optional(),
+  handoverStatus: z.enum(handoverStatuses).optional(),
+  lastInboundAt: z.iso.datetime().nullable().optional()
 }).strict();
 export type Conversation = z.infer<typeof conversationSchema>;
 
@@ -106,6 +124,9 @@ function hasCompletePolicyAuthorization(message: {
     && message.knowledgeVersion !== null && message.model !== null && message.agentRunId !== null;
 }
 
+export const deliveryStatuses = ['PENDING', 'DELIVERED', 'FAILED', 'READ'] as const;
+export type DeliveryStatus = (typeof deliveryStatuses)[number];
+
 export const messageSchema = z.object({
   messageId: z.uuid(),
   conversationId: z.uuid(),
@@ -127,7 +148,26 @@ export const messageSchema = z.object({
   knowledgeVersion: z.string().nullable(),
   model: z.string().nullable(),
   agentRunId: z.uuid().nullable(),
-  messageType: z.enum(messageTypes)
+  messageType: z.enum(messageTypes),
+  // E.2A — already-existing columns (migration 17), newly exposed here.
+  // E.2A: channel is DATABASE-DERIVED (see migration 29's
+  // messages_derive_channel_trigger) — a caller may include it when
+  // constructing a Message for saveMessage() (Supabase's store
+  // deliberately never writes it; the trigger always derives the real
+  // value from conversation_id), and it is always populated on a loaded
+  // Message. Optional here purely for backward compatibility with the
+  // many pre-existing Message object literals across this codebase that
+  // predate this field.
+  channel: z.enum(channelKinds).optional(),
+  // providerOccurredAt: the exact provider (e.g. Meta) timestamp for THIS
+  // message, distinct from createdAt (webhook-ingestion/server time).
+  // Mandatory in practice for WhatsApp inbound evidence used by the
+  // conversion command; optional/nullable here for every other channel
+  // and for outbound drafts that haven't sent yet.
+  providerOccurredAt: z.iso.datetime().nullable().optional(),
+  externalMessageId: z.string().nullable().optional(),
+  deliveryStatus: z.enum(deliveryStatuses).nullable().optional(),
+  webhookStatus: z.string().nullable().optional()
 }).strict().refine(
   (message) => message.status !== 'SENT' || message.direction === 'INBOUND' || (message.approvedBy !== null && message.approvedAt !== null) || hasCompletePolicyAuthorization(message),
   { message: 'a SENT outbound message must carry a human approver, or complete low-risk policy authorization (inbound messages are exempt — a customer\'s own message needs no VOYARA approval)' }

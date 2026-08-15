@@ -71,6 +71,22 @@ export async function sendLowRiskMessage(
   const conversation = await ctx.store.loadConversation(parsed.data.conversationId);
   if (!conversation) throw new RiskPolicyAuthorityError('Conversation not found.', 'NOT_FOUND');
 
+  // E.2A §2 — WhatsApp low-risk auto-send is deliberately disabled for the
+  // controlled first pilot. This is a fail-closed rule at the top of the
+  // function, before any message row is even drafted, not just before the
+  // network call — no WHATSAPP conversation can produce an auto-sent
+  // message through this path regardless of policy state. All WhatsApp
+  // outbound customer messages must go through the human-approved
+  // canonical path (approveAndSendMessage in agent-operating-layer.ts).
+  // This does not touch simulation or any other already-certified channel.
+  if (conversation.channel === 'WHATSAPP') {
+    await ctx.store.recordAgentAuditEvent({
+      eventId: randomUUID(), conversationId: parsed.data.conversationId, messageId: null, kind: 'LOW_RISK_MESSAGE_AUTO_SENT_REFUSED',
+      actorId: 'system', actorKind: 'system', correlationId: ctx.correlationId, reasonCode: 'WHATSAPP_AUTOSEND_NOT_ACTIVATED', contentHash: null
+    });
+    throw new RiskPolicyAuthorityError('WhatsApp low-risk auto-send is not activated for this checkpoint.', 'WHATSAPP_AUTOSEND_NOT_ACTIVATED');
+  }
+
   const agentRunId = randomUUID();
   await ctx.policyStore.recordLlmRun({
     runId: agentRunId, conversationId: parsed.data.conversationId, messageId: null,
