@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8" /><title>VOYARA E.2B — Final Certification Screenshot Index</title>
+<style>
+  body { font-family: -apple-system, sans-serif; background: #f4ede0; padding: 32px; }
+  h1 { margin-bottom: 4px; } h2 { margin-top: 32px; }
+  .badge { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; margin-left: 8px; background: #dff0e6; color: #1f6f4a; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 16px; }
+  figure { margin: 0; background: white; border: 1px solid #e2d9c8; border-radius: 10px; overflow: hidden; }
+  figcaption { padding: 8px 12px; font-size: 0.8rem; }
+  img { width: 100%; display: block; }
+  .disclaimer { background: #c9a227; color: #1b1b1b; font-weight: 700; padding: 10px 14px; border-radius: 8px; margin-top: 12px; }
+</style>
+</head>
+<body>
+<h1>VOYARA E.2B — Final Certification Screenshot Index <span class="badge">frozen</span></h1>
+<p class="disclaimer">All "production presentation simulation" images use deterministic fixtures, rendered through the real production components — never real customer, supplier, payment, or booking data.</p>
+
+<h2>Ask VOYARA (production harness)</h2>
+<div class="grid">
+  <figure><img src="en-desktop-ask-compose.png" /><figcaption>EN Desktop — compose (real AskVoyara, empty)</figcaption></figure>
+  <figure><img src="az-mobile-ask-chip-filled.png" /><figcaption>AZ Mobile 390px — chip fills, does not submit</figcaption></figure>
+  <figure><img src="ru-320-ask-validation-error.png" /><figcaption>RU 320px — validation/empty-hint state</figcaption></figure>
+</div>
+
+<h2>Journey Canvas (production harness) — AZ hydration fix proof</h2>
+<div class="grid">
+  <figure><img src="en-desktop-journey-published.png" /><figcaption>EN Desktop — published, no acceptance claim</figcaption></figure>
+  <figure><img src="en-desktop-journey-accepted.png" /><figcaption>EN Desktop — accepted, VOYARA-owned, no pay-now</figcaption></figure>
+  <figure><img src="en-desktop-journey-payment-required.png" /><figcaption>EN Desktop — customer payment action required</figcaption></figure>
+  <figure><img src="en-desktop-journey-voucher-issued.png" /><figcaption>EN Desktop — VOUCHER_ISSUED, ready-to-travel</figcaption></figure>
+  <figure><img src="az-mobile-journey-payment-required.png" /><figcaption>AZ Mobile 390px — correct AZ currency (1.050,00 ₼) and date (31 dek 2026) formatting, zero hydration error</figcaption></figure>
+  <figure><img src="ru-320-journey-payment-required.png" /><figcaption>RU 320px — zero overflow</figcaption></figure>
+</div>
+
+<h2>Illustrative E.2B experience (customer-facing)</h2>
+<div class="grid">
+  <figure><img src="../e2b2-interactive-visual/en-desktop-final-state.png" /><figcaption>Full workspace: conversation + inspiration + Journey Canvas + Compare</figcaption></figure>
+</div>
+</body>
+</html>

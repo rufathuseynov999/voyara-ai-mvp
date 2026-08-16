@@ -51,7 +51,7 @@ function isExperienceOsPath(pathname: string): boolean {
 // header/footer/chat widget or its customer "Plan a journey" CTA. This
 // was a real defect: those routes previously fell through to the
 // marketing-chrome branch below with no exclusion at all.
-const bareChromePathPrefixes = ['/staff', '/internal-preview'];
+const bareChromePathPrefixes = ['/staff', '/internal-preview', '/experience-preview'];
 
 function isBareChromePath(pathname: string): boolean {
   const withoutLocale = pathname.replace(/^\/[a-z]{2}(?=\/|$)/, '') || '/';

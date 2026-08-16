@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8" /><title>VOYARA E.2B — Founder Screenshot Index</title>
+<style>
+  body { font-family: -apple-system, sans-serif; background: #f4ede0; padding: 32px; }
+  h1 { margin-bottom: 4px; }
+  .badge { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; margin-left: 8px; }
+  .live { background: #dff0e6; color: #1f6f4a; }
+  .illustrative { background: #f6ecd8; color: #8a6d1f; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; margin-top: 24px; }
+  figure { margin: 0; background: white; border: 1px solid #e2d9c8; border-radius: 10px; overflow: hidden; }
+  figcaption { padding: 10px 14px; font-size: 0.82rem; }
+  img { width: 100%; display: block; }
+  .disclaimer { background: #c9a227; color: #1b1b1b; font-weight: 700; padding: 10px 14px; border-radius: 8px; margin-top: 16px; }
+</style>
+</head>
+<body>
+<h1>VOYARA E.2B — Founder Screenshot Index</h1>
+<p class="disclaimer">All "Production presentation simulation" screenshots use deterministic fixtures shaped exactly like real repository contracts, rendered through the real, unmodified production components — never real customer, supplier, payment, or booking data.</p>
+
+<h2>Production Journey Canvas (simulation) <span class="badge live">LIVE evidence mode</span></h2>
+<div class="grid">
+  <figure><img src="en-desktop-published.png" /><figcaption>EN Desktop — Published, not yet accepted. Proves: no premature progress shown.</figcaption></figure>
+  <figure><img src="en-desktop-accepted.png" /><figcaption>EN Desktop — Accepted, no payment request. Proves: VOYARA-owned "preparing next step," never "pay now."</figcaption></figure>
+  <figure><img src="en-desktop-payment-required.png" /><figcaption>EN Desktop — REQUESTED payment. Proves: customer action required.</figcaption></figure>
+  <figure><img src="en-desktop-payment-review.png" /><figcaption>EN Desktop — UNDER_REVIEW payment. Proves: VOYARA owns the next step.</figcaption></figure>
+  <figure><img src="en-desktop-booking-progress.png" /><figcaption>EN Desktop — SUPPLIER_CONFIRMED booking. Proves: in-progress, not ready-to-travel.</figcaption></figure>
+  <figure><img src="en-desktop-voucher-issued.png" /><figcaption>EN Desktop — VOUCHER_ISSUED. Proves: the only state reaching ready-to-travel.</figcaption></figure>
+  <figure><img src="en-desktop-verification-rejected.png" /><figcaption>EN Desktop — VERIFICATION_REJECTED. Proves: never reaches ready-to-travel.</figcaption></figure>
+  <figure><img src="en-desktop-minimal-live.png" /><figcaption>EN Desktop — minimal LIVE state. Proves: no itinerary/hotel/dining fabricated when absent.</figcaption></figure>
+  <figure><img src="az-mobile-accepted.png" /><figcaption>AZ Mobile 390px — accepted state. Proves: zero horizontal overflow (real defect found and fixed this pass).</figcaption></figure>
+  <figure><img src="ru-320-payment-required.png" /><figcaption>RU 320px — payment-required. Proves: zero overflow at the narrowest supported width.</figcaption></figure>
+</div>
+
+<h2>Illustrative E.2B experience (customer-facing preview) <span class="badge illustrative">ILLUSTRATIVE evidence mode</span></h2>
+<div class="grid">
+  <figure><img src="../e2b2-interactive-visual/en-desktop-final-state.png" /><figcaption>EN Desktop — full interactive session end state (corrected brief, food direction, Premium Comfort compare, day-3 edit).</figcaption></figure>
+</div>
+</body>
+</html>

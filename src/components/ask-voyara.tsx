@@ -1,11 +1,13 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useMemo, useState, type FormEvent } from 'react';
+import { useMemo, useState } from 'react';
 import type { Dictionary } from '@/i18n/dictionaries';
 import type { Locale } from '@/i18n/config';
 import type { TravelRequestCommandResult } from '@/server/travel-request/contract';
 import { parseIntent, type ParsedIntent } from '@/lib/ask-voyara-parser';
+import { TravelConversationPresentation } from './travel-workspace/travel-conversation-presentation';
+import type { ConversationViewModel } from './travel-workspace/travel-workspace-types';
 
 /**
  * UX2 — Ask VOYARA.
@@ -33,7 +35,6 @@ export function AskVoyara({ locale, messages, requestMessages }: {
   requestMessages: Dictionary['travelRequest'];
 }) {
   const router = useRouter();
-  const [text, setText] = useState('');
   const [submittedText, setSubmittedText] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState('');
@@ -42,10 +43,38 @@ export function AskVoyara({ locale, messages, requestMessages }: {
 
   const samples = [messages.sample1, messages.sample2, messages.sample3];
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (!text.trim()) return;
-    setSubmittedText(text.trim());
+  // E.2B.2B — production mapper: builds the exact same ConversationViewModel
+  // shape the preview uses, from AskVoyara's own real state. No preview
+  // fixture, no E.2B engine, and no new parsing logic — parsed still comes
+  // entirely from the existing parseIntent() call above. interactionMode
+  // is COMPOSE_CONFIRM (single-shot: type, parse, confirm) and
+  // quickPromptBehavior is FILL_DRAFT (chips fill the composer, they have
+  // never auto-submitted) — this is what preserves AskVoyara's real,
+  // long-standing interaction contract instead of forcing it to behave
+  // like the preview's multi-turn chat.
+  const conversationModel: ConversationViewModel = {
+    turns: submittedText ? [{ speaker: 'customer', text: submittedText }] : [],
+    quickPrompts: submittedText ? [] : samples,
+    briefFields: [
+      { key: 'destination', label: messages.detectedDestination, value: parsed?.destination ?? null },
+      {
+        key: 'dates', label: messages.detectedDates,
+        value: parsed?.departureDate ? `${parsed.departureDate}${parsed.returnDate ? ` → ${parsed.returnDate}` : ''}` : null
+      },
+      { key: 'travelers', label: messages.detectedTravelers, value: parsed?.adults ? String(parsed.adults) : null },
+      { key: 'budget', label: messages.detectedBudget, value: parsed?.budgetAzn ? String(parsed.budgetAzn) : null }
+    ],
+    missingFieldLabel: parsed && !parsed.destination && !parsed.departureDate && !parsed.adults && !parsed.budgetAzn ? messages.emptyHint : null,
+    correctionSummary: null,
+    ready: Boolean(parsed),
+    evidence: 'live',
+    interactionMode: 'COMPOSE_CONFIRM',
+    quickPromptBehavior: 'FILL_DRAFT'
+  };
+
+  function handleSend(value: string) {
+    if (!value.trim()) return;
+    setSubmittedText(value.trim());
     setStatus('');
   }
 
@@ -95,68 +124,21 @@ export function AskVoyara({ locale, messages, requestMessages }: {
     <div className="ask-voyara">
       <p className="ask-voyara-intro">{messages.intro}</p>
 
-      <form className="ask-voyara-composer" onSubmit={handleSubmit}>
-        <textarea
-          className="ask-voyara-textarea"
-          maxLength={600}
-          onChange={(event) => setText(event.target.value)}
-          placeholder={messages.placeholder}
-          value={text}
-        />
-        <div className="ask-voyara-composer-actions">
-          <button className="button button-primary" disabled={busy || !text.trim()} type="submit">
-            {busy ? messages.working : messages.send}
-          </button>
-        </div>
-      </form>
+      <TravelConversationPresentation
+        model={conversationModel}
+        callbacks={{
+          onSend: handleSend,
+          onBuild: parsed ? createDraft : undefined
+        }}
+        labels={{
+          heading: messages.parsedTitle, send: messages.send, quickPromptsLabel: messages.quickChipsLabel,
+          understandingTitle: messages.parsedTitle, correctionLabel: '', correctionPlaceholder: '', correctionApply: '',
+          changed: '', buildJourney: messages.confirmCta, notProvidedLabel: messages.notDetected,
+          busy, busyLabel: messages.working
+        }}
+      />
 
-      {!submittedText ? (
-        <div className="ask-voyara-chips" aria-label={messages.quickChipsLabel}>
-          {samples.map((sample) => (
-            <button className="ask-voyara-chip" key={sample} onClick={() => setText(sample)} type="button">
-              {sample}
-            </button>
-          ))}
-        </div>
-      ) : null}
-
-      {parsed ? (
-        <section aria-live="polite" className="ask-voyara-parsed">
-          <h2>{messages.parsedTitle}</h2>
-          <div className="ask-voyara-fields">
-            <div className={parsed.destination ? 'ask-voyara-field' : 'ask-voyara-field is-empty'}>
-              <span>{messages.detectedDestination}</span>
-              <strong>{parsed.destination ?? messages.notDetected}</strong>
-            </div>
-            <div className={parsed.departureDate ? 'ask-voyara-field' : 'ask-voyara-field is-empty'}>
-              <span>{messages.detectedDates}</span>
-              <strong>
-                {parsed.departureDate
-                  ? `${parsed.departureDate}${parsed.returnDate ? ` → ${parsed.returnDate}` : ''}`
-                  : messages.notDetected}
-              </strong>
-            </div>
-            <div className={parsed.adults ? 'ask-voyara-field' : 'ask-voyara-field is-empty'}>
-              <span>{messages.detectedTravelers}</span>
-              <strong>{parsed.adults ? parsed.adults : messages.notDetected}</strong>
-            </div>
-            <div className={parsed.budgetAzn ? 'ask-voyara-field' : 'ask-voyara-field is-empty'}>
-              <span>{messages.detectedBudget}</span>
-              <strong>{parsed.budgetAzn ? parsed.budgetAzn : messages.notDetected}</strong>
-            </div>
-          </div>
-          {!parsed.destination && !parsed.departureDate && !parsed.adults && !parsed.budgetAzn ? (
-            <p className="ask-voyara-status">{messages.emptyHint}</p>
-          ) : null}
-          <div className="ask-voyara-parsed-actions">
-            <button className="button button-primary" disabled={busy} onClick={createDraft} type="button">
-              {busy ? messages.working : messages.confirmCta}
-            </button>
-          </div>
-          <p aria-live="polite" className="ask-voyara-status">{status}</p>
-        </section>
-      ) : null}
-
+      <p aria-live="polite" className="ask-voyara-status">{status}</p>
       <p className="ask-voyara-disclaimer">{messages.disclaimer}</p>
     </div>
   );

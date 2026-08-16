@@ -1,25 +1,38 @@
 import Link from 'next/link';
 import { PublishedProposals } from './published-proposals';
 import { NextActionCard } from './next-action-card';
+import { JourneyCanvasPresentation } from './travel-workspace/journey-canvas-presentation';
+import type { JourneyCanvasViewModel } from './travel-workspace/travel-workspace-types';
 import type { Dictionary } from '@/i18n/dictionaries';
 import type { Locale } from '@/i18n/config';
 import type { PublishedProposalView } from '@/server/commercial/contract';
 import type { CustomerPaymentRequestView } from '@/server/payment/contract';
 import type { CustomerBookingView } from '@/server/booking/contract';
 import { deriveJourneyNextAction } from '@/lib/journey-continuity';
+import { mapPublishedProposalToJourneyCanvasViewModel } from '@/lib/production-journey-canvas-mapper';
 
 /**
  * UX2 — Journey Canvas. UX3 adds the post-acceptance "what happens next"
  * projection (see journey-continuity.ts) without changing anything below.
+ * E.2B.2B converges the outer visual frame onto the shared
+ * JourneyCanvasPresentation, WITHOUT touching any of the domain logic
+ * below — deriveStage/deriveJourneyNextAction/headline/isSampleData are
+ * all byte-identical to the pre-convergence version. The one addition is
+ * mapPublishedProposalToJourneyCanvasViewModel(), the pure mapper that
+ * builds the neutral, LIVE-evidence view model the shared frame renders.
  *
  * This does NOT replace or reimplement the Proposal domain logic. The
  * actual proposal cards, line items, quotation hash and the accept()
  * command are still rendered by the existing, untouched
- * <PublishedProposals> component — reused verbatim.
+ * <PublishedProposals> component — reused verbatim, passed through the
+ * shared frame's `proposalContent` slot. <PublishedProposals> always
+ * receives the FULL, unmodified `proposals` array — multiple real
+ * proposals are never collapsed to one; the mapper's single-proposal
+ * model is used only to derive the hero heading/evidence badge, exactly
+ * matching the pre-convergence `headline` derivation, which already only
+ * ever used `proposals[0]`.
  *
- * Journey Canvas adds visual chrome around that authoritative data: a trip
- * summary hero, a Human-Approval-Gate stage track, and a context/map side
- * panel. The stage track is derived only from fields that already exist on
+ * The stage track is derived only from fields that already exist on
  * PublishedProposalView (status, validUntil, acceptedAt) — nothing is
  * invented:
  *   - "AI prepared" and "Expert reviewed": true once a proposal exists at
@@ -65,7 +78,6 @@ export function JourneyCanvas({
 }) {
   const currentStage = deriveStage(proposals);
   const currentIndex = STAGE_ORDER.indexOf(currentStage);
-  const headline = proposals[0]?.customer.title ?? canvasMessages.title;
   const isSampleData = proposals.length === 0;
   const acceptedProposal = proposals.find((p) => p.status === 'ACCEPTED') ?? null;
   const nextAction = acceptedProposal && continuityMessages ? deriveJourneyNextAction(acceptedProposal, payments, bookings) : null;
@@ -78,47 +90,79 @@ export function JourneyCanvas({
     booked: canvasMessages.stageBooked
   };
 
+  // E.2B.2B — the neutral view model. Used ONLY for the shared frame's
+  // hero heading/evidence badge — every operational surface below
+  // (proposal cards, accept(), NextActionCard, stage track, nav links)
+  // is still the real, untouched domain component, passed through as a
+  // slot, never re-derived from this model.
+  const representativeProposal = proposals[0] ?? null;
+  const model: JourneyCanvasViewModel = representativeProposal
+    ? mapPublishedProposalToJourneyCanvasViewModel({
+        proposal: representativeProposal,
+        payment: null,
+        booking: null,
+        nextAction: deriveJourneyNextAction(representativeProposal, payments, bookings),
+        labels: { heading: canvasMessages.title, summary: canvasMessages.title, mapUnavailable: canvasMessages.mapUnavailable }
+      })
+    : {
+        heading: canvasMessages.title, summary: canvasMessages.title, destinationSequence: [],
+        routeLabel: null, selectedDirectionLabel: null, selectedOptionLabel: null,
+        versionLabel: null, whatChanged: null, evidenceMode: 'LIVE'
+      };
+
+  const stageContent = (
+    <div className="journey-stage-track" role="list" aria-label={canvasMessages.eyebrow}>
+      {STAGE_ORDER.filter((stage) => stage !== 'readyToBook' || currentStage === 'readyToBook' || currentStage === 'booked').map((stage) => {
+        const stageIndex = STAGE_ORDER.indexOf(stage);
+        const state = stageIndex < currentIndex ? 'is-complete' : stageIndex === currentIndex ? 'is-current' : '';
+        return (
+          <span className={`journey-stage ${state}`.trim()} key={stage} role="listitem">
+            <span aria-hidden="true" className="journey-stage-dot" />
+            {stageLabel[stage]}
+          </span>
+        );
+      })}
+    </div>
+  );
+
+  const proposalContent = (
+    <div className="journey-canvas-main">
+      {isSampleData ? <p className="journey-sample-notice">{canvasMessages.sampleDataNotice}</p> : null}
+      {nextAction && continuityMessages ? (
+        <NextActionCard action={nextAction} locale={locale} messages={continuityMessages} />
+      ) : null}
+      <PublishedProposals locale={locale} messages={messages} proposals={proposals} />
+    </div>
+  );
+
+  const secondaryActionsContent = (
+    <aside className="journey-canvas-side">
+      <div className="journey-map-placeholder">{canvasMessages.mapUnavailable}</div>
+      <div className="journey-alternatives-placeholder">
+        <strong>{canvasMessages.alternativesTitle}</strong>
+        <p>{canvasMessages.alternativesUnavailable}</p>
+      </div>
+      <Link className="button button-outline-dark" href={askHref}>
+        {canvasMessages.askAboutItem}
+      </Link>
+    </aside>
+  );
+
   return (
     <div className="journey-canvas">
-      <div className="journey-canvas-hero">
-        <span className="eyebrow">{canvasMessages.eyebrow}</span>
-        <h1>{headline}</h1>
-        <p>{canvasMessages.title}</p>
-      </div>
-
-      <div className="journey-stage-track" role="list" aria-label={canvasMessages.eyebrow}>
-        {STAGE_ORDER.filter((stage) => stage !== 'readyToBook' || currentStage === 'readyToBook' || currentStage === 'booked').map((stage) => {
-          const stageIndex = STAGE_ORDER.indexOf(stage);
-          const state = stageIndex < currentIndex ? 'is-complete' : stageIndex === currentIndex ? 'is-current' : '';
-          return (
-            <span className={`journey-stage ${state}`.trim()} key={stage} role="listitem">
-              <span aria-hidden="true" className="journey-stage-dot" />
-              {stageLabel[stage]}
-            </span>
-          );
-        })}
-      </div>
-
-      <div className="journey-canvas-grid">
-        <div className="journey-canvas-main">
-          {isSampleData ? <p className="journey-sample-notice">{canvasMessages.sampleDataNotice}</p> : null}
-          {nextAction && continuityMessages ? (
-            <NextActionCard action={nextAction} locale={locale} messages={continuityMessages} />
-          ) : null}
-          <PublishedProposals locale={locale} messages={messages} proposals={proposals} />
-        </div>
-
-        <aside className="journey-canvas-side">
-          <div className="journey-map-placeholder">{canvasMessages.mapUnavailable}</div>
-          <div className="journey-alternatives-placeholder">
-            <strong>{canvasMessages.alternativesTitle}</strong>
-            <p>{canvasMessages.alternativesUnavailable}</p>
-          </div>
-          <Link className="button button-outline-dark" href={askHref}>
-            {canvasMessages.askAboutItem}
-          </Link>
-        </aside>
-      </div>
+      <JourneyCanvasPresentation
+        model={model}
+        callbacks={{}}
+        labels={{
+          journeySubtitle: canvasMessages.title, hotelCandidate: '', dining: '', notLiveLabel: '',
+          whatChanged: '', applyEdit: '', showOriginal: '', showRevised: '', showingRevised: false,
+          compareTitle: '', selectDirection: '', selectedPlan: '',
+          pace: '', hotelLevel: '', included: '', budgetRange: '', flexibility: '', serviceLevel: '',
+          timeLabels: { morning: '', afternoon: '', evening: '' }, dayLabelTemplate: 'Day {n}',
+          liveLabel: canvasMessages.eyebrow, illustrativeLabel: canvasMessages.eyebrow
+        }}
+        slots={{ stageContent, proposalContent, secondaryActionsContent }}
+      />
     </div>
   );
 }

@@ -8,7 +8,48 @@ import type { CommercialCommandResult, PublishedProposalView } from '@/server/co
 
 const numberLocales: Record<Locale, string> = { az: 'az-AZ', ru: 'ru-RU', en: 'en-US' };
 
+/**
+ * E.2B AZ hydration fix — root cause, precisely identified by diffing raw
+ * SSR HTML against the post-hydration DOM for the same request:
+ *
+ *   Server (Node.js, full ICU)      Client (Chromium's bundled ICU)
+ *   money:  "1.050,00 ₼"            "AZN 1,050.00"
+ *   date:   "31 dek 2026, 00:00"    "2026 M12 31 00:00"
+ *
+ * Node's ICU has complete az-AZ locale data; the Chromium build bundled
+ * with this environment's Playwright does not, and Intl.NumberFormat /
+ * Intl.DateTimeFormat silently fall back to a generic, non-Azerbaijani
+ * format instead of throwing — producing genuinely different text on
+ * server vs client and triggering React hydration error #418. ru-RU and
+ * en-US are unaffected (both environments have complete locale data for
+ * those), confirmed by the same SSR-vs-hydrated diff coming back
+ * byte-identical for ru/en.
+ *
+ * Fix: for az specifically, never delegate to Intl — use a small,
+ * deterministic hand-rolled formatter so server and client always agree,
+ * regardless of either runtime's ICU locale-data completeness. ru/en
+ * continue using Intl unchanged, since that path is proven correct.
+ */
+const AZ_MONTH_ABBR = ['yan', 'fev', 'mar', 'apr', 'may', 'iyn', 'iyl', 'avq', 'sen', 'okt', 'noy', 'dek'];
+
+function formatAzMoney(value: number): string {
+  const fixed = value.toFixed(2);
+  const [whole, fraction] = fixed.split('.');
+  const withThousands = whole.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  return `${withThousands},${fraction} ₼`;
+}
+
+function formatAzDateTime(date: Date): string {
+  const day = date.getUTCDate();
+  const month = AZ_MONTH_ABBR[date.getUTCMonth()];
+  const year = date.getUTCFullYear();
+  const hh = String(date.getUTCHours()).padStart(2, '0');
+  const mm = String(date.getUTCMinutes()).padStart(2, '0');
+  return `${day} ${month} ${year}, ${hh}:${mm}`;
+}
+
 function money(minor: number, locale: Locale): string {
+  if (locale === 'az') return formatAzMoney(minor / 100);
   return new Intl.NumberFormat(numberLocales[locale], {
     style: 'currency',
     currency: 'AZN',
@@ -81,7 +122,7 @@ function ProposalCard({
 
       <div className="proposal-version-strip">
         <div><span>{messages.version}</span><strong>{proposal.versionNumber}</strong></div>
-        <div><span>{messages.validUntil}</span><strong>{new Intl.DateTimeFormat(numberLocales[locale], { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(proposal.validUntil))}</strong></div>
+        <div><span>{messages.validUntil}</span><strong>{locale === 'az' ? formatAzDateTime(new Date(proposal.validUntil)) : new Intl.DateTimeFormat(numberLocales[locale], { dateStyle: 'medium', timeStyle: 'short', timeZone: 'UTC' }).format(new Date(proposal.validUntil))}</strong></div>
         <div className="quotation-hash"><span>SHA-256</span><code>{proposal.payloadHash}</code></div>
       </div>
 
@@ -121,7 +162,7 @@ function ProposalCard({
           <button className="button button-primary" disabled={busy || !confirmed} onClick={accept} type="button">{busy ? messages.working : messages.accept}</button>
         </section>
       ) : proposal.status === 'ACCEPTED' ? (
-        <p className="acceptance-record">{messages.acceptedRecord} {proposal.acceptedAt ? new Intl.DateTimeFormat(numberLocales[locale], { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(proposal.acceptedAt)) : ''}</p>
+        <p className="acceptance-record">{messages.acceptedRecord} {proposal.acceptedAt ? (locale === 'az' ? formatAzDateTime(new Date(proposal.acceptedAt)) : new Intl.DateTimeFormat(numberLocales[locale], { dateStyle: 'medium', timeStyle: 'short', timeZone: 'UTC' }).format(new Date(proposal.acceptedAt))) : ''}</p>
       ) : <p className="authority-note">{messages.expired}</p>}
       <p aria-live="polite" className="form-status">{status}</p>
     </article>

@@ -721,3 +721,201 @@
     max-width: 900px;
   }
 }
+
+/* ==========================================================================
+   E.2B.1 — Customer Experience Proof preview
+   ========================================================================== */
+.e2b-preview-banner {
+  background: var(--gold);
+  color: var(--ink);
+  font-weight: 700;
+  text-align: center;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+}
+.e2b-preview-page {
+  background: var(--paper-warm, #f4ede0);
+  min-height: 100vh;
+}
+.e2b-preview-workspace {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.e2b-section {
+  background: var(--paper, #fff);
+  border: 1px solid var(--hairline, #e2d9c8);
+  border-radius: 14px;
+  padding: 20px;
+  min-width: 0;
+}
+.e2b-conversation {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 12px 0;
+}
+.e2b-turn {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 0.92rem;
+  word-break: break-word;
+}
+.e2b-turn-customer {
+  align-self: flex-end;
+  background: var(--emerald-soft, #dff0e6);
+  color: var(--ink);
+}
+.e2b-turn-voyara {
+  align-self: flex-start;
+  background: var(--champagne-soft, #f6ecd8);
+  color: var(--ink);
+}
+.e2b-brief dl, .e2b-compare-card dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 12px;
+  margin-top: 8px;
+  font-size: 0.85rem;
+}
+.e2b-brief dt, .e2b-compare-card dt { font-weight: 600; color: var(--muted, #6b6455); }
+.e2b-inspiration-grid, .e2b-compare-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+.e2b-inspiration-card, .e2b-compare-card {
+  border: 1px solid var(--hairline, #e2d9c8);
+  border-radius: 12px;
+  padding: 14px;
+  min-width: 0;
+}
+.e2b-compare-card.is-selected {
+  border-color: var(--gold, #c9a227);
+  box-shadow: 0 0 0 2px var(--gold, #c9a227) inset;
+}
+.e2b-inspiration-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--emerald-soft, #dff0e6), var(--champagne-soft, #f6ecd8));
+  margin-bottom: 10px;
+}
+.e2b-inspiration-meta { font-size: 0.78rem; color: var(--muted, #6b6455); }
+.e2b-illustrative-note { font-size: 0.78rem; color: var(--muted, #6b6455); font-style: italic; }
+.e2b-itinerary { list-style: none; margin: 12px 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.e2b-itinerary-day { border-left: 3px solid var(--gold, #c9a227); padding-left: 12px; min-width: 0; }
+.e2b-itinerary-day ul { margin: 6px 0 0; padding-left: 18px; font-size: 0.88rem; }
+.e2b-time-label { font-weight: 600; margin-right: 6px; color: var(--emerald, #1f6f4a); }
+.e2b-edit-panel { margin-top: 18px; padding: 14px; border-radius: 10px; background: var(--paper-warm, #f4ede0); }
+.e2b-what-changed { font-size: 0.85rem; margin-top: 10px; }
+.e2b-accountability ul { list-style: disc; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem; }
+
+.e2b-preview-page, .e2b-preview-workspace, .e2b-section {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.e2b-input-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  min-width: 0;
+}
+.e2b-text-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--hairline, #e2d9c8);
+  border-radius: 8px;
+  font: inherit;
+  box-sizing: border-box;
+}
+.e2b-quick-prompts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--muted, #6b6455);
+}
+.e2b-quick-prompts button { max-width: 100%; white-space: normal; text-align: left; }
+.e2b-correction-panel { margin-top: 16px; padding: 12px; background: var(--paper-warm, #f4ede0); border-radius: 10px; min-width: 0; }
+.e2b-correction-panel label { display: block; font-size: 0.82rem; margin-bottom: 6px; }
+.e2b-direction-active { font-size: 0.8rem; color: var(--emerald, #1f6f4a); font-weight: 600; }
+.e2b-direction-summary { margin-top: 14px; padding: 12px; background: var(--emerald-soft, #dff0e6); border-radius: 10px; font-size: 0.88rem; }
+.e2b-canvas-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 16px 0; }
+.e2b-canvas-card { border: 1px solid var(--hairline, #e2d9c8); border-radius: 10px; padding: 12px; font-size: 0.85rem; min-width: 0; }
+.e2b-canvas-card h4 { margin: 0 0 6px; font-size: 0.85rem; }
+.e2b-illustration { width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; display: block; }
+.e2b-route-wrapper { margin: 14px 0; }
+.e2b-route-svg { width: 100%; height: auto; max-width: 400px; display: block; }
+
+@media (max-width: 480px) {
+  .e2b-turn { max-width: 92%; }
+  .e2b-input-row { flex-direction: column; }
+  .e2b-brief dl, .e2b-compare-card dl { grid-template-columns: 1fr; }
+  .e2b-inspiration-grid, .e2b-compare-grid, .e2b-canvas-cards { grid-template-columns: 1fr; }
+}
+
+.e2b-rich-card {
+  display: flex;
+  gap: 12px;
+  border: 1px solid var(--hairline, #e2d9c8);
+  border-radius: 12px;
+  overflow: hidden;
+  min-width: 0;
+  background: var(--paper, #fff);
+}
+.e2b-card-illustration {
+  width: 110px;
+  height: 100%;
+  min-height: 120px;
+  flex-shrink: 0;
+  display: block;
+  object-fit: cover;
+}
+.e2b-rich-card-body { padding: 12px 14px 12px 0; min-width: 0; font-size: 0.85rem; }
+.e2b-rich-card-title { font-weight: 700; margin: 2px 0; }
+.e2b-rich-card-meta { color: var(--muted, #6b6455); font-size: 0.78rem; margin: 2px 0 6px; }
+.e2b-experience-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+.e2b-experience-card { border: 1px solid var(--hairline, #e2d9c8); border-radius: 10px; overflow: hidden; min-width: 0; }
+.e2b-card-illustration-small { width: 100%; height: 70px; display: block; }
+.e2b-experience-card .e2b-time-label { display: block; padding: 6px 8px 0; }
+.e2b-experience-card .e2b-rich-card-meta { padding: 0 8px 8px; }
+
+@media (max-width: 480px) {
+  .e2b-rich-card { flex-direction: column; }
+  .e2b-card-illustration { width: 100%; height: 100px; }
+  .e2b-experience-row { grid-template-columns: 1fr; }
+}
+
+.e2b-evidence-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--champagne-soft, #f6ecd8);
+  color: var(--champagne-deep, #8a6d1f);
+  margin: 4px 0 10px;
+}
+
+/* E.2B final certification fix: nested grid/flex children without
+   min-width:0 can force their parent (and the whole shell) wider than
+   the viewport when content has a large intrinsic min-content width —
+   real overflow bug found via the production harness at 320/390px. */
+.journey-canvas,
+.journey-canvas-grid,
+.journey-canvas-main,
+.journey-canvas-side,
+.journey-canvas-hero {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
